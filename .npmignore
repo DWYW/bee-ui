@@ -1,0 +1,25 @@
+.DS_Store
+node_modules
+/dist
+src
+tests
+public
+
+.*
+babel.config.js
+package-lock.json
+postcss.config.js
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
