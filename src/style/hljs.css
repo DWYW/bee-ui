@@ -1,0 +1,149 @@
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 {
+  line-height: 2em;
+  margin: 0.5em 0;
+  /* margin-bottom: 1em; */
+}
+
+.md pre {
+  background-color: #f5f5f5;
+  border:1px solid #ebedf0;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 1em 0;
+  overflow-x: auto;
+  display: block;
+  width: 100%;
+}
+
+.md blockquote {
+  border-left: 5px solid #ffc49c;
+  padding: 12px 8px;
+  line-height: 28px;
+  margin-bottom: 15px;
+  background-color: rgba(255, 233, 218, 0.4);
+  border-radius: 6px;
+}
+
+.md p {
+  line-height: 2em;
+  /* margin-bottom: 0.5em; */
+}
+.md hr {
+  margin: 1em 0;
+}
+.md>table {
+  width: 100%;
+  border-spacing: 0;
+  line-height: 24px;
+}
+
+.md>table th {
+  text-align: left;
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+}
+
+.md>table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ebedf0;
+}
