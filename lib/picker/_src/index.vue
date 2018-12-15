@@ -109,7 +109,7 @@ export default {
     openPicker () {
       if (this._instance) return
 
-      let {value, ...props} = this._props
+      let { value, ...props } = this._props
 
       const _config = Object.assign({}, props, {
         followDom: this.$refs.input.$el,
@@ -124,7 +124,7 @@ export default {
         closePicker: this.closePicker
       })
 
-      this._instance = new PickerConstructor({data: _config})
+      this._instance = new PickerConstructor({ data: _config })
       this._instance.vm = this._instance.$mount()
       this._instance.dom = this._instance.vm.$el
       document.body.appendChild(this._instance.dom)
@@ -165,7 +165,7 @@ export default {
 
       this.quickBtns.forEach((item) => {
         if (this.isRange && item) {
-          let {label, value} = item
+          let { label, value } = item
 
           if (label && utils.typeof(value) === 'array' && ((utils.typeof(value[0]) === 'date' && utils.typeof(value[1]) === 'date') || (utils.typeof(value[0]) === 'date' && utils.typeof(value[1]) === 'date'))) {
             btns.push(item)
@@ -173,7 +173,7 @@ export default {
         }
 
         if (!this.isRange && item) {
-          let {label, value} = item
+          let { label, value } = item
 
           if (label && utils.typeof(value) === 'date') {
             btns.push(item)

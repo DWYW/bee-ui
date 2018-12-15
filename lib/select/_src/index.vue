@@ -34,7 +34,7 @@
 import Vue from 'vue'
 import Listener from '../../utils/listener'
 import Options from './Options.vue'
-import {deepValue} from '../../utils/object'
+import { deepValue } from '../../utils/object'
 
 const OptionsConstructor = Vue.extend(Options)
 
@@ -152,7 +152,7 @@ export default {
         textContainerHeight: !this.multiple ? this._wrapper.offsetHeight : null
       }
 
-      this._instance = new OptionsConstructor({data: _config})
+      this._instance = new OptionsConstructor({ data: _config })
       this._instance.vm = this._instance.$mount()
       this._instance.dom = this._instance.vm.$el
       document.body.appendChild(this._instance.dom)
@@ -458,8 +458,6 @@ export default {
         }
       }
     }
-
-
   }
 }
 

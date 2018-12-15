@@ -1,28 +1,31 @@
 <template>
   <bee-menu :follow-target='followDom' :scroll-dom='scrollDom' :autoHide='!multiple' ref='menu'>
-    <ul class='options--wp'
-      :style='{minWidth: `${textContainerWidth}px`}'
-    >
-      <li :class='["options--item", {
-        "options__selected": isSelectedItem(option),
-        "options__multiple": multiple
-        }]'
-        :style='{lineHeight: (textContainerHeight - 2) + "px"}'
-        v-if='options.length'
-        v-for='(option, index) in options'
-        @click='pickerItem(option, index)'
-        :key='"option_item_" + deepValue(optionKey.value, option)'
-      >
-        {{deepValue(optionKey.label, option)}}
-        <bee-icon class='multiple--icon' icon='correct' v-if='multiple'></bee-icon>
-      </li>
-      <li class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}' v-if='!options.length'>暂无可选项</li>
+
+    <ul class='options--wp' :style='{minWidth: `${textContainerWidth}px`}'>
+      <!-- has options -->
+      <template v-if='options.length'>
+        <li :class='["options--item", {
+          "options__selected": isSelectedItem(option),
+          "options__multiple": multiple
+          }]'
+          :style='{lineHeight: (textContainerHeight - 2) + "px"}'
+          v-for='(option, index) in options'
+          @click='pickerItem(option, index)'
+          :key='"option_item_" + deepValue(optionKey.value, option)'
+        >
+          {{deepValue(optionKey.label, option)}}
+          <bee-icon class='multiple--icon' icon='correct' v-if='multiple'></bee-icon>
+        </li>
+      </template>
+
+      <!-- no options -->
+      <li v-if='!options.length' class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}'>暂无可选项</li>
     </ul>
   </bee-menu>
 </template>
 
 <script>
-import {deepValue} from '../../utils/object'
+import { deepValue } from '../../utils/object'
 
 export default {
   name: 'BeeSelectOptions',
@@ -115,4 +118,3 @@ export default {
   }
 }
 </style>
-

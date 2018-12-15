@@ -1,16 +1,17 @@
 <template>
   <div class="picker-time--wp">
     <section class="picker-time--body">
-      <time-item :class='["picker-time--item__" + itemNum]'
-        v-if='item'
-        v-for='(item, index) in datas'
-        :key='"time_item_" + index'
-        :type='index'
-        :data='item'
-        :width='100/itemNum'
-        :value='selected[index]'
-        @picker='picker'>
-      </time-item>
+      <template v-for='(item, index) in datas'>
+        <time-item :class='["picker-time--item__" + itemNum]'
+          v-if='item'
+          :key='"time_item_" + index'
+          :type='index'
+          :data='item'
+          :width='100/itemNum'
+          :value='selected[index]'
+          @picker='picker'>
+        </time-item>
+      </template>
     </section>
   </div>
 </template>
@@ -115,7 +116,7 @@ export default {
       if (!this.visiable[type]) return null
 
       let ends = [23, 59, 59]
-      let {year, month, date} = index < 3 ? this.startDate : this.endDate
+      let { year, month, date } = index < 3 ? this.startDate : this.endDate
 
       return this.rang(0, ends[index % 3]).map(item => {
         let params = null
@@ -208,7 +209,7 @@ export default {
      */
     picker (data) {
       let isStart = data.type < 3
-      let {year, month, date, hour, minute, second} = isStart ? this.startDate : this.endDate
+      let { year, month, date, hour, minute, second } = isStart ? this.startDate : this.endDate
       let params = [
         year,
         month,

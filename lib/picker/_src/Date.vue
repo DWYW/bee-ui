@@ -111,28 +111,28 @@ export default {
           this.selectedDate = _date
         }
       } else {
-        let {year, month} = this.today
+        let { year, month } = this.today
         this.dateData = utils.date2object(new Date(year, month, 1, 0, 0, 0))
       }
     },
 
     /* 上一年 */
     prevYear () {
-      let {year, month} = this.dateData
+      let { year, month } = this.dateData
       let _newDate = new Date(year - 1, month, 1, 0, 0, 0)
       this.dateData = utils.date2object(_newDate)
     },
 
      /* 下一年 */
     nextYear () {
-      let {year, month} = this.dateData
+      let { year, month } = this.dateData
       let _newDate = new Date(year + 1, month, 1, 0, 0, 0)
       this.dateData = utils.date2object(_newDate)
     },
 
     /* 上一个月 */
     prevMonth () {
-      let {year, month} = this.dateData
+      let { year, month } = this.dateData
       let _prevMonth = (month + 11) % 12
       let _newYear = month ? year : year - 1
       let _newDate = new Date(_newYear, _prevMonth, 1, 0, 0, 0)
@@ -141,7 +141,7 @@ export default {
 
     /* 下一个月 */
     nextMonth () {
-      let {year, month} = this.dateData
+      let { year, month } = this.dateData
       let _nextMonth = (month + 1) % 12
       let _newYear = _nextMonth ? year : year + 1
       let _newDate = new Date(_newYear, _nextMonth, 1)
@@ -155,28 +155,28 @@ export default {
       let _month = null
 
       switch (type) {
-      case 1:
-        // 上一年
-        _year = _dateData.month === 0 ? _dateData.year - 1 : _dateData.year
-        _month = (_dateData.month + 11) % 12
-        break
-      case 3:
-        // 下一年
-        _month = (_dateData.month + 1) % 12
-        _year = _month ? _dateData.year : _dateData.year + 1
-        break
-      default:
-        // 当前月
-        _year = _dateData.year
-        _month = _dateData.month
-      }
+        case 1:
+          // 上一年
+          _year = _dateData.month === 0 ? _dateData.year - 1 : _dateData.year
+          _month = (_dateData.month + 11) % 12
+          break
+        case 3:
+          // 下一年
+          _month = (_dateData.month + 1) % 12
+          _year = _month ? _dateData.year : _dateData.year + 1
+          break
+        default:
+          // 当前月
+          _year = _dateData.year
+          _month = _dateData.month
+        }
 
       return {year: _year, month: _month}
     },
 
     /* 获取当前日期的时间戳 */
     getStamp (day, type) {
-      let {year, month} = this.getYearMonth(type)
+      let { year, month } = this.getYearMonth(type)
       return utils.date2Stamp(new Date(year, month, day, 0, 0, 0))
     },
 
@@ -186,7 +186,7 @@ export default {
         return false
       }
 
-      let {year, month} = this.getYearMonth(type)
+      let { year, month } = this.getYearMonth(type)
 
       return this.disabled(new Date(year, month, day, 0, 0, 0))
     },
@@ -201,7 +201,7 @@ export default {
         return false
       }
 
-      let {year, month} = this.getYearMonth(type)
+      let { year, month } = this.getYearMonth(type)
       let _date = utils.date2object(new Date(year, month, day, 0, 0, 0))
 
       if (_date.times >= this.rangeStart.times) {
@@ -215,7 +215,7 @@ export default {
      * 获取每个日期class值
      */
     mountClassNames (day, type) {
-      let {year, month} = this.dateData
+      let { year, month } = this.dateData
       let rangeStart = this.rangeStart
       let rangeEnd = this.rangeEnd
       let className = {
@@ -248,7 +248,7 @@ export default {
       if (this.isRange) {
         this.rangePicker(day, type)
       } else {
-        let {year, month} = this.getYearMonth(type)
+        let { year, month } = this.getYearMonth(type)
 
         // 获取时间设置
         let _date = {
@@ -263,7 +263,7 @@ export default {
     },
 
     rangePicker (day, type) {
-      let {year, month} = this.getYearMonth(type)
+      let { year, month } = this.getYearMonth(type)
 
       // 选择开始时间
       if (!this.isHalfSelected) {

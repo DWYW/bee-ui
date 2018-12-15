@@ -95,7 +95,7 @@ export default {
       return (page) => {
         if (page) {
           page = page << 0
-          return page > 0 && page <=this.pageTotal ? page : this.insert
+          return page > 0 && page <= this.pageTotal ? page : this.insert
         } else {
           return page
         }
