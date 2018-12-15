@@ -36,11 +36,12 @@ export default {
     show () {
       this.addTimeout()
       this.__onShow()
+      return this
     },
 
-    close () {
+    hide () {
       this.removeTimeout()
-      this.__onClose()
+      this.__onHide()
     },
 
     afterLeave () {
@@ -56,7 +57,7 @@ export default {
       if (!this.duration) return false
 
       this.timeout = window.setTimeout(() => {
-        this.close()
+        this.hide()
       }, this.duration * 1000)
     }
   }

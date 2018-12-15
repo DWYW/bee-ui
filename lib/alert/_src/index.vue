@@ -17,7 +17,7 @@
 
         <div class="bee-alert--footer" v-if='confirmBtnVisiable || cancelBtnVisiable'>
           <bee-button @click='cancelEvent' class='bee-alert--cancle' v-if='cancelBtnVisiable'>{{cancelBtnText}}</bee-button>
-          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='cancelBtnVisiable'>{{cancelBtnText}}</bee-button>
+          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='confirmBtnVisiable'>{{confirmBtnText}}</bee-button>
         </div>
       </div>
     </div>
@@ -46,10 +46,11 @@ export default {
   methods: {
     show () {
       this.__onShow()
+      return this
     },
 
-    close () {
-      this.__onClose()
+    hide () {
+      this.__onHide()
     },
 
     afterLeave () {
@@ -59,17 +60,17 @@ export default {
 
     cancelEvent () {
       this.cancelBtnFun && this.cancelBtnFun()
-      this.close()
+      this.hide()
     },
 
     confirmEvent () {
       this.confirmBtnFun && this.confirmBtnFun()
-      this.close()
+      this.hide()
     },
 
     closeEvent () {
       this.closeBtnFun ? this.closeBtnFun() : this.cancelBtnFun ? this.cancelBtnFun() : null
-      this.close()
+      this.hide()
     }
   }
 }
@@ -108,7 +109,7 @@ export default {
 
       .@{root}--title {
         color: @alert-header-color;
-        font-size: 16px;
+        font-size: @alert-font-size;
       }
 
       .@{root}--colse {
@@ -125,7 +126,7 @@ export default {
       box-sizing: border-box;
       min-height: 100px;
       color: @alert-color;
-      font-size: 16px;
+      font-size: @alert-font-size;
 
       .@{root}-body--content {
         word-break: break-word;
@@ -152,8 +153,8 @@ export default {
       align-items: center;
 
       .@{root}--cancle, .@{root}--confirm {
-        height: 36px;
-        line-height: 34px;
+        height: 32px;
+        line-height: 30px;
       }
 
       .@{root}--cancle {

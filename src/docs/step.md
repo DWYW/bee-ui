@@ -16,6 +16,7 @@ export default {
 <template>
   <div class='inline'>
     <bee-step :labels='steps'></bee-step>
+    <bee-step :labels='steps' :step='2'></bee-step>
   </div>
 </template>
 

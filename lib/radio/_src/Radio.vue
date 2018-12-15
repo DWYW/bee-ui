@@ -65,7 +65,7 @@ export default {
   white-space: nowrap;
   position: relative;
 
-  i.icon {
+  i.bee--font {
     font-size: 20px;
     color: @radio-color-unselected;
     vertical-align: middle;
@@ -84,7 +84,7 @@ export default {
   }
 
   &.@{root}__selected {
-    i.icon {
+    i.bee--font {
       color: @radio-color-selected;
     }
   }
@@ -93,7 +93,7 @@ export default {
     cursor: no-drop;
     opacity: .4;
 
-    i.icon {
+    i.bee--font {
       color: @radio-color-unselected;
     }
   }

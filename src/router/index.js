@@ -21,21 +21,19 @@ const getRoutes = function (config) {
 }
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   },
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue')
-    }, {
-      path: '/components',
-      name: 'components',
-      component: () => import('@/views/Components.vue'),
-      children: getRoutes(ComponentsConfig)
-    }
-  ]
+  routes: [{
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/Home.vue')
+  }, {
+    path: '/components',
+    name: 'components',
+    component: () => import('@/views/Components.vue'),
+    children: getRoutes(ComponentsConfig)
+  }]
 })

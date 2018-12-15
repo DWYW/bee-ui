@@ -26,6 +26,8 @@ bee-ui提供了一套默认的主题颜色。
 @z-1: 9;
 @z-2: 99;
 
+@empty-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFnElEQVR4Xu2bf4hUVRTHz5nZmZ2W0opKk3F33j13kMA0wpDQworoh0iItZREYKVR/RFlBJX9VVqBUUREP7SEMIrALPIPiSKyjUC0sl9/zDt3zN022rByo7bF3XfiDm9szF33vTvuzM7s3D93znn3+/3cc2fuj7cI07zhNPcPLQCtCqgjAd/3n0DEexDxLqXUO/WQUtcpwMw/A8BsEflSa33xtAPg+/6viHiOiHyntZ7fAlAHAs5TwBjT5XleLyIGrrpPVQUUi8UbROSgUurruFqcAPi+vw4RXxKR/ZlM5ppsNns4bsc2vloAIoLM/DIirhWRkUwm42Wz2b44WlwBvIqId4YdFVKp1LLOzs7+OB1XCyA0vw0Rbwv7HW1vb8/VBEB/f3/H0NDQbgBYajsXETsVlhLRoTgQXCtgLPMicpPW+t04/dtYpwqwiWNA6EfEZURUiCqCmT8FgMtEZIvWem2UPGveGPMmANwcwh8BgG4X81UBGAfC4XQ6vbizs5OjmOnt7T17ZGRkQS6X60HEo1FymHkLANwRmj+KiCuJaFeU3LFinCug/LCwEj4GgMUlooiPKqU2uQo6WZ6ItBljSqBE5GgikViulPqwmr6qBmA7HxgYOH1wcHArIl6QSqVWRq0AF+HMvElEuhOJxN3Vmq96CrgYmGo5p6QCppqpOHpaAOLQasbYVgVEHVVmvtAuWgDgvKg59YhDxD8RcZ/neZ9E6X/CChCRNDPvRMTrojxwCsXsUEp1I+LoyTRNCICZtwPA6ilkLI6U54jofmcAxpgVIvJ++AABgNdEZFcymfw9jopaxorIoiAInkTEtrDfVUS0YzwN41ZAsVicHQTB9wBwVpj8ABE9W0szrn0x8xo7WGH+LwAwj4iOjPW8cQEwsz2lvTFcd+/TWi9yFVSPPGb+DACWhPrH3W2OCcD3/SsQ0W5wSk1Elmqte+phxLVPZrYDtrdsoa2tbX5XV5et6OPaCQBEJGWM+caWTWh+t9b6Wlch9cxjZvv9tSL08bnWulQRle0EAMaY9SKyuSJoARFZIA3XjDHzRMSOeiKEsEZrvW1cAIVC4VxEZEQ8Iwx6i4huaTjnFYKZ+Q0AuDUEcDiZTGrP8/4ohxxXAcy8FQBuDz8cTSaT+VwuV2xkAH19fdnh4eGDAJAMfbxORGWP/50JFovFi4Ig2F9xTvgiEd3byObL2pn5BQA45iWRSFzqed4X9vNjFcDMe8qnvADwDyLmlFL2N7ThmzFmlr04AYDM/7/YSwCYeTkAfFB2KiIbtdYbGt55hQHf9zci4iPH5j7i5UqpPWUABwDA7vZs+y0IAi+fzw82EwBmnikihxBxRujrABEtRN/3r0TEjyrIPKiUeqaZzJe9+L7/ECI+XVkFFsDbiNgdzo2fiMiLekbfaJCKxWImCAL7XTAr1L7dXi7and2Zk2FGROzhxPVEZNflsRsz2zWI/Wk+LXZytIS/LAC7zZ3M1kNEpTvEuM33fbsoU3Hz4sTXAsCPRJSLI6piztqrr/K+3uURE+bUAoAg4vlx1xTGmIUi8tWEDqoMqAUAK/FhInoqjlbf9zcj4vo4OS6xtQIwkE6nc3Pnzh2KIjL8zbbvHJQ3ZVHSnGJqBcAequwkolUTvVMUnkfY6+6rnRzFTKoZAKtLRN7r6OhYPWfOnL/H0lkoFGYkEgl7gHlVTB/O4TUFEEKwb5I8LyL2uOpb+zdEtMvwSwDgPvvipLMbh8SaA3DQOKkpLQA1WAlO6ghW+/BWBbQqYPI3Q9VW6aTmt6YAM9v789LFwTRso7YC7Lm/03a10YGJyA/2SGwDIj7e6GZc9IvIYxhuPuzNr12KTqe2Vym1pHQsXigU2m0VIOI6AJjZ5BSOiMgrdvTz+fzwhO8INTkM9/8XaBYwrQpolpF09THtK+BfrQR+1YR4WrkAAAAASUVORK5CYII=');
+
 // button
 @btn-width: 80px;
 @btn-height: @line-height;
@@ -117,9 +119,8 @@ bee-ui提供了一套默认的主题颜色。
 @table-head-bg-color: #f5f5f5;
 @table-body-color: #888888;
 @table-body-bg-color: #ffffff;
-@table-tr-actived-color: #ff6701;
+@table-tr-actived-color: @primary-color;
 @table-tr-actived-bg-color: rgba(255, 103, 1, .12);
-@table-empty-image: url(data:image/png;base64,······U5ErkJggg==);
 
 
 // switch 
@@ -146,6 +147,7 @@ bee-ui提供了一套默认的主题颜色。
 
 // pagination
 @pagination-btn-height: 28px;
+@pagination-btn-disabled-color: #eeeeee;
 
 // message
 @message-width: 320px;
@@ -181,4 +183,13 @@ bee-ui提供了一套默认的主题颜色。
 @tip-bg: #333333;
 @tip-color: #ffffff;
 @tip-font-size: 12px;
+
+// tab
+@tab-bg-color: #f5f5f5;
+@tab-active-color: @primary-color;
+@tab-active-bg-color: #ffffff;
+
+// loading
+@loading-bg: rgba(255, 255, 255, .8);
+
 ```

@@ -1,15 +1,10 @@
 <template>
   <transition name='bee-menu'>
-    <div class='menu--wp' ref='gmenu' v-show='show' @click='clickEvent'>
+    <div class='menu--wp' v-show='show' @click='clickEvent' :style='popStyles'>
       <div :class='[{
-        "menu--arr__up": arrPosition.top,
-        "menu--arr__bottom": !arrPosition.top
-      }]' :style='{
-        left: arrPosition.left,
-        right: arrPosition.right,
-        top: arrPosition.top,
-        bottom: arrPosition.bottom
-      }' v-if='hasArr'></div>
+        "menu--arr__up": position.direction === "down",
+        "menu--arr__down": position.direction == "up"
+      }]' v-if='hasArr' :style='arrStyle'></div>
       <slot></slot>
     </div>
   </transition>
@@ -17,23 +12,22 @@
 
 <script>
 import Listener from '../../utils/listener'
-import UI from '../../utils/ui'
 
 export default {
   name: 'BeeMenu',
   data () {
     return {
-      popTarget: null,
       show: false,
-      arrPosition: {
-        left: true,
-        top: true
+      position: {
+        arr: null,
+        pop: null,
+        direction: null
       }
     }
   },
   props: {
     scrollDom: {
-      default: () => document
+      default: () => document.body
     },
     followTarget: {
       required: true
@@ -55,9 +49,36 @@ export default {
       default: true
     }
   },
+  computed: {
+    popStyles () {
+      if (!this.position.pop) {
+        return null
+      } else {
+        const [left, top] = this.position.pop
+
+        return {
+          left: `${left}px`,
+          top: `${top}px`
+        }
+      }
+    },
+
+    arrStyle () {
+      if (!this.position.arr) {
+        return null
+      } else {
+        const [left, top] = this.position.arr
+
+        return {
+          left: `${left}px`,
+          top: `${top}px`
+        }
+      }
+    }
+  },
   mounted () {
-    this.popTarget = this.$refs.gmenu
     this.show = true
+
     this.$nextTick(() => {
       this.menuInit()
     })
@@ -85,81 +106,65 @@ export default {
      * 设置弹出层具体的位置
      */
     setPosition () {
-      let _position = this.mountPopPosition(this.scrollDom, this.followTarget, this.popTarget)
-      this.arrPosition = _position.arr
-      for (let key in _position.pop) {
-        this.popTarget.style[key] = _position.pop[key]
-      }
+      const { pop, arr, direction } = this.getPanelData(this.scrollDom, this.followTarget, this.$el)
+      this.$set(this.position, 'pop', pop)
+      this.$set(this.position, 'arr', arr)
+      this.$set(this.position, 'direction', direction)
     },
 
     /**
      * 计算弹出层的位置信息，以及三角图标的位置信息
-     * @param  {HTML DOM} scrollTarget 滚动的目标元素
-     * @param  {HTML DOM} target       要跟随的目标元素
-     * @param  {HTML DOM} popTarget    弹出层元素
-     * @return {Object}              位置信息的Object
+     * @param  {Html Element} scroll 滚动的目标元素
+     * @param  {Html Element} followed       要跟随的目标元素
+     * @param  {Html Element} pop    弹出层元素
+     * @return {pop: [left, top], arr: [left, top]}              位置信息的Object
      */
-    mountPopPosition (scrollTarget, target, popTarget) {
-      if (!target || !popTarget) {
-        return {
-          pop: {
-            left: 0,
-            top: 0
-          },
-          arr: {
-            top: true,
-            left: true
-          }
-        }
+    getPanelData (scroll, followed, pop) {
+      const data = {
+        pop: [0, 0],
+        arr: [0, 0],
+        direction: null
       }
 
-      let position = {
-        pop: {},
-        arr: {}
-      }
-      let _target = target.getBoundingClientRect()
-      // 5是三角图标的高度
-      let _scrollHeight = popTarget.offsetHeight + 5
-      let _scrollWidth = popTarget.offsetWidth
-      let _scrollTargetST = 0
-      let _nodeName = scrollTarget.nodeName + ''
-
-      if (_nodeName.match('document')) {
-        _scrollTargetST = document.documentElement.scrollTop || document.body.scrollTop
+      if (!followed) {
+        return data
       }
 
-      let broswer = {
-        width: UI.availScreen().width,
-        height: UI.availScreen().height
-      }
+      const followedBounding = followed.getBoundingClientRect()
+      const popBounding = pop.getBoundingClientRect()
+      const scrollBounding = scroll.getBoundingClientRect()
+      const bodyBounding = document.body.getBoundingClientRect()
+      const vertical = scrollBounding.height - (followedBounding.top + followedBounding.height - scrollBounding.top)
 
-      if ((broswer.height - _target.top - _target.height) > _scrollHeight) {
-        position.pop['top'] = `${_target.top + _target.height + this.distance + _scrollTargetST}px`
-        position.arr['top'] = '0px'
+      if (vertical > popBounding.height + this.distance) {
+        data.pop[1] = followedBounding.top + followedBounding.height + this.distance - bodyBounding.top
+        data.arr[1] = 0
+        data.direction = 'down'
       } else {
-        position.pop['top'] = `${_target.top - (_scrollHeight + this.distance - 5) + _scrollTargetST}px`
-        position.arr['bottom'] = '0px'
+        data.pop[1] = followedBounding.top - (popBounding.height + this.distance) - bodyBounding.top
+        data.arr[1] = popBounding.height
+        data.direction = 'up'
       }
 
-      if (this.center) {
-        if (broswer.width - _target.left - _target.width / 2 > _scrollWidth / 2) {
-          position.pop['left'] = `${parseInt(_target.left + _target.width / 2 - _scrollWidth / 2)}px`
-          position.arr['left'] = `${parseInt(_scrollWidth / 2 - 4)}px`
-        } else {
-          position.pop['left'] = `${parseInt(broswer.width - _scrollWidth - 5)}px`
-          position.arr['left'] = `${parseInt(_scrollWidth - (broswer.width - _target.left - _target.width / 2))}px`
-        }
+      const dl = followedBounding.left - scrollBounding.left + followedBounding.width / 2 - popBounding.width / 2
+      const dr = scrollBounding.width - (followedBounding.left - scrollBounding.left + followedBounding.width / 2 + popBounding.width / 2)
+
+      if (this.center && dl >= 0 && dr >= 0) {
+        data.pop[0] = dl + scrollBounding.left
+        data.arr[0] = popBounding.width / 2
       } else {
-        if (broswer.width - _target.left > _scrollWidth) {
-          position.pop['left'] = `${_target.left}px`
-          position.arr['left'] = '40px'
+        const horizon = scrollBounding.left + scrollBounding.width - followedBounding.left
+
+        if (horizon >= popBounding.width) {
+          data.pop[0] = followedBounding.left
+          data.arr[0] = Math.min(popBounding.width * 0.2, followedBounding.width / 2)
         } else {
-          position.pop['left'] = `${_target.left - _scrollWidth + _target.width}px`
-          position.arr['right'] = '40px'
+          data.pop[0] = followedBounding.left + followedBounding.width - popBounding.width
+          data.arr[0] = Math.max(popBounding.width * 0.8, popBounding.width - followedBounding.width / 2)
         }
       }
 
-      return position
+      return data
     },
 
     /**
@@ -184,6 +189,8 @@ export default {
   top: -100%;
   display: inline-block;
   z-index: 9;
+  border: 1px solid @border-color;
+  border-radius: @border-radius;
 
   .menu--arr__up {
     position: absolute;
@@ -193,7 +200,7 @@ export default {
     border-left: @menu-arr-size solid transparent;
     border-right: @menu-arr-size solid transparent;
     border-bottom: @menu-arr-size solid @menu-border-color;
-    margin-top: -(@menu-arr-size - 1px);
+    margin-top: -@menu-arr-size;
 
     &::after {
       content: '';
@@ -208,7 +215,7 @@ export default {
     }
   }
 
-  .menu--arr__bottom {
+  .menu--arr__down {
     position: absolute;
     z-index: 10;
     width: 0;
@@ -216,7 +223,7 @@ export default {
     border-left: @menu-arr-size solid transparent;
     border-right: @menu-arr-size solid transparent;
     border-top: @menu-arr-size solid @menu-border-color;
-    margin-bottom: -(@menu-arr-size - 1px);
+    margin-top: -2px;
 
     &::after {
       content: '';

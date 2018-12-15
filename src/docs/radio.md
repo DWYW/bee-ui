@@ -3,7 +3,6 @@
     margin-right: 20px;
   }
 </style>
-
 <script>
 export default {
   data () {

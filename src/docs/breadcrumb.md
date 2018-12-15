@@ -1,6 +1,6 @@
 ## breadcrumb 面包屑
 
-### 基本用法
+### 基本用法 （依赖vue-router）
 
 ::: demo 
 ``` html

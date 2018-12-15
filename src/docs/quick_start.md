@@ -14,7 +14,7 @@ cd [app name]
 
 ``` js
 // mian.js
-import BeeUI from 'bee-ui'
+import BeeUI from 'bee-ui-vue'
 
 Vue.use(BeeUI)
 ```
@@ -23,7 +23,7 @@ Vue.use(BeeUI)
 
 ``` js
 // mian.js
-import {BeeInput[, ...]} from 'bee-ui'
+import {BeeInput[, ...]} from 'bee-ui-vue'
 
 Vue.use(BeeInput)
 ```

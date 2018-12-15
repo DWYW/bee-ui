@@ -139,7 +139,6 @@ export default {
 
 .@{root}--pop {
   display: inline-block;
-  border: 1px solid @picker-border-color;
   border-radius: @border-radius;
   background-color: @picker-bg-color;
   color: @font-color;

@@ -43,7 +43,7 @@ export default {
     reg: Function,
     maxlength: [Number, String],
     enterEvent: Function,
-    value: String
+    value: [String, Number]
   },
   data () {
     return {}

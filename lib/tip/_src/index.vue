@@ -59,10 +59,12 @@ export default {
       this.$nextTick(() => {
         this.setPositionData()
       })
+
+      return this
     },
 
-    close () {
-      this.__onClose()
+    hide () {
+      this.__onHide()
     },
 
     afterLeave () {
@@ -72,8 +74,8 @@ export default {
     },
 
     setPositionData () {
-      let {wrapperLeft, arrLeft} = this.getLeft(this.target)
-      let {wrapperTop, arrTop} = this.getTop(this.target)
+      let { wrapperLeft, arrLeft } = this.getLeft(this.target)
+      let { wrapperTop, arrTop } = this.getTop(this.target)
 
       this.offsetTop = wrapperTop
       this.arrOffsetTop = arrTop
@@ -93,7 +95,7 @@ export default {
           arrLeft = Math.min(_target.width, _self.width) / 2 - this.borderWidth
         } else if (/end$/.test(this.position)) {
           wrapperLeft = _target.left + _target.width - _self.width
-          arrLeft =  _self.width - Math.min(_target.width, _self.width) / 2 - this.borderWidth
+          arrLeft = _self.width - Math.min(_target.width, _self.width) / 2 - this.borderWidth
         } else {
           wrapperLeft = _target.left + (_target.width - _self.width) / 2
           arrLeft = _self.width / 2 - this.borderWidth
@@ -106,7 +108,7 @@ export default {
         arrLeft = 0 - this.borderWidth * 2
       }
 
-      return {wrapperLeft, arrLeft}
+      return { wrapperLeft, arrLeft }
     },
 
     getTop (target) {
@@ -134,7 +136,7 @@ export default {
         }
       }
 
-      return {wrapperTop, arrTop}
+      return { wrapperTop, arrTop }
     }
   }
 }
@@ -185,7 +187,6 @@ export default {
     padding: 6px 10px;
   }
 }
-
 
 .@{root}-enter-active, .@{root}-leave-active {
   transition: opacity .4s;
