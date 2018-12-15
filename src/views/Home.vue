@@ -10,7 +10,7 @@
         <router-link to='/components/install'>
           <span>开始使用</span>
         </router-link>
-        <a href='https://dwyw.github.io/bee-ui/' target="_blank">
+        <a href='https://github.com/DWYW/bee-ui' target="_blank">
           GitHub
         </a>
       </div>
