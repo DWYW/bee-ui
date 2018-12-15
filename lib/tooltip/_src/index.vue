@@ -38,13 +38,11 @@ export default {
         content: this.content,
         position: this.position,
         scrollDom: this.scrollDom
-      })
-
-      this.tip.show()
+      }).show()
     },
 
     mouseLeave () {
-      this.tip.close()
+      this.tip.hide()
       this.tip = null
     }
   }

@@ -14,3 +14,21 @@ html, body {
   color: #444444;
   font-size: 14px;
 }
+
+// 整个滚动条.
+::-webkit-scrollbar {
+  background: transparent;
+  width: 6px;
+  height: 6px;
+}
+
+// 滚动条上的按钮 (上下箭头)
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+// 滚动条上的滚动滑块.
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .2);
+  border-radius: 4px;
+}

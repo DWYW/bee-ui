@@ -1,18 +1,28 @@
 {
-  "name": "bee-ui",
-  "version": "0.0.1",
-  "private": false,
+  "name": "bee-ui-vue",
+  "version": "0.1.0",
+  "description": "vue ui compontents.",
+  "author": "colin",
   "main": "lib/index.js",
+  "keywords": [
+    "vue",
+    "bee",
+    "bee-ui",
+    "bee-ui-vue"
+  ],
+  "license": "ISC",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "publish": "node publish.js"
   },
   "dependencies": {
     "markdown-it": "^8.4.2",
     "markdown-it-container": "^2.0.0",
     "vue": "^2.5.17",
+    "vue-loader": "^14.2.2",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -28,6 +38,7 @@
     "eslint-plugin-vue": "^5.0.0-0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "shelljs": "^0.8.3",
     "vue-markdown-loader": "^2.4.1",
     "vue-template-compiler": "^2.5.17"
   }

@@ -67,6 +67,9 @@ export default {
     delete (row, index) {
       console.log(row, index)
       this.actived = index
+    },
+    selectionChange (rows) {
+      console.log(rows)
     }
   }
 }
@@ -78,10 +81,11 @@ export default {
 ::: demo
 ``` html
 <template>
-  <bee-table :data='data' :actived-index='actived'>
-    <bee-table-column width='100' label='姓名' prop='name'></bee-table-column>
+  <bee-table :data='data' :active-index='actived' @selectionChange='selectionChange'>
+    <bee-table-column width='50' type='selection'></bee-table-column>
+    <bee-table-column width='100' label='姓名' prop='name' ></bee-table-column>
     <bee-table-column width='100' label='年龄' prop='age'></bee-table-column>
-    <bee-table-column width='100' label='年级' prop='grade'></bee-table-column>
+    <bee-table-column width='100' label='年级' prop='grades' placeholder='-'></bee-table-column>
     <bee-table-column width='100' label='专业' prop='subject'></bee-table-column>
     <bee-table-column width='160' label='操作'>
       <template slot-scope='scope'>
@@ -156,7 +160,8 @@ export default {
 ::: demo
 ``` html
 <template>
-  <bee-table :data='data' :height='200'>
+  <bee-table :data='data' :height='200' @selectionChange='selectionChange'>
+    <bee-table-column width='50' type='selection'></bee-table-column>
     <bee-table-column width='100' label='姓名' prop='name'></bee-table-column>
     <bee-table-column width='100' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='100' label='年级' prop='grade'></bee-table-column>
@@ -234,8 +239,9 @@ export default {
 ::: demo
 ``` html
 <template>
-  <bee-table :data='data'>
-    <bee-table-column fixed='left' width='160' label='姓名' prop='name'></bee-table-column>
+  <bee-table :data='data' @selectionChange='selectionChange'>
+    <bee-table-column fixed='left' width='50' type='selection'></bee-table-column>
+    <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
     <bee-table-column width='160' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
     <bee-table-column width='160' label='专业' prop='subject'></bee-table-column>
@@ -312,14 +318,15 @@ export default {
 ::: demo
 ``` html
 <template>
-  <bee-table :data='data' :height='200'>
-    <bee-table-column fixed='left' width='160' label='姓名' prop='name'></bee-table-column>
+  <bee-table :data='data' :height='200' @selectionChange='selectionChange' :active-index='actived'>
+    <bee-table-column fixed='left' width='50' type='selection'></bee-table-column>
+    <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
     <bee-table-column width='160' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
     <bee-table-column width='160' label='专业' prop='subject'></bee-table-column>
     <bee-table-column fixed='right' width='260' label='操作'>
       <template slot-scope='scope'>
-        <span class='primary'>查看</span>
+        <span class='primary'  @click='view(scope.row, scope.$index)'>查看</span>
         <span class='primary'>删除</span>
       </template>
     </bee-table-column>
@@ -384,10 +391,31 @@ export default {
 ```
 :::
 
+### 空表格
 
-### 属性值
+::: demo
+``` html
+<template>
+  <bee-table :data='[]' :height='200' @selectionChange='selectionChange'>
+    <bee-table-column width='50' fixed='left' type='selection'></bee-table-column>
+    <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
+    <bee-table-column width='160' label='年龄' prop='age'></bee-table-column>
+    <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
+    <bee-table-column width='160' label='专业' prop='subject'></bee-table-column>
+    <bee-table-column fixed='right' width='260' label='操作'>
+      <template slot-scope='scope'>
+        <span class='primary'>查看</span>
+        <span class='primary'>删除</span>
+      </template>
+    </bee-table-column>
+  </bee-table>
+</template>
+```
+:::
 
 #### BeeTable
+
+### 属性值
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
@@ -395,16 +423,25 @@ export default {
 |height|表格的高度|number|—|-|
 |maxHeight|表格的最大高度|number|—|-|
 |placeholderc|占位符|string|—|-|
-|activedIndex|激活项|number|—|-|
+|activeIndex|激活项|number|—|-|
 |scrollDom.sync|滚动的 HTML DOM| dom|—|-|
+
+### 事件
+
+|方法|说明
+|---|---|
+|selectionChange|选线变化|
 
 <br/>
 <br/>
 
 #### BeeTableColumn
 
+### 属性值
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
+|type|类型|string|general,selection|general|
 |width|列宽|number|—|50|
 |fixed|浮动类型|string|left,right|-|
 |prop|列的取值字段|string|—|-|
