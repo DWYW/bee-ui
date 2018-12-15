@@ -1,0 +1,64 @@
+@import '../../theme.less';
+
+@root: tab;
+
+.@{root}--wp {
+  width: 100%;
+  background-color: @tab-bg-color;
+  box-sizing: border-box;
+
+  &.tab--wp__card {
+    border: 1px solid @tab-bg-color;
+    border-top: none;
+  }
+  
+  .@{root}--labels {
+    width: 100%;
+
+    .@{root}-label--item {
+      display: inline-block;
+      padding: 6px 20px;
+      border-top: 2px solid transparent;
+      color: #888888;
+      transition: color 0.25s, borderColor 0.25s;
+      cursor: pointer;
+
+      &.@{root}-label--item__active {
+        border-top-color: @tab-active-color;
+        color: @tab-active-color;
+        background-color: @tab-active-bg-color;
+      }
+    }
+  }
+
+  .@{root}--contents {
+    width: 100%;
+    background: @tab-active-bg-color;
+    padding: 20px;
+    position: relative;
+    box-sizing: border-box;
+
+    .@{root}--items {
+      width: 100%;
+
+      .@{root}--item {
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.@{root}-change-enter {
+ opacity: 0;
+}
+
+.@{root}-change-enter-active{
+  transition: opacity .5s;
+}
+
+.@{root}-change-leave-active {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}

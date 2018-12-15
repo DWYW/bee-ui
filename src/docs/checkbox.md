@@ -3,7 +3,6 @@
     margin-right: 20px;
   }
 </style>
-
 ## checkbox 多选
 
 ### 基本用法

@@ -20,7 +20,10 @@
         v-for='(label, key) in labels'
         :key='"body_" + key'
       >
-        <div class='body-item--icon'>{{key + 1}}</div>
+        <div class='body-item--icon' v-if='key + 1 < step'>
+          <bee-icon icon='correct'></bee-icon>
+        </div>
+         <div class='body-item--icon' v-else>{{key + 1}}</div>
         <div class='body-item--label'>{{label}}</div>
       </div>
     </div>
@@ -156,4 +159,3 @@ export default {
   }
 }
 </style>
-

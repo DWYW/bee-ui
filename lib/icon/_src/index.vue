@@ -1,5 +1,5 @@
 <template>
-  <i :class='["icon--wp icon", "icon-" + icon]' @click='handleClick'></i>
+  <i :class='["icon--wp bee--font", "bee-" + icon]' @click='handleClick'></i>
 </template>
 
 <script>

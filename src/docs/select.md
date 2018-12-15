@@ -51,6 +51,7 @@ export default {
 <template>
   <p class='inline'>
     <bee-select :options='options'></bee-select>
+    <bee-select :options='[]'></bee-select>
   </p>
 </template>
 ```

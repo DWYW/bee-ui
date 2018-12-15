@@ -1,139 +1,158 @@
 @import '../../theme.less';
 @root: bee-table;
 
+
 .@{root}--wp {
   width: 100%;
   overflow: hidden;
   position: relative;
-  border: 1px solid @table-border-color;
+  background-color: @table-head-bg-color;
+  box-sizing: border-box;
 
-  .@{root}--head {
+  table {
     width: 100%;
-    position: absolute;
-    overflow: hidden;
-    background-color: @table-body-bg-color;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
 
-    .@{root}-head--body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+    thead tr th, tbody tr td {
+      &.@{root}--col {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 8px;
+        word-break: break-word;
+        box-sizing: border-box;
+
+        .icon--wp {
+          font-size: 20px;
+          color: @table-body-color;
+          cursor: pointer;
+          &.icon--wp__active {
+            color: @primary-color;
+          }
+
+          &.icon--wp__disabled {
+            cursor: no-drop;
+            opacity: .6;
+            color: @table-body-color;
+
+            &:hover {
+              color: @table-body-color;
+            }
+          }
+
+          &:hover {
+            color: @primary-color;
+          }
+        }
+      }
+      &.@{root}--col__left {
+        text-align: left;
+      }
+      &.@{root}--col__center {
+        text-align: center;
+      }
+      &.@{root}--col__right {
+        text-align: right;
+      }
     }
+
+    thead tr th {
+      background-color: @table-head-bg-color;
+      color: @table-head-color;
+      font-weight: normal;
+      border: 1px solid @table-border-color;
+    }
+
+    tbody tr td {
+      color: @table-body-color;
+      white-space: normal;
+      background-color: @table-body-bg-color;
+      transition: color 0.25s, background 0.25s;
+      border: 1px solid @table-border-color;
+    }
+
+    tbody .@{root}--row__active td {
+      background-color: @table-tr-actived-bg-color;
+    }
+  }
+
+  .@{root}--header {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 
   .@{root}--body {
     width: 100%;
     overflow: auto;
     background-color: @table-body-bg-color;
-  }
 
-  .@{root}--fix, .@{root}--fix {
-    position: absolute;
-    top: 0;
-    width: 0;
-    height: 100%;
-    overflow: hidden;
-    background-color: @table-body-bg-color;
-
-    .@{root}-fix--head {
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-    }
-    .@{root}-fix--body {
-      overflow: hidden;
-    }  
-  }
-
-  .@{root}--fix__left {
-    left: 0;
-    box-shadow: 2px 0 6px -2px rgba(0, 0, 0, .4);
-    &.@{root}--fix__start {
-      box-shadow: none;
-    }
-    .@{root}-fix--head {
-      left: 0;
-    }
-  }
-
-  .@{root}--fix__right {
-    right: 0;
-    box-shadow: -2px 0 6px -2px rgba(0, 0, 0, .4);
-    
-    &.@{root}--fix__end {
-      box-shadow: none;
-    }
-    
-    .@{root}-fix--head {
-      right: 0;
-    }
-
-    .@{root}-fix--body {
-      float: right;
-    }  
-  }
-  
-  
-  table.@{root}--table {
-    padding: 0;
-    margin: 0;
-    border-collapse: collapse;
-    width: 100%;
-
-    >thead tr th, >tbody tr td {
-      padding: 8px;
-      text-align: center;
-      word-break: break-word;
-      border: 1px solid @table-border-color;
-
-      &.@{root}--col__left {
-        text-align: left;
-      }
-
-      &.@{root}--col__center {
-        text-align: center;
-      }
-
-      &.@{root}--col__right {
-        text-align: right;
-      }
-
-      &:first-child {
-        border-left: none;
-      }
-      &:last-child {
-        border-right: none;
-      }
-    }
-
-    >thead tr th {
-      font-size: 16px;
-      background-color: @table-head-bg-color;
-      color: @table-head-color;
-      font-weight: normal;
-    }
-
-    >tbody tr td {
-      font-size: 14px;
-      color: @table-body-color;
-      white-space: normal;
-      background-color: @table-body-bg-color;
-      transition: color 0.25s, background 0.25s;
-    }
-    
-    >thead tr:first-child th {
+    table tbody tr:first-child td {
       border-top: none;
     }
-    >tbody tr:last-child td {
-      border-bottom: none;
+  }
+
+  .@{root}--fixed {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+
+    .@{root}-fixed--header{
+      position: absolute;
+      top: 0;
+      overflow: hidden;
     }
-    >tbody tr.@{root}--row__actived td {
-      background-color: @table-tr-actived-bg-color;
+
+    .@{root}-fixed--body {
+      overflow: hidden;
+      background-color: @table-body-bg-color;
     }
-    >tbody tr td.@{root}--col__empty {
-      background-image: @table-empty-image;
-      background-repeat: no-repeat;
-      background-position: center;
-      height: 100px;
+
+    &.@{root}--fixed__left {
+      left: 0;
+      box-shadow: 2px 0 6px -2px rgba(0, 0, 0, .4);
+
+      .@{root}-fixed--header{
+        left: 0;
+      }
+
+      &.@{root}--scroll__start {
+        box-shadow: none;
+      }
+    }
+
+    &.@{root}--fixed__right {
+      right: 0;
+      box-shadow: -2px 0 6px -2px rgba(0, 0, 0, .4);
+
+      .@{root}-fixed--header{
+        right: 0;
+      }
+
+      .@{root}-fixed--body {
+        float: right;
+      }
+
+      &.@{root}--scroll__end {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.@{root}--wp__empty {
+    table {
+      tbody tr td {
+        &.@{root}--col {
+          padding: 0;
+        }
+      }
+    }
+
+    .@{root}--body {
+      overflow: hidden;
     }
   }
 }

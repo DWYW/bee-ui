@@ -16,7 +16,6 @@
   height: 40px;
 }
 </style>
-
 ## 图标
 
 图标来源于 iconfont 。
@@ -64,6 +63,11 @@
   <span class='icon--name'>arr-up</span>
 </span>
 
+
+<span class='icon--item'>
+  <bee-icon icon="selected-part"> </bee-icon>
+  <span class='icon--name'>selected-part</span>
+</span>
 
 <span class='icon--item'>
   <bee-icon icon="checkbox-unselected"> </bee-icon>

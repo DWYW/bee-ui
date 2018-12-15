@@ -209,7 +209,7 @@ export default {
       border: none;
       display: block;
       font-size: 14px;
-      overflow: hidden;
+      overflow: auto hidden;
       width: 100%;
     }
   }

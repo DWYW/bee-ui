@@ -59,6 +59,10 @@ export default [{
     path: 'step',
     label: 'step 步骤条',
     type: 'doc'
+  }, {
+    path: 'tab',
+    label: 'tab 选项卡',
+    type: 'doc'
   }]
 }, {
   path: null,
@@ -96,6 +100,14 @@ export default [{
   }, {
     path: 'breadcrumb',
     label: 'breadcrumb 面包屑',
+    type: 'doc'
+  }, {
+    path: 'loading',
+    label: 'loading 加载',
+    type: 'doc'
+  }, {
+    path: 'empty',
+    label: 'empty 空内容',
     type: 'doc'
   }]
 }]
