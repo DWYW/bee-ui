@@ -75,6 +75,7 @@ class Publish {
       })
 
       const version = shell.exec(`npm view ${this.package.name} version`).stdout.trim()
+      this.package.version = version
       this.setVersion(version)
     } catch (error) {
       console.log(error)
@@ -85,6 +86,7 @@ class Publish {
   writePackage () {
     this.package.version = this.version
     fs.writeFileSync(path.join(__dirname, `./lib/package.json`), JSON.stringify(this.package, null, 2))
+    fs.copyFileSync('README.md', 'lib/README.md')
     shell.exec('npm publish lib')
   }
 
