@@ -22,3 +22,4 @@ yarn-error.log*
 
 # other
 package-lock.json
+lib/package.json
