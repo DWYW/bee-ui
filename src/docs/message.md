@@ -33,7 +33,7 @@ export default {
 
     remove2 () {
       let item = this.messages.pop()
-      item && item.close()
+      item && item.hide()
     },
     message3 () {
       this.$_createMessage({
@@ -115,7 +115,7 @@ export default {
 
     remove2 () {
       let item = this.messages.pop()
-      item.close()
+      item.hide()
     }
   }
 }

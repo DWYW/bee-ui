@@ -181,4 +181,7 @@ bee-ui提供了一套默认的主题颜色。
 @tip-bg: #333333;
 @tip-color: #ffffff;
 @tip-font-size: 12px;
+
+// loading
+@loading-bg: rgba(255, 255, 255, .8);
 ```

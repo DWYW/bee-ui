@@ -59,10 +59,12 @@ export default {
       this.$nextTick(() => {
         this.setPositionData()
       })
+
+      return this
     },
 
-    close () {
-      this.__onClose()
+    hide () {
+      this.__onHide()
     },
 
     afterLeave () {
@@ -185,7 +187,6 @@ export default {
     padding: 6px 10px;
   }
 }
-
 
 .@{root}-enter-active, .@{root}-leave-active {
   transition: opacity .4s;

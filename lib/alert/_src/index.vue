@@ -46,10 +46,11 @@ export default {
   methods: {
     show () {
       this.__onShow()
+      return this
     },
 
-    close () {
-      this.__onClose()
+    hide () {
+      this.__onHide()
     },
 
     afterLeave () {
@@ -59,17 +60,17 @@ export default {
 
     cancelEvent () {
       this.cancelBtnFun && this.cancelBtnFun()
-      this.close()
+      this.hide()
     },
 
     confirmEvent () {
       this.confirmBtnFun && this.confirmBtnFun()
-      this.close()
+      this.hide()
     },
 
     closeEvent () {
       this.closeBtnFun ? this.closeBtnFun() : this.cancelBtnFun ? this.cancelBtnFun() : null
-      this.close()
+      this.hide()
     }
   }
 }

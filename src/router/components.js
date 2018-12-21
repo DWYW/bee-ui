@@ -97,5 +97,9 @@ export default [{
     path: 'breadcrumb',
     label: 'breadcrumb 面包屑',
     type: 'doc'
+  }, {
+    path: 'loading',
+    label: 'loading 加载',
+    type: 'doc'
   }]
 }]

@@ -106,14 +106,14 @@ export default {
     },
 
     /** 关闭dialog */
-    close () {
+    hide () {
       this.$emit('update:show', false)
     },
 
     /** 点击取消按钮 */
     cancel () {
       this.cancelBtnFun ? this.cancelBtnFun() : null
-      this.close()
+      this.hide()
     },
 
     /** 点击X号 */
@@ -124,7 +124,7 @@ export default {
         this.cancelBtnFun()
       }
 
-      this.close()
+      this.hide()
     },
 
     /** 点击确认按钮 */
@@ -137,7 +137,7 @@ export default {
 
       if (res === false) return null
 
-      this.close()
+      this.hide()
     }
   },
   watch: {
