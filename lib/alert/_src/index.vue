@@ -17,7 +17,7 @@
 
         <div class="bee-alert--footer" v-if='confirmBtnVisiable || cancelBtnVisiable'>
           <bee-button @click='cancelEvent' class='bee-alert--cancle' v-if='cancelBtnVisiable'>{{cancelBtnText}}</bee-button>
-          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='cancelBtnVisiable'>{{confirmBtnText}}</bee-button>
+          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='confirmBtnVisiable'>{{confirmBtnText}}</bee-button>
         </div>
       </div>
     </div>
