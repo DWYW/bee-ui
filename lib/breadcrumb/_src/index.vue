@@ -36,7 +36,6 @@ export default {
 
 .@{root}--wp {
   width: 100%;
-  margin-bottom: 20px;
 
   .crumb--item {
     font-size: 14px;
