@@ -1,5 +1,5 @@
 <template>
-  <div class='bee-bread-crumb--wp'>
+  <span class='bee-bread-crumb--wp'>
     <template v-for='(crumb, $index) in crumbs'>
       <span  :class='["crumb--item", {
           "crumb--item__actived": $index === (crumbs.length - 1)
@@ -15,7 +15,7 @@
     </template>
 
     <slot></slot>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -36,8 +36,6 @@ export default {
 
 .@{root}--wp {
   width: 100%;
-  padding: 20px 0 15px;
-  border-bottom: 1px solid @border-color;
   margin-bottom: 20px;
 
   .crumb--item {

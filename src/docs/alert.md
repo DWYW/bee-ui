@@ -201,6 +201,7 @@ export default {
 |title|标题|string|-|提示|
 |message|提示的文字信息|string|—|-|
 |html|提示的HTML代码|string|—|-|
+|align|内容的对齐方式|string|horizontal,vertial,center|-|
 |cancelBtnVisiable|是否显示取消按钮|boolean|-|true|
 |cancelBtnText|取消按钮显示的文字|string|-|取消|
 |cancelBtnFun|取消按钮绑定的事件函数|function|-|-|
