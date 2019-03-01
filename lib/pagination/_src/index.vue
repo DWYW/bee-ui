@@ -9,6 +9,7 @@
         "bee-pagination--btn__more": !item,
         "bee-pagination--btn__actived": page === item
       }]'
+      :disabled='pageTotal === 1'
       v-for='(item, key) in btns'
       :key='"btn" + key'
       @click='specifyPage(item)'
@@ -23,7 +24,7 @@
 
     <span class="bee-pagination--total" v-if='total && totalVisible'>共 <span>{{total}}</span> 条</span>
 
-    <span class="bee-pagination--quick">
+    <span class="bee-pagination--quick" v-if='pageTotal > 1'>
       <bee-input class='quick--ipt'
         placeholder='页数'
         v-model='insert'
@@ -122,6 +123,8 @@ export default {
     },
 
     specifyPage (page) {
+      if (!page) return false
+
       this.$emit('change', page)
     },
 
@@ -151,14 +154,27 @@ export default {
 
     &.@{root}--btn__more {
       border-color: transparent;
+      cursor: default !important;
+
       &:active {
-        color: @font-tint-color;
+        color: @font-color;
+        border-color: transparent;
       }
     }
 
     &.@{root}--btn__actived {
       color: @primary-color;
       border-color: @primary-color;
+    }
+
+    &[disabled] {
+      background-color: @pagination-btn-disabled-color !important;
+      border-color: @pagination-btn-disabled-color !important;
+
+      &.@{root}--btn__actived, &:active {
+        border-color: @pagination-btn-disabled-color !important;
+        color: @font-tint-color !important;
+      }
     }
   }
 

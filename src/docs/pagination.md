@@ -30,6 +30,13 @@ export default {
     :page-total='pagination.pageTotal'
     @change='onChange'
   ></bee-pagination>
+  <br/>
+  <bee-pagination 
+    :page='1' 
+    :total='2' 
+    :page-total='1'
+    @change='onChange'
+  ></bee-pagination>
 </template>
 ```
 :::

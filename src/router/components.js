@@ -59,6 +59,10 @@ export default [{
     path: 'step',
     label: 'step 步骤条',
     type: 'doc'
+  }, {
+    path: 'tab',
+    label: 'tab 选项卡',
+    type: 'doc'
   }]
 }, {
   path: null,
