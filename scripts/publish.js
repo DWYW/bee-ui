@@ -2,7 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const readline = require('readline')
 const shell = require('shelljs')
-const originJson = path.join(__dirname, './package.json')
+const originJson = path.join(__dirname, '../package.json')
+const projectRoot = path.join(__dirname, '..')
 
 class Publish {
   constructor () {
@@ -85,8 +86,8 @@ class Publish {
   /** 重写版本号 */
   writePackage () {
     this.package.version = this.version
-    fs.writeFileSync(path.join(__dirname, `./lib/package.json`), JSON.stringify(this.package, null, 2))
-    fs.copyFileSync('README.md', 'lib/README.md')
+    fs.writeFileSync(path.join(projectRoot, `lib/package.json`), JSON.stringify(this.package, null, 2))
+    fs.copyFileSync(path.join(projectRoot, 'README.md'), path.join(projectRoot, 'lib/README.md'))
     shell.exec('npm publish lib')
   }
 
