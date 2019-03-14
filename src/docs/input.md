@@ -1,6 +1,7 @@
 <style>
 .demo .ipt--wp {
   margin-right: 20px;
+  margin-bottom: 10px;
 }
 </style>
 <script>

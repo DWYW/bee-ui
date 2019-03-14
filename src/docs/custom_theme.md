@@ -86,7 +86,8 @@ bee-ui提供了一套默认的主题颜色。
 @dlg-colse-color: @font-tint-color;
 @dlg-body-color: @font-color;
 @dlg-body-height: 128px;
-@dlg-footer-btn-height: 38px;
+@dlg-footer-btn-height: 36px;
+@dlg-font-size: 14px;
 
 // menu
 @menu-border-color: @border-color;
@@ -120,7 +121,7 @@ bee-ui提供了一套默认的主题颜色。
 @table-body-color: #888888;
 @table-body-bg-color: #ffffff;
 @table-tr-actived-color: @primary-color;
-@table-tr-actived-bg-color: rgba(255, 103, 1, .12);
+@table-tr-actived-bg-color: rgba(255, 103, 1, .05);
 
 
 // switch 
@@ -171,13 +172,14 @@ bee-ui提供了一套默认的主题颜色。
 
 // alert 
 @alert-border-color: @border-color;
-@alert-header-height: 46px;
+@alert-header-height: 40px;
 @alert-header-bg: #f5f5f5;
 @alert-header-color: @font-color;
 @alert-close-color: @font-tint-color;
 @alert-body-bg: #ffffff;
 @alert-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
 @alert-color: @font-color;
+@alert-font-size: 14px;
 
 // tip
 @tip-bg: #333333;
