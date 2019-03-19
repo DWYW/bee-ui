@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    visiable () {
+    visible () {
       if (!/[hms]/g.test(this.format)) {
         return {
           hour: true,
@@ -113,7 +113,7 @@ export default {
       let types = ['hour', 'minute', 'second']
       let type = types[index % 3]
 
-      if (!this.visiable[type]) return null
+      if (!this.visible[type]) return null
 
       let ends = [23, 59, 59]
       let { year, month, date } = index < 3 ? this.startDate : this.endDate

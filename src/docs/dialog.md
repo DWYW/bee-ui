@@ -57,13 +57,13 @@ export default {
 |show.sync|是否显示的阈值|boolean|-|-|
 |width|dialog的宽度|string|*|500px|
 |title|标题|string|-|提示|
-|cancelBtnVisiable|是否显示取消按钮|boolean|-|true|
+|cancelBtnVisible|是否显示取消按钮|boolean|-|true|
 |cancelBtnText|取消按钮显示的文字|string|-|取消|
 |cancelBtnFun|取消按钮绑定的事件函数|function|-|-|
-|confirmBtnVisiable|是否显示确定按钮|boolean|-|true|
+|confirmBtnVisible|是否显示确定按钮|boolean|-|true|
 |confirmBtnText|确定按钮显示的文字|string|-|确定|
 |confirmBtnFun|确定按钮绑定的事件函数|function|-|-|
-|closeBtnVisiable|是否显示关闭按钮|boolean|-|true|
+|closeBtnVisible|是否显示关闭按钮|boolean|-|true|
 |closeBtnFun|关闭按钮绑定的事件函数|function|-|-|
 
 <br/>

@@ -4,7 +4,7 @@
       <div class="bee-alert--panel">
         <div class="bee-alert--header">
           <span class="bee-alert--title">{{title}}</span>
-          <bee-icon class='bee-alert--colse' icon='close' @click="closeEvent" v-if='closeBtnVisiable'></bee-icon>
+          <bee-icon class='bee-alert--colse' icon='close' @click="closeEvent" v-if='closeBtnVisible'></bee-icon>
         </div>
 
         <div :class='["bee-alert--body", {
@@ -15,9 +15,9 @@
           <span class="bee-alert-body--content" v-else>{{message}}</span>
         </div>
 
-        <div class="bee-alert--footer" v-if='confirmBtnVisiable || cancelBtnVisiable'>
-          <bee-button @click='cancelEvent' class='bee-alert--cancle' v-if='cancelBtnVisiable'>{{cancelBtnText}}</bee-button>
-          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='confirmBtnVisiable'>{{confirmBtnText}}</bee-button>
+        <div class="bee-alert--footer" v-if='confirmBtnVisible || cancelBtnVisible'>
+          <bee-button @click='cancelEvent' class='bee-alert--cancle' v-if='cancelBtnVisible'>{{cancelBtnText}}</bee-button>
+          <bee-button @click='confirmEvent' class="bee-alert--confirm" theme='primary' v-if='confirmBtnVisible'>{{confirmBtnText}}</bee-button>
         </div>
       </div>
     </div>
