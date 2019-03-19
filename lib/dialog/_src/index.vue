@@ -6,14 +6,14 @@
         }'>
           <div class='dlg--title' v-if='title'>
             <span class='dlg-title--text'>{{title}}</span>
-            <bee-icon class='dlg--close' icon='close' v-if='closeBtnVisiable' @click='cancelClose'></bee-icon>
+            <bee-icon class='dlg--close' icon='close' v-if='closeBtnVisible' @click='cancelClose'></bee-icon>
           </div>
           <div class='dlg--body'>
             <slot></slot>
           </div>
-          <div class='dlg-footer' v-if='confirmBtnVisiable || cancelBtnVisiable'>
-            <bee-button class='dlg--btn__cancel' v-if='cancelBtnVisiable' @click='cancel'>{{cancelBtnText}}</bee-button>
-            <bee-button class="dlg--btn__confirm" theme='primary' v-if='confirmBtnVisiable' @click='confirm'>{{confirmBtnText}}</bee-button>
+          <div class='dlg-footer' v-if='confirmBtnVisible || cancelBtnVisible'>
+            <bee-button class='dlg--btn__cancel' v-if='cancelBtnVisible' @click='cancel'>{{cancelBtnText}}</bee-button>
+            <bee-button class="dlg--btn__confirm" theme='primary' v-if='confirmBtnVisible' @click='confirm'>{{confirmBtnText}}</bee-button>
           </div>
         </div>
     </div>
@@ -43,7 +43,7 @@ export default {
     cancelBtnFun: {
       type: Function
     },
-    cancelBtnVisiable: {
+    cancelBtnVisible: {
       type: Boolean,
       default: true
     },
@@ -54,11 +54,11 @@ export default {
     confirmBtnFun: {
       type: Function
     },
-    confirmBtnVisiable: {
+    confirmBtnVisible: {
       type: Boolean,
       default: true
     },
-    closeBtnVisiable: {
+    closeBtnVisible: {
       type: Boolean,
       default: true
     },

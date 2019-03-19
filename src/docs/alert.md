@@ -64,7 +64,7 @@ export default {
     noClose () {
       this.$_createAlert({
         title: 'no close',
-        closeBtnVisiable: false
+        closeBtnVisible: false
       }).show()
     }
   }
@@ -185,7 +185,7 @@ export default {
     noClose () {
       this.$_createAlert({
         title: 'no close',
-        closeBtnVisiable: false
+        closeBtnVisible: false
       }).show()
     }
   }
@@ -202,11 +202,11 @@ export default {
 |message|提示的文字信息|string|—|-|
 |html|提示的HTML代码|string|—|-|
 |align|内容的对齐方式|string|horizontal,vertial,center|-|
-|cancelBtnVisiable|是否显示取消按钮|boolean|-|true|
+|cancelBtnVisible|是否显示取消按钮|boolean|-|true|
 |cancelBtnText|取消按钮显示的文字|string|-|取消|
 |cancelBtnFun|取消按钮绑定的事件函数|function|-|-|
-|confirmBtnVisiable|是否显示确定按钮|boolean|-|true|
+|confirmBtnVisible|是否显示确定按钮|boolean|-|true|
 |confirmBtnText|确定按钮显示的文字|string|-|确定|
 |confirmBtnFun|确定按钮绑定的事件函数|function|-|-|
-|closeBtnVisiable|是否显示关闭按钮|boolean|-|true|
+|closeBtnVisible|是否显示关闭按钮|boolean|-|true|
 |closeBtnFun|关闭按钮绑定的事件函数|function|-|-|
