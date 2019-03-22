@@ -621,6 +621,7 @@ export default {
 |maxHeight|表格的最大高度|number|—|-|
 |placeholderc|占位符|string|—|-|
 |activeIndex|激活项|number|—|-|
+|resetScroll|重置滚动行为|boolean|—|true|
 |scrollDom.sync|滚动的 HTML DOM| dom|—|-|
 
 ### 事件
