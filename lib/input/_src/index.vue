@@ -40,10 +40,13 @@ export default {
     icon: Object,
     autoFocus: Boolean,
     readOnly: Boolean,
-    reg: Function,
+    reg: [Function, String],
     maxlength: [Number, String],
     enterEvent: Function,
-    value: [String, Number]
+    value: {
+      type: [String, Number],
+      default: ''
+    }
   },
   data () {
     return {}
@@ -86,8 +89,22 @@ export default {
     },
 
     updateValue (evt) {
+      const currentValue = evt.target.value
+
       if (Utils.typeof(this.reg) === 'function') {
-        evt.target.value = this.reg(evt.target.value)
+        const filter = this.reg(evt.target.value, evt)
+
+        if (Utils.typeof(filter) === 'boolean' && !filter && currentValue) {
+          evt.target.value = this.value
+        } else if (Utils.typeof(filter) !== 'boolean') {
+          evt.target.value = filter
+        }
+      } else if (Utils.typeof(this.reg) === 'string') {
+        const regExp = new RegExp(this.reg)
+
+        if (!regExp.test(currentValue) && currentValue) {
+          evt.target.value = this.value
+        }
       }
 
       this.$emit('input', evt.target.value)

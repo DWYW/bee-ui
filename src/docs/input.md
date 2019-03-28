@@ -12,6 +12,8 @@ export default {
       test2: null,
       test3: null,
       mobile: null,
+      str1: null,
+      str2: null,
       readOnly: 'readOnly',
       icon: [{
         icon: 'search',
@@ -32,6 +34,11 @@ export default {
     mobileReg () {
       return (value) => {
         return value ? /^(1|1[3-9]|1[3-9]\d{1,9})$/g.test(value) ? value : this.mobile : value
+      }
+    },
+    reg1 () {
+      return (value) => {
+        return /^[a-zA-Z]*$/.test(value)
       }
     }
   },
@@ -135,7 +142,7 @@ export default {
 ```
 :::
 
-### 其他用法
+### 过滤
 
 ::: demo
 
@@ -144,6 +151,10 @@ export default {
   <div class='demo'>
     <p>
       <bee-input v-model='mobile' placeholder='请输入手机号' maxlength='11' :icon="icon[1]" :reg='mobileReg' :enter-event='enterEvent'></bee-input>
+
+      <bee-input v-model='str1' placeholder='请输入字母' maxlength='11' :icon="icon[1]" :reg='reg1' ></bee-input>
+
+      <bee-input v-model='str2' placeholder='只能输入数字' maxlength='11' :icon="icon[1]" reg='^[0-9]*$' ></bee-input>
     </p>
   <div>
 </template>
@@ -153,13 +164,20 @@ export default {
 export default {
   data () {
     return {
-      mobile: null
+      mobile: null,
+      str1: null,
+      str2: null
     }
   },
   computed: {
     mobileReg () {
       return (value) => {
         return value ? /^(1|1[3-9]|1[3-9]\d{1,9})$/g.test(value) ? value : this.mobile : value
+      }
+    },
+    reg1 () {
+      return (value) => {
+        return /^[a-zA-Z]*$/.test(value)
       }
     }
   },
@@ -199,7 +217,7 @@ export default {
 |autoFocus|自动获取焦点|boolean|-|-|
 |readOnly|只读|boolean|-|-|
 |maxlength|输入的最大长度|number|-|-|
-|reg|value的格式化函数|function|-|-|
+|reg|value的格式化函数或正则表达式|function,string|-|-|
 |enterEvent|enter按键的回调函数|function|-|-|
 |disabled|禁用状态|boolean|-|-|
 
