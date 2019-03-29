@@ -61,6 +61,37 @@ export default {
         grade: '二年级',
         subject: '临床医院',
         sex: '男'
+      }],
+      data2: [{
+        name: '张三',
+        chinese: 86,
+        math: 80,
+        english: 90
+      }, {
+        name: '李四',
+        chinese: 86,
+        math: 70,
+        english: 92
+      }, {
+        name: '王五',
+        chinese: 96,
+        math: 90,
+        english: 80
+      }, {
+        name: '小丽',
+        chinese: 83,
+        math: 89,
+        english: 92
+      }, {
+        name: '小红',
+        chinese: 79,
+        math: 99,
+        english: 100
+      }, {
+        name: '小明',
+        chinese: 88,
+        math: 80,
+        english: 95
       }]
     }
   },
@@ -411,7 +442,7 @@ export default {
 ``` html
 <template>
   <bee-table :data='data' :height='200' @selectionChange='selectionChange' ref='selectionTable'>
-    <bee-table-column width='40' type='selection'></bee-table-column>
+    <bee-table-column width='40' fixed='left' type='selection'></bee-table-column>
     <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
     <bee-table-column width='160' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
@@ -521,12 +552,6 @@ export default {
     </bee-table-column>
     <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
     <bee-table-column width='160' label='专业' prop='subject'></bee-table-column>
-    <bee-table-column fixed='right' width='260' label='操作'>
-      <template slot-scope='scope'>
-        <span class='primary'  @click='view(scope.row, scope.$index)'>查看</span>
-        <span class='primary'>删除</span>
-      </template>
-    </bee-table-column>
   </bee-table>
 </template>
 <script>
@@ -588,12 +613,32 @@ export default {
 ```
 :::
 
+### 显示统计
+
+::: demo
+``` html
+<template>
+  <bee-table :data='data2' :height='200' :summary='true'>
+    <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
+    <bee-table-column width='100' label='语文' prop='chinese'></bee-table-column>
+    <bee-table-column width='100' label='数学' prop='math'></bee-table-column>
+    <bee-table-column width='100' label='英语' prop='english'></bee-table-column>
+    <bee-table-column width='100' label='总分'>
+      <template slot-scope='scope'>
+        {{scope.row.chinese + scope.row.math + scope.row.english}}
+      </template>
+    </bee-table-column>
+  </bee-table>
+</template>
+```
+:::
+
 ### 空表格
 
 ::: demo
 ``` html
 <template>
-  <bee-table :data='[]' :height='200' >
+  <bee-table :data='[]' :height='200'>
     <bee-table-column width='160' label='姓名' prop='name'></bee-table-column>
     <bee-table-column width='160' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='160' label='年级' prop='grade'></bee-table-column>
@@ -622,6 +667,9 @@ export default {
 |placeholderc|占位符|string|—|-|
 |activeIndex|激活项|number|—|-|
 |resetScroll|重置滚动行为|boolean|—|true|
+|summary|是否显示合计|boolean|—|false|
+|summaryText|合计的默认文字| string|-|—|合计|
+|summaryMethod|计算合计的方法|function|—|尾部说明|
 |scrollDom.sync|滚动的 HTML DOM| dom|—|-|
 
 ### 事件
@@ -646,3 +694,25 @@ export default {
 |label|列标题|string|—|-|
 |align|对齐方式|string|left,center,right|center|
 |placeholderc|占位符|string|—|-|
+
+
+```js
+// summaryMethod default
+
+function (columns, data, text) {
+  return columns.map((col, rowIdx) => {
+    if (rowIdx === 0) {
+      return text
+    } else if (col.prop) {
+      return data.reduce((acc, cur) => {
+        const item = deepValue(col.prop, cur)
+        Number(item) ? acc += Number(item) : null
+        return acc
+      }, 0)
+    } else {
+      return col.placeholder
+    }
+  })
+}
+
+```
