@@ -29,6 +29,7 @@ export default {
     format: String,
     isRange: Boolean,
     disabled: Object,
+    visible: Object,
     callback: Function,
     staticText: Object,
     value: [Date, Array]
@@ -41,21 +42,6 @@ export default {
     }
   },
   computed: {
-    visible () {
-      if (!/[hms]/g.test(this.format)) {
-        return {
-          hour: true,
-          minute: true,
-          second: true
-        }
-      }
-
-      return {
-        hour: /h+/.test(this.format),
-        minute: /m+/.test(this.format),
-        second: /s+/.test(this.format)
-      }
-    },
     startDate () {
       if (utils.typeof(this.value) === 'array') {
         return utils.date2object(this.value[0])

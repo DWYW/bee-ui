@@ -137,10 +137,12 @@ export default {
     }
     &.@{root}--item__selected {
       background-color: @picker-time-selected-bg-color;
+      color: @picker-time-selected-color;
       font-weight: bold;
     }
     &.@{root}--item__disabled {
       color: @font-tint-color;
+      opacity: 0.3;
       &:hover {
         background-color: inherit;
       }
