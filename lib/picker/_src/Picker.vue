@@ -30,6 +30,7 @@
       <Time v-else
         :callback='timePicked'
         :disabled='timeDisabled'
+        :visible='timeVisible'
         :format='format'
         :is-range='isRange'
         :static-text='text'
@@ -144,6 +145,7 @@ export default {
   color: @font-color;
   font-size: 14px;
   word-break: break-word;
+  font-family: sans-serif;
 
   .@{pop}--wp {
     display: flex;

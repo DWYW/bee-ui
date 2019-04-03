@@ -112,7 +112,8 @@ bee-ui提供了一套默认的主题颜色。
 @picker-pop-header-height: 24px;
 @picker-quick-btn-width: 100px;
 @picker-range-selected-bg-color: #ffe8d9;
-@picker-time-selected-bg-color: #f5f5f5;
+@picker-time-selected-bg-color: rgba(255, 133, 51, .1);
+@picker-time-selected-color: @primary-color;
 
 // table
 @table-border-color: @border-color;

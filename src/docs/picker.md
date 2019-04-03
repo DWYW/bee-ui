@@ -13,7 +13,12 @@ export default {
       date4: null,
       date5: null,
       date6: null,
-      date7: null
+      date7: null,
+      visible: {
+        hour: true,
+        minute: true,
+        second: false
+      }
     }
   },
   computed: {
@@ -255,7 +260,7 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker format='YYYY-MM' ></bee-picker>
-    <bee-picker format='YYYY-MM hh:mm' type='datetime'></bee-picker> <br/>
+    <bee-picker format='YYYY-MM hh:mm' :time-visible='visible' type='datetime'></bee-picker> <br/>
     <bee-picker :max-days='3' type='range'></bee-picker>
   </div>
 </template>
@@ -270,12 +275,44 @@ export default {
 |---|---|---|---|---|
 |type|类型值|string|date,datetime,range,rangetime|date|
 |lang|语言|string|zh_cn|zh_cn|
-|format|显示的日期格式化参数|string|-|YYYY-MM-DD|YYYY-MM-DD hh:mm:ss|
+|format|显示的日期格式化参数|string|-|见下方|
 |labelFormat|显示的日期的别名设置|function|-|-|
 |disabled|日期不可用的设置|function|-|-|
 |timeDisabled|时间不可用的设置|object|-|-|
+|timeVisible|时间设置可见性|object|-|见下方|
 |placeholder|占位符|string|-|-|
 |quickBtns|快速选择按钮|array|-|-|
 |quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|
 |maxDays|日期最大的选择天数|number|-|-|
 |scrollDom|跟随滚动的DOM节点|HTML DOM|-|document|
+
+<br/>
+<br/>
+
+> 当type为date或者datetime时， format默认值为 YYYY-MM-DD <br/>
+> 当type为range或者rangetime时， format默认值为 YYYY-MM-DD hh:mm:ss
+
+```js
+// timeVisible 默认值
+{
+  hour: true,
+  minute: true,
+  second: true
+}
+
+// timeDisabled 设置
+{
+  hour: (date) => {
+    // do something ...
+    return // disabled
+  },
+  minute: (date) => {
+    // do something ...
+    return // disabled
+  },
+  second: (date) => {
+    // do something ...
+    return // disabled
+  }
+}
+```
