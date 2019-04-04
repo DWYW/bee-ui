@@ -156,17 +156,40 @@ export default {
 }
 
 .notify-enter-active {
-  transition: all .4s cubic-bezier(0.84, 0.12, 1, 1);
+  animation-name: notifyEntry;
+  animation-duration: .6s;
+  animation-fill-mode: both;
 }
 
 .notify-leave-active {
   transition: all .4s;
 }
 
-.notify-enter {
-  transform: translate3d(120%, 0, 0);
-}
 .notify-leave-to {
   opacity: 0;
+}
+
+@keyframes notifyEntry {
+  from, 60%, 75%, 90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  from {
+    opacity: 0;
+    transform: translate3d(200%, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+  to {
+    transform: none;
+  }
 }
 </style>
