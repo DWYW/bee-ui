@@ -59,6 +59,16 @@ export default {
     // 日期不可用过滤
     disabled: Function,
     timeDisabled: Object,
+    timeVisible: {
+      type: Object,
+      default: () => {
+        return {
+          hour: true,
+          minute: true,
+          second: true
+        }
+      }
+    },
     placeholder: String,
     // 快捷按钮
     quickBtns: Array,
