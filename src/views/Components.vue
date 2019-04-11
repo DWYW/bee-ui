@@ -4,7 +4,7 @@
 
     <div class="page-body">
       <Nav :left='left'></Nav>
-      <bee-scroll show-type='hover' ref='BeeScroll' :scroll-dom.sync='scrollDom' >
+      <bee-scroll ref='BeeScroll' :scroll-dom.sync='scrollDom' >
         <div class="page-wraper" ref='PW'>
           <router-view class="content-wrapper md"/>
         </div>
