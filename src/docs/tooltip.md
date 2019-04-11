@@ -8,6 +8,16 @@
 }
 </style>
 
+<script> 
+export default {
+  computed: {
+    scrollDom: (vm) => {
+      return vm.$parent.scrollDom
+    }
+  }
+}
+</script>
+
 ## tooltip 文字提示
 
 ### 基本用法
@@ -16,59 +26,59 @@
 ``` html
 <template>
   <div class='inline'>
-    <bee-tool-tip content='这是一段提示文字' position='top-start'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='top-start'>
       <span class='span'>top start</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='top'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='top'>
       <span class='span'>top</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='top-end'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='top-end'>
       <span class='span'>top end</span>
     </bee-tool-tip>
   </div>
 
   <div class='inline'>
-    <bee-tool-tip content='这是一段提示文字' position='bottom-start'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='bottom-start'>
       <span class='span'>bottom start</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='bottom'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='bottom'>
       <span class='span'>bottom</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='bottom-end'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='bottom-end'>
       <span class='span'>bottom end</span>
     </bee-tool-tip>
   </div>
 
   <div class='inline'>
-    <bee-tool-tip content='这是一段提示文字' position='left-start'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='left-start'>
       <span class='span'>left-start</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='right-start'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='right-start'>
       <span class='span'>right-start</span>
     </bee-tool-tip>
   </div>
 
   <div class='inline'>
-    <bee-tool-tip content='这是一段提示文字' position='left'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='left'>
       <span class='span'>left</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='right'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='right'>
       <span class='span'>right</span>
     </bee-tool-tip>
   </div>
 
   <div class='inline'>
-    <bee-tool-tip content='这是一段提示文字' position='left-end'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='left-end'>
       <span class='span'>left-end</span>
     </bee-tool-tip>
 
-    <bee-tool-tip content='这是一段提示文字' position='right-end'>
+    <bee-tool-tip :scroll-dom='scrollDom' content='这是一段提示文字' position='right-end'>
       <span class='span'>right-end</span>
     </bee-tool-tip>
   </div>

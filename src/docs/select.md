@@ -1,5 +1,10 @@
 <script>
 export default {
+  computed: {
+    scrollDom: (vm) => {
+      return vm.$parent.scrollDom
+    }
+  },
   data () {
     return {
       disabled1: 1,
@@ -50,8 +55,8 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select :options='options'></bee-select>
-    <bee-select :options='[]'></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='options'></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='[]'></bee-select>
   </p>
 </template>
 ```
@@ -63,7 +68,7 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select :options='options' multiple></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='options' multiple></bee-select>
   </p>
 </template>
 ```
@@ -75,8 +80,8 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select :options='options' disabled v-model='disabled1'></bee-select> <br/> <br/>
-    <bee-select :options='options' multiple disabled v-model='disabled2'></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='options' disabled v-model='disabled1'></bee-select> <br/> <br/>
+    <bee-select :scroll-dom='scrollDom' :options='options' multiple disabled v-model='disabled2'></bee-select>
   </p>
 </template>
 ```

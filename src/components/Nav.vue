@@ -48,9 +48,11 @@ export default {
   top: 0;
   left: 0;
   height: calc(~'100vh - ' @inner-height);
+  z-index: 99;
 
   .group-wrapper {
     width: 100%;
+    overflow: hidden;
 
     .group-item {
       width:  100%;

@@ -4,7 +4,7 @@
 
     <div class="page-body">
       <Nav :left='left'></Nav>
-      <bee-scroll>
+      <bee-scroll show-type='hover' ref='BeeScroll' :scroll-dom.sync='scrollDom' >
         <div class="page-wraper" ref='PW'>
           <router-view class="content-wrapper md"/>
         </div>
@@ -25,7 +25,8 @@ export default {
   },
   data () {
     return {
-      left: null
+      left: null,
+      scrollDom: null
     }
   },
   mounted () {
@@ -38,6 +39,13 @@ export default {
   methods: {
     mountLeft () {
       this.left = `${this.$refs.PW.getBoundingClientRect().left + 10}px`
+    }
+  },
+  watch: {
+    '$route': function () {
+      this.$nextTick(() => {
+        this.$refs.BeeScroll.init()
+      })
     }
   }
 }
@@ -68,20 +76,5 @@ export default {
       overflow: hidden;
     }
   }
-  // margin: 0 auto;
-  // padding-left: 10px;
-  // padding-bottom: 50px;
-
-  // .page-wrapper{
-  //   padding-left: @nav-width;
-  //   padding-top: @header-height;
-  //   box-sizing: border-box;
-  //   max-width: @page-width;
-
-  //   .content-wrapper {
-  //     padding: 0 10px;
-  //     min-height: calc(~'100vh - 110px');
-  //   }
-  // }
 }
 </style>
