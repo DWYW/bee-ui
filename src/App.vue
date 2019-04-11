@@ -7,4 +7,8 @@
 <style lang="less">
 @import './style/hljs.css';
 @import './style/base.less';
+#app {
+  width: 100vw;
+  height: 100vh;
+}
 </style>

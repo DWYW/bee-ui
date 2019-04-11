@@ -2,44 +2,35 @@
   <div class='system-nav' ref='nav' :style='{
     "left": left
   }'>
-    <ul class="group-wrapper">
-      <li class="group-item" v-for='(group, gIdx) in navs' :key='"group-" + gIdx'>
-        <p class="group-label">{{group.label}}</p>
+    <bee-scroll show-type='hover'>
+      <ul class="group-wrapper">
+        <li class="group-item" v-for='(group, gIdx) in navs' :key='"group-" + gIdx'>
+          <p class="group-label">{{group.label}}</p>
 
-        <ul class="nav-wrapper" v-if='group.children'>
-          <li class="nav-item"
-            v-for='(nav, nIdx) in group.children'
-            :key='"nav-" + gIdx + "-" + nIdx'
-          >
-            <router-link :to='"/components/" + nav.path' active-class="actived">{{nav.label}}</router-link>
-          </li>
-        </ul>
-      </li>
-    </ul>
+          <ul class="nav-wrapper" v-if='group.children'>
+            <li class="nav-item"
+              v-for='(nav, nIdx) in group.children'
+              :key='"nav-" + gIdx + "-" + nIdx'
+            >
+              <router-link :to='"/components/" + nav.path' active-class="actived">{{nav.label}}</router-link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </bee-scroll>
   </div>
 </template>
 
 <script>
 import NAVS from '@/router/components'
-import Listener from '@/common/Listener'
 
 export default {
+  props: {
+    left: null
+  },
   data () {
     return {
-      navs: NAVS,
-      left: null
-    }
-  },
-  mounted () {
-    this.mountLeft()
-    Listener.add(window, 'resize', this.mountLeft)
-  },
-  beforeDestroy () {
-    Listener.remove(window, 'resize', this.mountLeft)
-  },
-  methods: {
-    mountLeft () {
-      this.left = `${this.$refs.nav.parentNode.getBoundingClientRect().left + 10}px`
+      navs: NAVS
     }
   }
 }
@@ -53,14 +44,13 @@ export default {
 
 .system-nav {
   width: @nav-width;
-  position: fixed;
-  top: @inner-height;
+  position: absolute;
+  top: 0;
+  left: 0;
   height: calc(~'100vh - ' @inner-height);
 
   .group-wrapper {
     width: 100%;
-    height: 100%;
-    overflow: auto;
 
     .group-item {
       width:  100%;
