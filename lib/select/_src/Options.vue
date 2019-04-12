@@ -1,26 +1,50 @@
 <template>
   <bee-menu :follow-target='followDom' :scroll-dom='scrollDom' :autoHide='!multiple' ref='menu'>
+    <div class='options--wp' :style='{minWidth: `${textContainerWidth}px`}' ref='wrapper'>
+      <ul v-if='!scrollRect'>
+        <!-- has options -->
+        <template v-if='options.length'>
+          <li :class='["options--item", {
+            "options__selected": isSelectedItem(option),
+            "options__multiple": multiple
+            }]'
+            :style='{lineHeight: (textContainerHeight - 2) + "px"}'
+            v-for='(option, index) in options'
+            @click='pickerItem(option, index)'
+            :key='"option_item_" + deepValue(optionKey.value, option)'
+          >
+            {{deepValue(optionKey.label, option)}}
+            <bee-icon class='multiple--icon' icon='correct' v-if='multiple'></bee-icon>
+          </li>
+        </template>
 
-    <ul class='options--wp' :style='{minWidth: `${textContainerWidth}px`}'>
-      <!-- has options -->
-      <template v-if='options.length'>
-        <li :class='["options--item", {
-          "options__selected": isSelectedItem(option),
-          "options__multiple": multiple
-          }]'
-          :style='{lineHeight: (textContainerHeight - 2) + "px"}'
-          v-for='(option, index) in options'
-          @click='pickerItem(option, index)'
-          :key='"option_item_" + deepValue(optionKey.value, option)'
-        >
-          {{deepValue(optionKey.label, option)}}
-          <bee-icon class='multiple--icon' icon='correct' v-if='multiple'></bee-icon>
-        </li>
-      </template>
+        <!-- no options -->
+        <li v-if='!options.length' class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}'>暂无可选项</li>
+      </ul>
 
-      <!-- no options -->
-      <li v-if='!options.length' class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}'>暂无可选项</li>
-    </ul>
+      <bee-scroll show-type='hover' v-else>
+        <ul>
+          <!-- has options -->
+          <template v-if='options.length'>
+            <li :class='["options--item", {
+              "options__selected": isSelectedItem(option),
+              "options__multiple": multiple
+              }]'
+              :style='{lineHeight: (textContainerHeight - 2) + "px"}'
+              v-for='(option, index) in options'
+              @click='pickerItem(option, index)'
+              :key='"option_item_" + deepValue(optionKey.value, option)'
+            >
+              {{deepValue(optionKey.label, option)}}
+              <bee-icon class='multiple--icon' icon='correct' v-if='multiple'></bee-icon>
+            </li>
+          </template>
+
+          <!-- no options -->
+          <li v-if='!options.length' class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}'>暂无可选项</li>
+        </ul>
+      </bee-scroll>
+    </div>
   </bee-menu>
 </template>
 
@@ -31,8 +55,15 @@ export default {
   name: 'BeeSelectOptions',
   data () {
     return {
-      deepValue: deepValue
+      deepValue: deepValue,
+      scrollRect: false
     }
+  },
+  mounted () {
+    // console.log(this.$el)
+    this.$nextTick(() => {
+      this.scrollRect = this.$refs.wrapper.scrollHeight !== this.$refs.wrapper.clientHeight
+    })
   },
   updated () {
     this.$nextTick(() => {
@@ -79,10 +110,13 @@ export default {
   min-width: @select-min-width;
   border-radius: @border-radius;
   background-color: @select-options-bg-color;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 28px * 8 + 2px;
+  overflow: hidden;
   color: @font-tint-color;
+  max-height: 28px * 8 + 2px;
+
+  .scroll--body {
+    max-height: 28px * 8 + 2px;
+  }
 
   .@{root}--item {
     line-height: 28px;
@@ -93,7 +127,7 @@ export default {
     white-space: nowrap;
 
     &.@{root}__multiple {
-      padding-right: 20px;
+      padding-right: 30px;
 
       .multiple--icon {
         float: right;

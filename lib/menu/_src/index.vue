@@ -137,12 +137,12 @@ export default {
       const vertical = scrollBounding.height - (followedBounding.top + followedBounding.height - scrollBounding.top)
 
       if (vertical > popBounding.height + this.distance) {
-        data.pop[1] = followedBounding.top + followedBounding.height + this.distance - bodyBounding.top
+        data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
         data.arr[1] = 0
         data.direction = 'down'
       } else {
-        data.pop[1] = followedBounding.top - (popBounding.height + this.distance) - bodyBounding.top
-        data.arr[1] = popBounding.height
+        data.pop[1] = Math.floor(followedBounding.top - (popBounding.height + this.distance) - bodyBounding.top)
+        data.arr[1] = Math.floor(popBounding.height)
         data.direction = 'up'
       }
 
@@ -150,17 +150,17 @@ export default {
       const dr = scrollBounding.width - (followedBounding.left - scrollBounding.left + followedBounding.width / 2 + popBounding.width / 2)
 
       if (this.center && dl >= 0 && dr >= 0) {
-        data.pop[0] = dl + scrollBounding.left
-        data.arr[0] = popBounding.width / 2
+        data.pop[0] = Math.floor(dl + scrollBounding.left)
+        data.arr[0] = Math.floor(popBounding.width / 2)
       } else {
         const horizon = scrollBounding.left + scrollBounding.width - followedBounding.left
 
         if (horizon >= popBounding.width) {
-          data.pop[0] = followedBounding.left
-          data.arr[0] = Math.min(popBounding.width * 0.2, followedBounding.width / 2)
+          data.pop[0] = Math.floor(followedBounding.left)
+          data.arr[0] = Math.floor(Math.min(popBounding.width * 0.2, followedBounding.width / 2))
         } else {
-          data.pop[0] = followedBounding.left + followedBounding.width - popBounding.width
-          data.arr[0] = Math.max(popBounding.width * 0.8, popBounding.width - followedBounding.width / 2)
+          data.pop[0] = Math.floor(followedBounding.left + followedBounding.width - popBounding.width)
+          data.arr[0] = Math.floor(Math.max(popBounding.width * 0.8, popBounding.width - followedBounding.width / 2))
         }
       }
 

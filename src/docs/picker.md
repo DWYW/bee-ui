@@ -22,6 +22,9 @@ export default {
     }
   },
   computed: {
+    scrollDom: (vm) => {
+      return vm.$parent.scrollDom
+    },
     quickBtns () {
       return [{
         label: '今天',
@@ -110,10 +113,10 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker></bee-picker>
-    <bee-picker type='datetime'></bee-picker> <br/>
-    <bee-picker type='range'></bee-picker>
-    <bee-picker type='rangetime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' type='rangetime'></bee-picker>
   </div>
 </template>
 ```
@@ -126,10 +129,10 @@ export default {
 <template>
   <div class='inline'>
     <p>禁用今天之前的日期</p>
-    <bee-picker v-model='date2' :disabled='dateDisabled'></bee-picker>
-    <bee-picker v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime'></bee-picker> <br/>
-    <bee-picker v-model='date4' :disabled='dateDisabled' type='range'></bee-picker>
-    <bee-picker v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='dateDisabled'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='dateDisabled' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime'></bee-picker>
   </div>
 </template>
 
@@ -221,8 +224,8 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker v-model='date6' :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
-    <bee-picker v-model='date7' :quick-btns='quickBtns' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date6' :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date7' :quick-btns='quickBtns' type='range'></bee-picker>
   </div>
 </template>
 
@@ -259,9 +262,9 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker format='YYYY-MM' ></bee-picker>
-    <bee-picker format='YYYY-MM hh:mm' :time-visible='visible' type='datetime'></bee-picker> <br/>
-    <bee-picker :max-days='3' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM' ></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM hh:mm' :time-visible='visible' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' :max-days='3' type='range'></bee-picker>
   </div>
 </template>
 ```
