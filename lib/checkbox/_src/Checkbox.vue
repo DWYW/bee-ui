@@ -70,13 +70,13 @@ export default {
     color: @checkbox-color-unselected;
     vertical-align: middle;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
+    transform: translateY(-50%);
   }
 
   .@{root}--label {
     padding-left: 24px;
-    vertical-align: middle;
   }
 
   input {
