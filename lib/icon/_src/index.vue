@@ -1,12 +1,18 @@
 <template>
-  <i :class='["icon--wp bee--font", "bee-" + icon]' @click='handleClick'></i>
+  <i :class='["icon--wp", fontFamily,
+    fontFamily === "bee--font" ? "bee-" + icon : icon
+  ]' @click='handleClick'></i>
 </template>
 
 <script>
 export default {
   name: 'BeeIcon',
   props: {
-    icon: String
+    icon: String,
+    fontFamily: {
+      type: String,
+      default: 'bee--font'
+    }
   },
   methods: {
     handleClick (evt) {

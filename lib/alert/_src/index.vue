@@ -11,8 +11,8 @@
           "bee-alert--body__horizontal-center": isHorizontalCenter,
           "bee-alert--body__vertial-center": isVertialCenter
         }]'>
-          <span class="bee-alert-body--content" v-if='html' v-html='html'></span>
-          <span class="bee-alert-body--content" v-else>{{message}}</span>
+          <div class="bee-alert-body--content" v-if='html' v-html='html'></div>
+          <div class="bee-alert-body--content" v-else>{{message}}</div>
         </div>
 
         <div class="bee-alert--footer" v-if='confirmBtnVisible || cancelBtnVisible'>

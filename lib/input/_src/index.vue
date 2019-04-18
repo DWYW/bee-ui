@@ -17,7 +17,7 @@
       :readOnly='readOnly'
       :value='value'/>
 
-      <bee-icon v-if='icon' :icon='icon.icon'></bee-icon>
+      <bee-icon v-if='icon' :icon='icon.icon' :font-family='icon.fontFamily'></bee-icon>
   </span>
 </template>
 

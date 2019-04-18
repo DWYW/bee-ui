@@ -226,6 +226,7 @@ export default {
 
 {
   icon: IconName,
+  fontFamily: fontFamily,
   position: left|right
 }
 ```
