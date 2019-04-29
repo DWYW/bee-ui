@@ -103,6 +103,11 @@ export default {
       this.$emit('update:scrollDom', this.$refs.body)
     })
   },
+  updated() {
+    this.$nextTick(() => {
+      this.onResize()
+    })
+  },
   methods: {
     init () {
       this.updateSize()
