@@ -60,7 +60,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.$el)
     this.$nextTick(() => {
       this.scrollRect = this.$refs.wrapper.scrollHeight !== this.$refs.wrapper.clientHeight
     })
