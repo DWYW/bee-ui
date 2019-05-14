@@ -3,41 +3,24 @@
     "show-type__always": showType === "always",
     "show-type__hover": showType === "hover"
   }]'>
-    <div class="scroll--body" ref='body' :style='{
-      marginRight: "-" + scrollbar.horizontal.right + "px",
-      marginBottom: "-" + scrollbar.vertical.bottom + "px",
-      width: body.width,
-      height: body.height
-    }'>
+    <div class="scroll--body" ref='body'>
       <slot></slot>
     </div>
 
     <!-- 纵向滚动条 -->
-    <div v-if='scrollbar.horizontal.visible'
-    :class='["scroll--bar scroll--bar__horizontal", {
-      "scroll--bar__active": scrollbar.switch === "horizontal"
-    }]'
-    :style='{
-      height: scrollbar.horizontal.height,
-      transform: "translate3d(0, " + scrollbar.horizontal.top + "px, 0)"
-    }'
-    role='horizontal'
-    ref='horizontal'
-    @mousedown='barMoveStart'
+    <div v-if='horizontal'
+      class='scroll--bar scroll--bar__horizontal'
+      role='horizontal'
+      ref='horizontal'
+      @mousedown='barMoveStart'
     ></div>
 
     <!-- 横向滚动条 -->
-    <div v-if='scrollbar.vertical.visible'
-    :class='["scroll--bar scroll--bar__vertical", {
-      "scroll--bar__active": scrollbar.switch === "vertical"
-    }]'
-    :style='{
-      width: scrollbar.vertical.width,
-      transform: "translate3d(" + scrollbar.vertical.left + "px, 0, 0)"
-    }'
-    role='vertical'
-    ref='vertical'
-    @mousedown='barMoveStart'
+    <div v-if='vertical'
+      class='scroll--bar scroll--bar__vertical'
+      role='vertical'
+      ref='vertical'
+      @mousedown='barMoveStart'
     ></div>
   </div>
 </template>
@@ -73,25 +56,9 @@ export default {
   },
   data () {
     return {
-      scrollbar: {
-        horizontal: {
-          visible: false,
-          right: 0,
-          top: 0,
-          height: 0
-        },
-        vertical: {
-          visible: false,
-          bottom: 0,
-          left: 0,
-          width: false
-        },
-        switch: false
-      },
-      body: {
-        width: null,
-        height: null
-      },
+      horizontal: false,
+      vertical: false,
+      switch: null,
       mousePos: null
     }
   },
@@ -103,39 +70,60 @@ export default {
       this.$emit('update:scrollDom', this.$refs.body)
     })
   },
-  updated() {
+  updated () {
     this.$nextTick(() => {
       this.onResize()
     })
   },
   methods: {
     init () {
-      this.updateSize()
-      this.$set(this.scrollbar.horizontal, 'top', 0)
-      this.$set(this.scrollbar.vertical, 'left', 0)
-      this.$refs.body.scrollTop = 0
-      this.$refs.body.scrollLeft = 0
+      this.updateBodySize()
+
+      this.$nextTick(() => {
+        this.updateBarData()
+      })
     },
 
-    updateSize () {
+    onResize () {
+      this.updateBodySize()
+      this.updateBarData()
+    },
+
+    onScroll (e) {
+      e.preventDefault()
+      this.$emit('onScroll', e)
+
+      if (this.switch) return
+
+      this.updateBarData()
+    },
+
+    updateBodySize () {
+      if (!this.$refs.body) return false
+
       const _body = this.$refs.body
-      const horizontalSize = _body.offsetWidth - _body.clientWidth
-      const verticalSize = _body.offsetHeight - _body.clientHeight
+      const horizontalWidth = _body.offsetWidth - _body.clientWidth
+      const verticalHeight = _body.offsetHeight - _body.clientHeight
 
-      this.$set(this.scrollbar.horizontal, 'visible', _body.clientHeight !== _body.scrollHeight)
-      this.$set(this.scrollbar.horizontal, 'right', horizontalSize)
+      if (!this.vertical && _body.clientWidth < _body.scrollWidth) {
+        this.vertical = true
+      } else if (this.vertical && _body.clientWidth === _body.scrollWidth) {
+        this.vertical = false
+      }
 
-      this.$set(this.scrollbar.vertical, 'visible', _body.clientWidth !== _body.scrollWidth)
-      this.$set(this.scrollbar.vertical, 'bottom', verticalSize)
+      if (!this.horizontal && _body.clientHeight < _body.scrollHeight) {
+        this.horizontal = true
+      } else if (this.horizontal && _body.clientHeight === _body.scrollHeight) {
+        this.horizontal = false
+      }
 
-      this.$set(this.body, 'width', `calc(100% + ${horizontalSize}px)`)
-      this.$set(this.body, 'height', `calc(100% + ${verticalSize}px)`)
-
-      this.$set(this.scrollbar.horizontal, 'height', `${_body.clientHeight / _body.scrollHeight * 100}%`)
-      this.$set(this.scrollbar.vertical, 'width', `${_body.clientWidth / _body.scrollWidth * 100}%`)
+      _body.style.width = `calc(100% + ${horizontalWidth}px)`
+      _body.style.marginRight = `-${horizontalWidth}px`
+      _body.style.height = `calc(100% + ${verticalHeight}px)`
+      _body.style.marginBottom = `-${verticalHeight}px`
     },
 
-    updatePosition () {
+    updateBarData () {
       const _body = this.$refs.body
       const _horizontal = this.$refs.horizontal
       const _vertical = this.$refs.vertical
@@ -143,83 +131,69 @@ export default {
       if (_horizontal) {
         const _verticalHeight = _vertical ? _vertical.offsetHeight : 0
         const top = _body.scrollTop / (_body.scrollHeight - _body.clientHeight) * (_body.clientHeight - _horizontal.offsetHeight - _verticalHeight)
-        this.$set(this.scrollbar.horizontal, 'top', Math.floor(top))
+        _horizontal.style.height = `${_body.clientHeight / _body.scrollHeight * 100}%`
+        _horizontal.style.transform = `translate3d(0, ${top}px, 0)`
+        _horizontal.setAttribute('data-top', top)
       }
 
       if (_vertical) {
         const _horizontalWidth = _horizontal ? _horizontal.offsetWidth : 0
         const left = _body.scrollLeft / (_body.scrollWidth - _body.clientWidth) * (_body.clientWidth - _vertical.offsetWidth - _horizontalWidth)
-        this.$set(this.scrollbar.vertical, 'left', Math.floor(left))
+        _vertical.style.width = `${_body.clientWidth / _body.scrollWidth * 100}%`
+        _vertical.style.transform = `translate3d(${left}px, 0, 0)`
+        _vertical.setAttribute('data-left', left)
       }
     },
 
-    onResize () {
-      this.updateSize()
-    },
-
-    onScroll (e) {
-      this.$emit('onScroll', e)
-
-      if (this.scrollbar.switch) return
-
-      this.updatePosition()
-    },
-
     barMoveStart (e) {
+      e.target.classList.add('scroll--bar__active')
+
       this.mousePos = {
         x: e.pageX,
         y: e.pageY
       }
 
-      this.scrollbar.switch = e.target.getAttribute('role')
+      this.switch = e.target.getAttribute('role')
       Listener.addListener(window, 'mousemove', this.barMoving)
       Listener.addListener(window, 'mouseup', this.barMoveEnd)
     },
 
     barMoving (e) {
-      if (!this.scrollbar.switch) return
+      if (!this.switch) return
 
       const _body = this.$refs.body
       const _horizontal = this.$refs.horizontal
       const _vertical = this.$refs.vertical
 
       // horizontal scroll bar.
-      if (this.scrollbar.switch === 'horizontal') {
+      if (this.switch === 'horizontal') {
         const _verticalHeight = _vertical ? _vertical.offsetHeight : 0
         const maxTop = Math.floor(_body.clientHeight - _horizontal.offsetHeight - _verticalHeight)
         const step = e.pageY - this.mousePos.y
 
-        // update horizontal scroll bar position.
-        if (this.scrollbar.horizontal.top + step < 0) {
-          this.$set(this.scrollbar.horizontal, 'top', 0)
-        } else if (this.scrollbar.horizontal.top + step > maxTop) {
-          this.$set(this.scrollbar.horizontal, 'top', maxTop)
-        } else {
-          this.$set(this.scrollbar.horizontal, 'top', this.scrollbar.horizontal.top + step)
-        }
+        let top = _horizontal.getAttribute('data-top') >> 0
+        top = top + step < 0 ? 0 : top + step > maxTop ? maxTop : top + step
+        _horizontal.style.transform = `translate3d(0, ${top}px, 0)`
+        _horizontal.setAttribute('data-top', top)
 
         // update scroll body scroll top.
-        const scrollTop = this.scrollbar.horizontal.top * (_body.scrollHeight - _body.clientHeight) / (_body.clientHeight - _horizontal.offsetHeight - _verticalHeight)
+        const scrollTop = top * (_body.scrollHeight - _body.clientHeight) / (_body.clientHeight - _horizontal.offsetHeight - _verticalHeight)
         _body.scrollTop = Math.floor(scrollTop)
       }
 
       // vertical scroll bar.
-      if (this.scrollbar.switch === 'vertical') {
+      if (this.switch === 'vertical') {
         const _horizontalWidth = _horizontal ? _horizontal.offsetWidth : 0
         const maxLeft = Math.floor(_body.clientWidth - _vertical.offsetWidth - _horizontalWidth)
         const step = e.pageX - this.mousePos.x
 
-        // update vertical scroll bar position.
-        if (this.scrollbar.vertical.left + step < 0) {
-          this.$set(this.scrollbar.vertical, 'left', 0)
-        } else if (this.scrollbar.vertical.left + step > maxLeft) {
-          this.$set(this.scrollbar.vertical, 'left', maxLeft)
-        } else {
-          this.$set(this.scrollbar.vertical, 'left', this.scrollbar.vertical.left + step)
-        }
+        let left = _vertical.getAttribute('data-left') >> 0
+        left = left + step < 0 ? 0 : left + step > maxLeft ? maxLeft : left + step
+        _vertical.style.transform = `translate3d(${left}px, 0, 0)`
+        _vertical.setAttribute('data-left', left)
 
         // update scroll body scroll left.
-        const scrollLeft = this.scrollbar.vertical.left * (_body.scrollWidth - _body.clientWidth) / (_body.clientWidth - _vertical.offsetWidth - _horizontalWidth)
+        const scrollLeft = left * (_body.scrollWidth - _body.clientWidth) / (_body.clientWidth - _vertical.offsetWidth - _horizontalWidth)
         _body.scrollLeft = Math.floor(scrollLeft)
       }
 
@@ -228,8 +202,11 @@ export default {
         y: e.pageY
       }
     },
+
     barMoveEnd (e) {
-      this.scrollbar.switch = false
+      this.$refs.horizontal && this.$refs.horizontal.classList.remove('scroll--bar__active')
+      this.$refs.vertical && this.$refs.vertical.classList.remove('scroll--bar__active')
+      this.switch = false
       this.mousePos = null
       Listener.removeListener(window, 'mousemove', this.barMoving)
       Listener.removeListener(window, 'mouseup', this.barMoveEnd)
@@ -265,6 +242,21 @@ export default {
     overflow: scroll;
     height: 100%;
     width: 100%;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      width: 16px;
+      height: 16px;
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, .2);
+      border-radius: 4px;
+    }
   }
 
   >.@{root}--bar {
@@ -274,6 +266,7 @@ export default {
     user-select: none;
     background-color: @scroll-bar-bg;
     transition: background .2s;
+    z-index: @z-0;
 
     &:hover {
       background-color: @scroll-bar-active-bg;
