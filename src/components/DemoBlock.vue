@@ -47,6 +47,7 @@ export default {
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   border-radius: 2px;
+  box-sizing: border-box;
 
   pre {
     border: none !important;
