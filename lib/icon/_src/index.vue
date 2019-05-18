@@ -1,7 +1,9 @@
 <template>
   <i :class='["icon--wp", fontFamily,
     fontFamily === "bee--font" ? "bee-" + icon : icon
-  ]' @click='handleClick'></i>
+  ]' @click='handleClick'>
+    <slot></slot>
+  </i>
 </template>
 
 <script>
