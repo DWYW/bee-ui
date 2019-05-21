@@ -57,14 +57,14 @@ export default {
         sex: '女'
       }, {
         name: '小明',
-        age: 22,
+        age: 0,
         grade: '二年级',
         subject: '临床医院',
         sex: '男'
       }],
       data2: [{
         name: '张三',
-        chinese: 86,
+        chinese: 0,
         math: 80,
         english: 90
       }, {
