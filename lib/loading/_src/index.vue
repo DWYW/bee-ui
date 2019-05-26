@@ -31,20 +31,15 @@ export default {
   methods: {
     show () {
       this.__onShow()
-      this.$el.parentNode.classList.add('bee-loading--parent')
       return this
     },
 
     hide () {
-      window.setTimeout(() => {
-        this.__onHide()
-      }, 100)
+      this.__onHide()
     },
 
     afterLeave () {
-      this.$destroy()
-      this.$el.parentNode.classList.remove('bee-loading--parent')
-      this.$el.parentNode.removeChild(this.$el)
+      this.__onDestroy()
     }
   }
 }
