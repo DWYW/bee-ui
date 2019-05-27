@@ -12,9 +12,11 @@ export default {
         label: '香蕉'
       }, {
         label: '苹果',
+        desc: '这是一段说明信息',
         disabled: true
       }, {
-        label: '菠萝'
+        label: '菠萝',
+        desc: '这是一段说明信息'
       }, {
         label: '奇异果'
       }]

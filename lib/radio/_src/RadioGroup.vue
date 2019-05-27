@@ -1,16 +1,19 @@
 <template>
   <div class='radio-group--wp'>
-    <bee-radio :class='{
-      "radio__block": block
-    }'
-      v-for='(radio, $index) in groups'
-      :key='$index'
-      :disabled='radio.disabled'
-      :value='value === $index'
-      @input='itemSelected($event, $index)'
-    >
-      {{radio.label}}
-    </bee-radio>
+    <div :class="['group--item', {
+      'group--item__block': block,
+      'group--item__disable': radio.disabled
+    }]" v-for='(radio, $index) in groups' :key='$index'>
+      <bee-radio class="group-item--radio"
+        :disabled='radio.disabled'
+        :value='value === $index'
+        @input='itemSelected($event, $index)'
+      >
+        {{radio.label}}
+      </bee-radio>
+
+      <span class="group-item--desc">{{radio.desc}}</span>
+    </div>
   </div>
 </template>
 
@@ -45,18 +48,37 @@ export default {
 </script>
 
 <style lang='less'>
+@import '../../theme.less';
+
 .radio-group--wp {
   display: inline-block;
 
-  .radio--wp {
-    padding-right: 15px;
+  .group--item {
+    display: inline-block;
+    white-space: nowrap;
 
-    &:last-child {
-      padding-right: 0;
+    .group-item--radio {
+      padding-right: 4px;
     }
 
-    &.radio__block {
+    .group-item--desc {
+      padding-right: 15px;
+      line-height: @radio-line-height;
+    }
+
+    &.group--item__block {
       display: block;
+
+      .group-item--desc {
+        display: block;
+        padding-left: 24px;
+      }
+    }
+
+    &.group--item__disable {
+      .group-item--desc {
+        color: @radio-color-unselected;
+      }
     }
   }
 }
