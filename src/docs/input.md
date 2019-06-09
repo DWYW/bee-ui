@@ -193,21 +193,6 @@ export default {
 
 ### 属性值
 
-<!-- ``` html
-<bee-input
-  :theme='String'
-  :type='String'
-  :icon='Object'
-  :placeholder='String'
-  :auto-focus='Boolean'
-  :read-only='Boolean'
-  :maxlength='Number'
-  :reg='Function'
-  :enter-event='Function'
-  disabled
-></bee-input>
-``` -->
-
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |theme|按钮的类型|string|default,primary,success,error|default|
@@ -217,9 +202,20 @@ export default {
 |autoFocus|自动获取焦点|boolean|-|-|
 |readOnly|只读|boolean|-|-|
 |maxlength|输入的最大长度|number|-|-|
-|reg|value的格式化函数或正则表达式|function,string|-|-|
+|reg|value的格式化函数或正则表达式字符串|function,string|-|-|
 |enterEvent|enter按键的回调函数|function|-|-|
 |disabled|禁用状态|boolean|-|-|
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|click|click事件|-|
+|change|change事件|-|
+|focus|focus事件|-|
+|blur|blur事件|-|
+|keyup|keyup事件|-|
+|iconClick|图标的click事件|^0.7.0|
+
 
 ``` js
 // icon的格式

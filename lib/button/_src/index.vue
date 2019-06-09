@@ -54,7 +54,7 @@ export default {
       this.$refs.animation.insertBefore(child, this.$refs.animation.firstChild)
 
       window.setTimeout(() => {
-        this.$refs.animation.removeChild(child)
+        this.$refs.animation && this.$refs.animation.removeChild(child)
       }, 499)
     },
 
@@ -80,7 +80,7 @@ export default {
   display: inline-block;
   min-width: @btn-width;
   height: @btn-height;
-  line-height: @btn-height - 2;
+  line-height: @btn-height;
   border: 0;
   border-radius: @border-radius;
   text-align: center;
@@ -91,7 +91,6 @@ export default {
   outline: none;
   overflow: hidden;
   position: relative;
-  border: 1px solid transparent;
 
   &.@{root}__sm {
     min-width: @btn-sm-width;
@@ -133,9 +132,10 @@ export default {
 
   // default
   &.@{root}__default {
+    line-height: @btn-height - 2;
     background-color: @btn-default-bg;
     color: @btn-default-color;
-    border-color: @border-color;
+    border: 1px solid @border-color;
     transition: border 0.15s, color 0.15s;
 
     &.@{root}__sm {

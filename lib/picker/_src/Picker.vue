@@ -17,7 +17,7 @@
 
       <Date v-if='pickerType === "date"'
         :callback='datePicked'
-        :disabled='disabled'
+        :disabled='disabled ? disabled : null'
         :format='format'
         :is-range='isRange'
         :is-need-time='isNeedTime'

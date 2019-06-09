@@ -394,6 +394,10 @@ export default {
         height: @select-height;
         background: transparent;
         color: @font-color;
+
+        &::placeholder {
+          color: @placeholder-color;
+        }
       }
 
       .@{root}-text--wp {

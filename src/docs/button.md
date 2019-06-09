@@ -36,16 +36,20 @@
 ```
 :::
 
-### 属性值
+### 大小
+:::demo
+``` html
+<bee-button size='sm'>default</bee-button>
+<bee-button>default</bee-button>
+<bee-button size='lg'>default</bee-button>
 
-<!-- ``` html
-<bee-button
-  :theme=String
-  :size=String
-  :animation=Boolean
-  :disabled='Boolean'
-/>
-``` -->
+<bee-button theme='primary' size='sm'>default</bee-button>
+<bee-button theme='primary'>default</bee-button>
+<bee-button theme='primary' size='lg'>default</bee-button>
+```
+:::
+
+### 属性值
 
 | 参数 | 说明 |	类型 |	可选值 |	默认值 |
 |---|---|---|---|---|

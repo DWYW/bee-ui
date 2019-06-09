@@ -40,6 +40,7 @@ export default {
   background-color: @header-bg-color;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .2);
 
   &.fixed {
     position: fixed;

@@ -17,7 +17,7 @@
       :readOnly='readOnly'
       :value='value'/>
 
-      <bee-icon v-if='icon' :icon='icon.icon' :font-family='icon.fontFamily'></bee-icon>
+      <bee-icon v-if='icon' :icon='icon.icon' :font-family='icon.fontFamily' @click="iconClick"></bee-icon>
   </span>
 </template>
 
@@ -108,6 +108,12 @@ export default {
       }
 
       this.$emit('input', evt.target.value)
+    },
+
+    iconClick (evt) {
+      if (this.disabled) return false
+
+      this.$emit('iconClick', evt)
     }
   }
 }
@@ -121,6 +127,7 @@ export default {
   display: inline-block;
   position: relative;
   font-size: 14px;
+  background-color: @ipt-bg-color;
 
   .@{root}--ipt {
     height: @ipt-height;
@@ -131,6 +138,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     font-size: inherit;
+    background-color: transparent;
 
     &::placeholder {
       color: @placeholder-color;
@@ -143,6 +151,7 @@ export default {
     top: 0;
     line-height: @ipt-height;
     font-size: 16px;
+    cursor: pointer;
   }
 
   &.@{root}--icon__left {
@@ -191,8 +200,10 @@ export default {
   }
 
   &.@{root}__disabled {
-    opacity: .4;
+    opacity: .6;
+    background-color: @ipt-disabled-bg;
     cursor: no-drop;
+
     .@{root}--ipt {
       cursor: no-drop;
       border-color: @border-color;
@@ -200,6 +211,7 @@ export default {
 
     .icon--wp {
       color: @border-color;
+      cursor: no-drop;
     }
   }
 }
