@@ -130,9 +130,14 @@ export default {
   <div class='inline'>
     <p>禁用今天之前的日期</p>
     <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='dateDisabled'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime' :auto-change='true'></bee-picker> <br/>
     <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='dateDisabled' type='range'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime' :auto-change='true'></bee-picker>
+
+    <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='true'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='true' :time-disabled='timeDisabled' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='true' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='true' :time-disabled='timeDisabled' type='rangetime'></bee-picker>
   </div>
 </template>
 
@@ -274,24 +279,26 @@ export default {
 ### 属性值
 
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|type|类型值|string|date,datetime,range,rangetime|date|
-|lang|语言|string|zh_cn|zh_cn|
-|format|显示的日期格式化参数|string|-|见下方|
-|labelFormat|显示的日期的别名设置|function|-|-|
-|disabled|日期不可用的设置|function|-|-|
-|timeDisabled|时间不可用的设置|object|-|-|
-|timeVisible|时间设置可见性|object|-|见下方|
-|placeholder|占位符|string|-|-|
-|quickBtns|快速选择按钮|array|-|-|
-|quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|
-|maxDays|日期最大的选择天数|number|-|-|
-|scrollDom|跟随滚动的DOM节点|HTML DOM|-|document|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|type|类型值|string|date,datetime,range,rangetime|date|-|
+|lang|语言|string|zh_cn|zh_cn|-|
+|format|显示的日期格式化参数|string|-|见下方|-|
+|labelFormat|显示的日期的别名设置|function|-|-|-|
+|disabled|日期不可用的设置|function,boolean|-|-|boolean 需要 ^0.7.0|
+|timeDisabled|时间不可用的设置|object|-|-|-|
+|timeVisible|时间设置可见性|object|-|见下方|-|
+|placeholder|占位符|string|-|-|-|
+|quickBtns|快速选择按钮|array|-|-|-|
+|quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|-|
+|maxDays|日期最大的选择天数|number|-|-|-|
+|autoChange|选择日期后是否自动切换到时间选择|boolean|-|-|^0.7.0|
+|scrollDom|跟随滚动的DOM节点|HTML DOM|-|document|-|
 
 <br/>
 <br/>
 
+> **disabled 为 true 时，将禁止选取<br/>**
 > 当type为date或者datetime时， format默认值为 YYYY-MM-DD <br/>
 > 当type为range或者rangetime时， format默认值为 YYYY-MM-DD hh:mm:ss
 

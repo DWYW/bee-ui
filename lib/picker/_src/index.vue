@@ -15,6 +15,7 @@
     <bee-input ref='input'
       :read-only='true'
       :icon='iconConfig'
+      :disabled='disabled === true'
       :placeholder='placeholder'
       :value='picker.label'
       @click='openPicker' />
@@ -57,7 +58,7 @@ export default {
       default: 'date'
     },
     // 日期不可用过滤
-    disabled: Function,
+    disabled: [Function, Boolean],
     timeDisabled: Object,
     timeVisible: {
       type: Object,
@@ -79,6 +80,7 @@ export default {
       },
       default: 'inner'
     },
+    autoChange: Boolean,
     maxDays: [Number, String],
     value: [Date, Array]
   },
@@ -112,7 +114,9 @@ export default {
       return quickBtns && quickBtns.length && this.quickBtnsType === 'outer'
     }
   },
-  mounted () {},
+  mounted () {
+    this.value && this.updatedValue(this.value)
+  },
   methods: {
     openPicker () {
       if (this._instance) return
@@ -215,6 +219,8 @@ export default {
 
       if (!this.isNeedTime) {
         this.closePicker()
+      } else if (this.autoChange && this._instance && this._instance.pickerType !== 'time') {
+        this._instance.pickerTypeSwitch('time')
       }
     },
 
@@ -232,12 +238,14 @@ export default {
         if (isUpdateRange) {
           if (utils.typeof(this.labelFormat) === 'function') {
             _label = this.labelFormat(date)
+            _label = !_label ? date.map((item) => utils.format(item, this.getFormat())).join(this._TEXT.join) : _label
           } else {
             _label = date.map((item) => utils.format(item, this.getFormat())).join(this._TEXT.join)
           }
         } else if (isUpdateDate) {
           if (utils.typeof(this.labelFormat) === 'function') {
             _label = this.labelFormat(date)
+            _label = !_label ? utils.format(date, this.getFormat()) : _label
           } else {
             _label = utils.format(date, this.getFormat())
           }
