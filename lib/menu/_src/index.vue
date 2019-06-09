@@ -134,16 +134,21 @@ export default {
       const popBounding = pop.getBoundingClientRect()
       const scrollBounding = scroll.getBoundingClientRect()
       const bodyBounding = document.body.getBoundingClientRect()
-      const vertical = scrollBounding.height - (followedBounding.top + followedBounding.height - scrollBounding.top)
+      const topDistance = followedBounding.top + followedBounding.height - scrollBounding.top
+      const vertical = scrollBounding.height - topDistance
 
       if (vertical > popBounding.height + this.distance) {
         data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
         data.arr[1] = 0
         data.direction = 'down'
-      } else {
+      } else if (topDistance >= popBounding.height + this.distance) {
         data.pop[1] = Math.floor(followedBounding.top - (popBounding.height + this.distance) - bodyBounding.top)
         data.arr[1] = Math.floor(popBounding.height)
         data.direction = 'up'
+      } else {
+        data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
+        data.arr[1] = 0
+        data.direction = 'down'
       }
 
       const dl = followedBounding.left - scrollBounding.left + followedBounding.width / 2 - popBounding.width / 2
