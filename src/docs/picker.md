@@ -296,7 +296,7 @@ export default {
 |disabled|日期不可用的设置|function,boolean|-|-|boolean 需要 ^0.7.0|
 |timeDisabled|时间不可用的设置|object|-|-|-|
 |timeVisible|时间设置可见性|object|-|见下方|-|
-|defaultTime|时间的默认设置|object|-|见下方|^0.7.1|
+|defaultTime|时间的默认设置|object,function|-|见下方|^0.7.1, 其中function ^0.7.2|
 |placeholder|占位符|string|-|-|-|
 |quickBtns|快速选择按钮|array|-|-|-|
 |quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|-|
