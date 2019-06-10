@@ -135,7 +135,7 @@ export default {
       let _disabled = this.disabled && this.disabled[type] && utils.typeof(this.disabled[type]) === 'function'
 
       if (_disabled) {
-        let inDisabled = this.disabled[type](date).indexOf(item) !== -1
+        let inDisabled = this.disabled[type](date, index).indexOf(item) !== -1
         let ltStartTime = this.isOneDay && index >= 3 && item < selected[index % 3]
         return inDisabled || ltStartTime
       } else {

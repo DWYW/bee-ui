@@ -18,6 +18,14 @@ export default {
         hour: true,
         minute: true,
         second: false
+      },
+      defaultTime: {
+        startHour: 1,
+        startMinute: 2,
+        startSecond: 2,
+        endHour: 2,
+        endMinute: 2,
+        endSecond: 2
       }
     }
   },
@@ -114,9 +122,9 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker :scroll-dom='scrollDom'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' type='datetime'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' type='datetime' :default-time='defaultTime'></bee-picker> <br/>
     <bee-picker :scroll-dom='scrollDom' type='range'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' type='rangetime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' type='rangetime' :default-time='defaultTime'></bee-picker>
   </div>
 </template>
 ```
@@ -130,7 +138,7 @@ export default {
   <div class='inline'>
     <p>禁用今天之前的日期</p>
     <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='dateDisabled'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime' :auto-change='true'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime' :auto-change='true' :default-time='defaultTime'></bee-picker> <br/>
     <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='dateDisabled' type='range'></bee-picker>
     <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime' :auto-change='true'></bee-picker>
 
@@ -288,6 +296,7 @@ export default {
 |disabled|日期不可用的设置|function,boolean|-|-|boolean 需要 ^0.7.0|
 |timeDisabled|时间不可用的设置|object|-|-|-|
 |timeVisible|时间设置可见性|object|-|见下方|-|
+|defaultTime|时间的默认设置|object|-|见下方|^0.7.1|
 |placeholder|占位符|string|-|-|-|
 |quickBtns|快速选择按钮|array|-|-|-|
 |quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|-|
@@ -312,17 +321,27 @@ export default {
 
 // timeDisabled 设置
 {
-  hour: (date) => {
+  hour: (date, index) => {
     // do something ...
     return // disabled
   },
-  minute: (date) => {
+  minute: (date, index) => {
     // do something ...
     return // disabled
   },
-  second: (date) => {
+  second: (date, index) => {
     // do something ...
     return // disabled
   }
+}
+
+// defaultTime 默认值
+{
+  startHour: 0,
+  startMinute: 0,
+  startSecond: 0,
+  endHour: 0,
+  endMinute: 0,
+  endSecond: 0,
 }
 ```
