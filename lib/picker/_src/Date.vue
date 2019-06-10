@@ -71,7 +71,7 @@ export default {
     callback: Function,
     isRange: Boolean,
     isNeedTime: Boolean,
-    defaultTime: Object,
+    defaultTime: [Object, Function],
     value: [Date, Array] // date or dateArray
   },
   data () {
@@ -240,6 +240,41 @@ export default {
       return className
     },
 
+    /**
+     * 获取默认时间
+     */
+    getDefaultTime () {
+      const _timeData = utils.typeof(this.defaultTime) === 'function' ? this.defaultTime() : this.defaultTime
+      let _data = {
+        startHour: (_timeData && _timeData.startHour) || 0,
+        startMinute: (_timeData && _timeData.startMinute) || 0,
+        startSecond: (_timeData && _timeData.startSecond) || 0,
+        endHour: (_timeData && _timeData.endHour) || 23,
+        endMinute: (_timeData && _timeData.endMinute) || 59,
+        endSecond: (_timeData && _timeData.endSecond) || 59
+      }
+
+      if (utils.typeof(this.value) === 'date') {
+        _data.startHour = this.value.getHours()
+        _data.startMinute = this.value.getMinutes()
+        _data.startSecond = this.value.getSeconds()
+      } else if (utils.typeof(this.value) === 'array') {
+        if (utils.typeof(this.value[0]) === 'date') {
+          _data.startHour = this.value[0].getHours()
+          _data.startMinute = this.value[0].getMinutes()
+          _data.startSecond = this.value[0].getSeconds()
+        }
+
+        if (utils.typeof(this.value[1]) === 'date') {
+          _data.endHour = this.value[1].getHours()
+          _data.endMinute = this.value[1].getMinutes()
+          _data.endSecond = this.value[1].getSeconds()
+        }
+      }
+
+      return _data
+    },
+
     /* 日期拾取 */
     picker (day, type) {
       if (this.disableFilter(day, type)) {
@@ -250,16 +285,9 @@ export default {
         this.rangePicker(day, type)
       } else {
         let { year, month } = this.getYearMonth(type)
-
-        // 获取时间设置
-        let _date = {
-          hour: this.value ? this.value.getHours() : (this.defaultTime.startHour || 0),
-          minute: this.value ? this.value.getMinutes() : (this.defaultTime.startMinute || 0),
-          second: this.value ? this.value.getSeconds() : (this.defaultTime.startSecond || 0)
-        }
-
+        const { startHour, startMinute, startSecond } = this.getDefaultTime()
         this.selectedDate = utils.date2object(new Date(year, month, day, 0, 0, 0))
-        this.callback(new Date(year, month, day, _date.hour, _date.minute, _date.second), 'pick')
+        this.callback(new Date(year, month, day, startHour, startMinute, startSecond), 'pick')
       }
     },
 
@@ -302,21 +330,9 @@ export default {
           this.isHalfSelected = false
           this.rangeEnd = _date
 
-          // 获取时间设置
-          let start = {
-            hour: this.value ? this.value[0].getHours() : (this.defaultTime.startHour || 0),
-            minute: this.value ? this.value[0].getMinutes() : (this.defaultTime.startMinute || 0),
-            second: this.value ? this.value[0].getSeconds() : (this.defaultTime.startSecond || 0)
-          }
-
-          let end = {
-            hour: this.value ? this.value[1].getHours() : (this.defaultTime.endHour || 23),
-            minute: this.value ? this.value[1].getMinutes() : (this.defaultTime.endMinute || 59),
-            second: this.value ? this.value[1].getSeconds() : (this.defaultTime.endSecond || 59)
-          }
-
-          let _startDate = new Date(this.rangeStart.year, this.rangeStart.month, this.rangeStart.date, start.hour, start.minute, start.second)
-          let _endDate = new Date(this.rangeEnd.year, this.rangeEnd.month, this.rangeEnd.date, end.hour, end.minute, end.second)
+          const { startHour, startMinute, startSecond, endHour, endMinute, endSecond } = this.getDefaultTime()
+          let _startDate = new Date(this.rangeStart.year, this.rangeStart.month, this.rangeStart.date, startHour, startMinute, startSecond)
+          let _endDate = new Date(this.rangeEnd.year, this.rangeEnd.month, this.rangeEnd.date, endHour, endMinute, endSecond)
 
           if (_endDate < _startDate) {
             _endDate = _startDate

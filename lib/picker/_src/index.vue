@@ -84,7 +84,7 @@ export default {
     autoChange: Boolean,
     maxDays: [Number, String],
     defaultTime: {
-      type: Object,
+      type: [Object, Function],
       default: () => {
         return {}
       }
