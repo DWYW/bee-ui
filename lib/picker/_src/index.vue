@@ -18,7 +18,8 @@
       :disabled='disabled === true'
       :placeholder='placeholder'
       :value='picker.label'
-      @click='openPicker' />
+      @click='openPicker'
+      @iconClick='openPicker' />
   </div>
 </template>
 
@@ -82,6 +83,12 @@ export default {
     },
     autoChange: Boolean,
     maxDays: [Number, String],
+    defaultTime: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     value: [Date, Array]
   },
   data () {

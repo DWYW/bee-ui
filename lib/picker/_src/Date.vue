@@ -71,6 +71,7 @@ export default {
     callback: Function,
     isRange: Boolean,
     isNeedTime: Boolean,
+    defaultTime: Object,
     value: [Date, Array] // date or dateArray
   },
   data () {
@@ -252,9 +253,9 @@ export default {
 
         // 获取时间设置
         let _date = {
-          hour: this.value ? this.value.getHours() : 0,
-          minute: this.value ? this.value.getMinutes() : 0,
-          second: this.value ? this.value.getSeconds() : 0
+          hour: this.value ? this.value.getHours() : (this.defaultTime.startHour || 0),
+          minute: this.value ? this.value.getMinutes() : (this.defaultTime.startMinute || 0),
+          second: this.value ? this.value.getSeconds() : (this.defaultTime.startSecond || 0)
         }
 
         this.selectedDate = utils.date2object(new Date(year, month, day, 0, 0, 0))
@@ -303,15 +304,15 @@ export default {
 
           // 获取时间设置
           let start = {
-            hour: this.value ? this.value[0].getHours() : 0,
-            minute: this.value ? this.value[0].getMinutes() : 0,
-            second: this.value ? this.value[0].getSeconds() : 0
+            hour: this.value ? this.value[0].getHours() : (this.defaultTime.startHour || 0),
+            minute: this.value ? this.value[0].getMinutes() : (this.defaultTime.startMinute || 0),
+            second: this.value ? this.value[0].getSeconds() : (this.defaultTime.startSecond || 0)
           }
 
           let end = {
-            hour: this.value ? this.value[1].getHours() : 23,
-            minute: this.value ? this.value[1].getMinutes() : 59,
-            second: this.value ? this.value[1].getSeconds() : 59
+            hour: this.value ? this.value[1].getHours() : (this.defaultTime.endHour || 23),
+            minute: this.value ? this.value[1].getMinutes() : (this.defaultTime.endMinute || 59),
+            second: this.value ? this.value[1].getSeconds() : (this.defaultTime.endSecond || 59)
           }
 
           let _startDate = new Date(this.rangeStart.year, this.rangeStart.month, this.rangeStart.date, start.hour, start.minute, start.second)

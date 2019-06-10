@@ -24,6 +24,7 @@
         :max-days='maxDays'
         :static-text='text'
         :type='type'
+        :default-time='defaultTime'
         :value='value'
       ></Date>
 
