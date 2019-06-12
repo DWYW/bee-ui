@@ -304,6 +304,11 @@ export default {
 |autoChange|选择日期后是否自动切换到时间选择|boolean|-|-|^0.7.0|
 |scrollDom|跟随滚动的DOM节点|HTML DOM|-|document|-|
 
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|opened|选项面板打开后的回调事件|^0.7.3|
+
 <br/>
 <br/>
 

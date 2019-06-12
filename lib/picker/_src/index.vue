@@ -150,6 +150,7 @@ export default {
       document.body.appendChild(this._instance.dom)
 
       setTimeout(() => {
+        this.$emit('opened', this)
         Listener.addListener(document, 'click', this.closePicker)
       })
     },
@@ -218,7 +219,7 @@ export default {
     /**
      * 选取后的回调
      * @param {Date|Array Date} date 回调值
-     * @param {String} type 回调类型 picker|quickBtn
+     * @param {String} type 回调类型 pick|quickBtn
      */
     pickerCallBack (date, type) {
       this.updatedValue(date)
