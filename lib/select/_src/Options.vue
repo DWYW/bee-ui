@@ -22,7 +22,7 @@
         <li v-if='!options.length' class='options--item' :style='{lineHeight: (textContainerHeight - 2) + "px"}'>暂无可选项</li>
       </ul>
 
-      <bee-scroll show-type='hover' v-else>
+      <bee-scroll show-type='hover' v-else ref='ScrollRect'>
         <ul>
           <!-- has options -->
           <template v-if='options.length'>
