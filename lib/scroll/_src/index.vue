@@ -204,12 +204,17 @@ export default {
     },
 
     barMoveEnd (e) {
-      this.$refs.horizontal && this.$refs.horizontal.classList.remove('scroll--bar__active')
-      this.$refs.vertical && this.$refs.vertical.classList.remove('scroll--bar__active')
-      this.switch = false
-      this.mousePos = null
-      Listener.removeListener(window, 'mousemove', this.barMoving)
-      Listener.removeListener(window, 'mouseup', this.barMoveEnd)
+      /**
+       * To resolve the problem of auto-closing options when applied to select component.
+       */
+      setTimeout(() => {
+        this.$refs.horizontal && this.$refs.horizontal.classList.remove('scroll--bar__active')
+        this.$refs.vertical && this.$refs.vertical.classList.remove('scroll--bar__active')
+        this.switch = false
+        this.mousePos = null
+        Listener.removeListener(window, 'mousemove', this.barMoving)
+        Listener.removeListener(window, 'mouseup', this.barMoveEnd)
+      })
     }
   }
 }

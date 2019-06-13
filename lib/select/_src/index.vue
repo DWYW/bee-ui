@@ -167,6 +167,12 @@ export default {
      */
     closeOptions () {
       if (this._instance) {
+        const scrollRect = this._instance.$refs.ScrollRect
+
+        if (scrollRect && scrollRect.switch) {
+          return false
+        }
+
         this.readonly = true
         this._instance.vm.$destroy()
         document.body.removeChild(this._instance.dom)
