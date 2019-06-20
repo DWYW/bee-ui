@@ -539,7 +539,7 @@ export default {
     <bee-table-column width='40'>
       <template slot='header' slot-scope='scope'>#</template>
       <template slot-scope='scope'>
-        {{(scope.$index + 1) * 2}}
+        <bee-icon icon='info'></bee-icon>  {{(scope.$index + 1) * 2}}
       </template>
     </bee-table-column>
     <bee-table-column width='160' label='姓名' prop='name'>
