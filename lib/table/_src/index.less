@@ -144,9 +144,14 @@
     background-color: @table-body-bg-color;
 
     .@{root}-fixed--header,
+    .@{root}-fixed--footer,
     .@{root}-fixed--body {
       overflow: hidden;
       position: absolute;
+    }
+
+    .@{root}-fixed--header,
+    .@{root}-fixed--body {
       top: 0;
     }
 
@@ -160,13 +165,25 @@
       }
     }
 
+    .@{root}-fixed--footer {
+      bottom: 2px;
+      box-sizing: content-box;
+      border-top: 1px solid @table-border-color;
+
+      table {
+        transform: translateY(-100%);
+
+        tfoot tr td {
+          border-top-color: transparent;
+        }
+      }
+    }
+
     &.@{root}--fixed__left {
       left: 0;
       border-right: 1px solid @table-border-color;
       box-sizing: content-box;
       box-shadow: 2px 0 6px -2px rgba(0, 0, 0, .4);
-
-
     }
 
     &.@{root}--fixed__right {
@@ -175,6 +192,7 @@
       box-shadow: -2px 0 6px -2px rgba(0, 0, 0, .4);
 
       .@{root}-fixed--header,
+      .@{root}-fixed--footer,
       .@{root}-fixed--body {
         right: 0;
       }
