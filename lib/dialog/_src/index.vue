@@ -164,7 +164,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: @z-2;
+  // be lt bee-menu z-index
+  z-index: @z-1;
 
   .@{root}--panel {
     background-color: @dlg-panel-bg-color;
