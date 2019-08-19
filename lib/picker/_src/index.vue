@@ -97,7 +97,9 @@ export default {
       picker: {
         label: null,
         value: null
-      }
+      },
+      _before: null,
+      _after: null
     }
   },
   computed: {
@@ -128,6 +130,7 @@ export default {
     openPicker () {
       if (this._instance) return
 
+      this._before = this.value
       let { value, ...props } = this._props
 
       const _config = Object.assign({}, props, {
@@ -160,6 +163,7 @@ export default {
      */
     closePicker () {
       if (this._instance) {
+        this.isChanged()
         this._instance.vm.$destroy()
         document.body.removeChild(this._instance.dom)
         this._instance = null
@@ -210,6 +214,7 @@ export default {
      * @param {Object} data 选中的按钮数据
      */
     quickCallback (data) {
+      this._after = data.value
       this.$set(this.picker, 'label', data.label)
       this.$set(this.picker, 'value', data.value)
       this.closePicker()
@@ -222,6 +227,7 @@ export default {
      * @param {String} type 回调类型 pick|quickBtn
      */
     pickerCallBack (date, type) {
+      this._after = date
       this.updatedValue(date)
       this.$emit('input', date)
 
@@ -230,6 +236,22 @@ export default {
       } else if (this.autoChange && this._instance && this._instance.pickerType !== 'time') {
         this._instance.pickerTypeSwitch('time')
       }
+    },
+
+    /**
+     * whether the value is changed.
+     */
+    isChanged () {
+      // whether before equal after
+      if (utils.typeof(this._before) === utils.typeof(this._after)) {
+        if (!this._before) return false
+
+        if (this._before.toString() === this._after.toString()) return false
+      }
+
+      this.$nextTick(() => {
+        this.$emit('change', this._after)
+      })
     },
 
     /**

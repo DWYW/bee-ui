@@ -11,6 +11,12 @@ export default {
       test1: null,
       test2: null,
       test3: null,
+      test4: null,
+      test5: null,
+      test6: null,
+      test7: null,
+      test8: null,
+      test9: null,
       mobile: null,
       str1: null,
       str2: null,
@@ -45,6 +51,9 @@ export default {
   methods: {
     enterEvent () {
       console.log(`您输入的手机号为${this.mobile}`)
+    },
+    onChange (value) {
+      console.log(value)
     }
   }
 }
@@ -59,12 +68,15 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input v-model='test1' placeholder='请输入'></bee-input>
-      <bee-input theme='primary' v-model='test1' placeholder='请输入'></bee-input>
-      <bee-input theme='success' v-model='test1' placeholder='请输入'></bee-input>
-      <bee-input theme='error' v-model='test1' placeholder='请输入'></bee-input>
+      <bee-input @change='onChange' v-model='test1' placeholder='请输入'></bee-input>
+      <bee-input theme='primary' @change='onChange' v-model='test2' placeholder='请输入'></bee-input>
+      <bee-input theme='success' @change='onChange' v-model='test3' placeholder='请输入'></bee-input>
+      <bee-input theme='error' @change='onChange' v-model='test4' placeholder='请输入'></bee-input>
     </p>
     <p>您输入的是：{{test1}}</p>
+    <p>您输入的是：{{test2}}</p>
+    <p>您输入的是：{{test3}}</p>
+    <p>您输入的是：{{test4}}</p>
   <div>
 </template>
 ```
@@ -79,9 +91,9 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input v-model='test3' placeholder='请输入' :auto-focus='true'></bee-input>
+      <bee-input @change='onChange' v-model='test5' placeholder='请输入' :auto-focus='true'></bee-input>
     </p>
-    <p> 您输入的是：{{test3}}</p>
+    <p> 您输入的是：{{test5}}</p>
   <div>
 </template>
 ```
@@ -95,12 +107,15 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input v-model='test2' placeholder='请输入' :icon="icon[0]"></bee-input>
-      <bee-input theme='primary' v-model='test2' placeholder='请输入' :icon="icon[1]"></bee-input>
-      <bee-input theme='success' v-model='test2' placeholder='请输入' :icon="icon[2]"></bee-input>
-      <bee-input theme='error' v-model='test2' placeholder='请输入' :icon="icon[3]"></bee-input>
+      <bee-input @change='onChange' v-model='test6' placeholder='请输入' :icon="icon[0]"></bee-input>
+      <bee-input theme='primary' @change='onChange' v-model='test7' placeholder='请输入' :icon="icon[1]"></bee-input>
+      <bee-input theme='success' @change='onChange' v-model='test8' placeholder='请输入' :icon="icon[2]"></bee-input>
+      <bee-input theme='error' @change='onChange' v-model='test9' placeholder='请输入' :icon="icon[3]"></bee-input>
     </p>
-    <p>您输入的是：{{test2}}</p>
+    <p>您输入的是：{{test6}}</p>
+    <p>您输入的是：{{test7}}</p>
+    <p>您输入的是：{{test8}}</p>
+    <p>您输入的是：{{test9}}</p>
   <div>
 </template>
 ```
@@ -150,12 +165,16 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input v-model='mobile' placeholder='请输入手机号' maxlength='11' :icon="icon[1]" :reg='mobileReg' :enter-event='enterEvent'></bee-input>
+      <bee-input @change='onChange' v-model='mobile' placeholder='请输入手机号' maxlength='11' :icon="icon[1]" :reg='mobileReg' :enter-event='enterEvent'></bee-input>
 
-      <bee-input v-model='str1' placeholder='请输入字母' maxlength='11' :icon="icon[1]" :reg='reg1' ></bee-input>
+      <bee-input @change='onChange' v-model='str1' placeholder='请输入字母' maxlength='11' :icon="icon[1]" :reg='reg1' ></bee-input>
 
-      <bee-input v-model='str2' placeholder='只能输入数字' maxlength='11' :icon="icon[1]" reg='^[0-9]*$' ></bee-input>
+      <bee-input @change='onChange' v-model='str2' placeholder='只能输入数字' maxlength='11' :icon="icon[1]" reg='^[0-9]*$' ></bee-input>
     </p>
+
+    <p>您输入的是：{{mobile}}</p>
+    <p>您输入的是：{{str1}}</p>
+    <p>您输入的是：{{str2}}</p>
   <div>
 </template>
 

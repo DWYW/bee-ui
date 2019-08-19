@@ -8,6 +8,8 @@ export default {
   data () {
     return {
       fruit: null,
+      value1: null,
+      value2: null,
       groups: [{
         label: '香蕉'
       }, {
@@ -25,6 +27,9 @@ export default {
   methods: {
     getFruit () {
       return this.groups[this.fruit] ? this.groups[this.fruit].label : null
+    },
+    onChange (value) {
+      console.log(value)
     }
   }
 }
@@ -37,9 +42,9 @@ export default {
 ::: demo
 ``` html
 <div class='inline'>
-  <bee-radio>苹果</bee-radio>
+  <bee-radio v-model='value1' @change="onChange">苹果</bee-radio>
   <bee-radio disabled>香蕉</bee-radio>
-  <bee-radio>奇异果</bee-radio>
+  <bee-radio v-model='value2' @change="onChange">奇异果</bee-radio>
 </div>
 ```
 :::
@@ -50,6 +55,12 @@ export default {
 |---|---|---|---|---|
 |icons|选项的图标配置信息|array|-|['radio-unselected', 'radio-selected']|
 |disabled|禁用状态|boolean|-|-|
+
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|change|选取后的回调|^0.7.7|
 
 <br/>
 <br/>
@@ -63,7 +74,7 @@ export default {
 ``` html 
 <template>
   <div style='border-bottom:1px solid #ccc;'>
-    <bee-radio-group v-model='fruit' :groups='groups'></bee-radio-group>
+    <bee-radio-group v-model='fruit' :groups='groups' @change="onChange"></bee-radio-group>
   </div>
   <div>
     <bee-radio-group v-model='fruit' :groups='groups' block></bee-radio-group>
@@ -103,4 +114,9 @@ export default {
 |---|---|---|---|---|
 |groups|选项数据|array|-|[]|
 |block|块级显示|boolean|-|-|
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|change|选取后的回调|^0.7.7|
 

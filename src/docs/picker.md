@@ -14,6 +14,12 @@ export default {
       date5: null,
       date6: null,
       date7: null,
+      date8: null,
+      date9: null,
+      date10: null,
+      date11: null,
+      date12: null,
+      date13: null,
       visible: {
         hour: true,
         minute: true,
@@ -109,6 +115,9 @@ export default {
       _data['nextDays'] = 6 * 7 - _data.days - _data.prevDays
 
       return _data
+    },
+    onChange (value) {
+      console.log(value)
     }
   }
 }
@@ -121,11 +130,16 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker :scroll-dom='scrollDom'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' type='datetime' :default-time='defaultTime'></bee-picker> <br/>
-    <bee-picker :scroll-dom='scrollDom' type='range'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' type='rangetime' :default-time='defaultTime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date1' @change="onChange"></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' type='datetime' :default-time='defaultTime' v-model='date2' @change="onChange"></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' type='range' v-model='date3' @change="onChange"></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' type='rangetime' :default-time='defaultTime' v-model='date4' @change="onChange"></bee-picker>
   </div>
+
+  <p>您选择的是：{{date1}}</p>
+  <p>您选择的是：{{date2}}</p>
+  <p>您选择的是：{{date3}}</p>
+  <p>您选择的是：{{date4}}</p>
 </template>
 ```
 :::
@@ -137,27 +151,27 @@ export default {
 <template>
   <div class='inline'>
     <p>禁用今天之前的日期</p>
-    <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='dateDisabled'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime' :auto-change='true' :default-time='defaultTime'></bee-picker> <br/>
-    <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='dateDisabled' type='range'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime' :auto-change='true'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='dateDisabled' v-model='date5' @change="onChange"></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='dateDisabled' :time-disabled='timeDisabled' type='datetime' :auto-change='true' :default-time='defaultTime' v-model='date6' @change="onChange"></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' :disabled='dateDisabled' type='range' v-model='date7' @change="onChange"></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='dateDisabled' :time-disabled='timeDisabled' type='rangetime' :auto-change='true' v-model='date8' @change="onChange"></bee-picker><br/>
 
-    <bee-picker :scroll-dom='scrollDom' v-model='date2' :disabled='true'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date3' :disabled='true' :time-disabled='timeDisabled' type='datetime'></bee-picker> <br/>
-    <bee-picker :scroll-dom='scrollDom' v-model='date4' :disabled='true' type='range'></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' v-model='date5' :disabled='true' :time-disabled='timeDisabled' type='rangetime'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='true' v-model='date5'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='true' :time-disabled='timeDisabled' type='datetime' v-model='date6'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' :disabled='true' type='range' v-model='date7'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' :disabled='true' :time-disabled='timeDisabled' type='rangetime' v-model='date8'></bee-picker>
+
+    <p>您选择的是：{{date5}}</p>
+    <p>您选择的是：{{date6}}</p>
+    <p>您选择的是：{{date7}}</p>
+    <p>您选择的是：{{date8}}</p>
   </div>
 </template>
 
 <script>
 export default {
   data () {
-    return {
-      date2: null,
-      date3: null,
-      date4: null,
-      date5: null
-    }
+    return {}
   },
   computed: {
     dateDisabled () {
@@ -237,8 +251,10 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker :scroll-dom='scrollDom' v-model='date6' :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
-    <bee-picker :scroll-dom='scrollDom' v-model='date7' :quick-btns='quickBtns' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' v-model='date9' @change="onChange" :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' v-model='date10' @change="onChange" :quick-btns='quickBtns' type='range'></bee-picker>
+    <p>您选择的是：{{date9}}</p>
+    <p>您选择的是：{{date10}}</p>
   </div>
 </template>
 
@@ -275,9 +291,13 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM' ></bee-picker>
-    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM hh:mm' :time-visible='visible' type='datetime'></bee-picker> <br/>
-    <bee-picker :scroll-dom='scrollDom' :max-days='3' type='range'></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM' v-model='date11' @change="onChange"></bee-picker>
+    <bee-picker :scroll-dom='scrollDom' format='YYYY-MM hh:mm' :time-visible='visible' type='datetime' v-model='date12' @change="onChange"></bee-picker> <br/>
+    <bee-picker :scroll-dom='scrollDom' :max-days='3' type='range' v-model='date13' @change="onChange"></bee-picker>
+
+    <p>您选择的是：{{date11}}</p>
+    <p>您选择的是：{{date12}}</p>
+    <p>您选择的是：{{date13}}</p>
   </div>
 </template>
 ```
@@ -308,6 +328,7 @@ export default {
 |事件|说明|版本支持|
 |---|---|---|
 |opened|选项面板打开后的回调事件|^0.7.3|
+|change|选取后的回调|^0.7.7|
 
 <br/>
 <br/>

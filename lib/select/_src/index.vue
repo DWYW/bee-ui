@@ -186,14 +186,28 @@ export default {
     },
 
     /**
+     * 值是否发生了改变
+     * @param  {any} option 选中的options item
+     * @param  {any} option 选中的options item
+     */
+    isChanged (current, next) {
+      if (this.multiple) {
+        if (this.arrayIsEqual(current, next)) return false
+      } else {
+        if (current === next) return false
+      }
+
+      this.$nextTick(() => {
+        this.$emit('change', next)
+      })
+    },
+
+    /**
      * 拾取后的回调函数
      * @param  {Object} option 选中的options item
      * @param  {Number} index  选中的item的索引号
      */
     pickerCallBack (option, index) {
-      // 添加change回调
-      this.$emit('change', null)
-
       option = Object.assign({}, option)
 
       if (this.multiple) {
@@ -209,16 +223,17 @@ export default {
           this.selectedLabels.splice(findIndex, 1)
         }
 
-        this.$emit('input', this.selectedItems)
+        this.isChanged(this.value, this.selectedItems)
+        this.$emit('input', [].concat(this.selectedItems))
         this.$nextTick(() => {
           this._instance.vm.$refs.menu.setPosition()
           this._instance.textContainerWidth = this._wrapper.offsetWidth
         })
       } else {
         this.setBackupData()
-
         this.selectedItem = deepValue(this.optionKey.value, option)
         this.selectedLabel = deepValue(this.optionKey.label, option)
+        this.isChanged(this.value, this.selectedItem)
         this.$emit('input', deepValue(this.optionKey.value, option))
         this.closeOptions()
       }
@@ -293,7 +308,8 @@ export default {
 
       this.selectedItems.splice(index, 1)
       this.selectedLabels.splice(index, 1)
-      this.$emit('input', this.selectedItems)
+      this.isChanged(this.value, this.selectedItems)
+      this.$emit('input', [].concat(this.selectedItems))
     },
 
     /**

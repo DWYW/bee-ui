@@ -48,8 +48,17 @@ export default {
   methods: {
     /* switch开关事件 */
     switchChange (e) {
+      this.isChanged(this.checked, e.target.checked)
       this.checked = e.target.checked
       this.$emit('input', e.target.checked)
+    },
+
+    isChanged (current, next) {
+      if (current === next) return false
+
+      this.$nextTick(() => {
+        this.$emit('change', next)
+      })
     }
   },
   watch: {

@@ -11,8 +11,8 @@
 ``` html
 <template>
   <div class='inline'>
-    <bee-checkbox v-model='banana'>香蕉</bee-checkbox>
-    <bee-checkbox v-model='apple'>苹果</bee-checkbox>
+    <bee-checkbox v-model='banana' @change='onChange'>香蕉</bee-checkbox>
+    <bee-checkbox v-model='apple' @change='onChange'>苹果</bee-checkbox>
     <bee-checkbox disabled>奇异果</bee-checkbox>
   </div>
   <p>
@@ -27,6 +27,11 @@ export default {
       banana: null,
       apple: null
     }
+  },
+  methods: {
+    onChange (value) {
+      console.log(value)
+    }
   }
 }
 </script>
@@ -39,3 +44,9 @@ export default {
 |---|---|---|---|---|
 |icons|选项的图标配置信息|array|-|['radio-unselected', 'radio-selected']|
 |disabled|禁用状态|boolean|-|-|
+
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|change|选取后的回调|^0.7.7|
