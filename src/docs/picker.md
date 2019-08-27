@@ -2,6 +2,20 @@
 .inline .picker--wp {
   margin: 0 10px 10px 0;
 }
+
+.test-dialog-body {
+  height: 320px;
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.test-dialog-body .wp {
+  width: 100%;
+  padding-top: 280px;
+  padding-bottom: 280px;
+  box-sizing: border-box;
+}
 </style>
 <script>
 export default {
@@ -32,7 +46,9 @@ export default {
         endHour: 2,
         endMinute: 2,
         endSecond: 2
-      }
+      },
+      dialogShow: false,
+      testDom: null
     }
   },
   computed: {
@@ -84,6 +100,13 @@ export default {
     }
   },
   methods: {
+    showDialog () {
+      this.dialogShow = true
+
+      this.$nextTick(() => {
+        this.testDom = this.$refs.test
+      })
+    },
     range (staft, end) {
       let res = []
 
@@ -298,6 +321,16 @@ export default {
     <p>您选择的是：{{date11}}</p>
     <p>您选择的是：{{date12}}</p>
     <p>您选择的是：{{date13}}</p>
+
+    <bee-button @click='showDialog'>show dialog</bee-button>
+
+    <bee-dialog :show.sync='dialogShow'>
+      <section class='test-dialog-body' ref='test'>
+        <section class='wp'>
+          <bee-picker :scroll-dom='testDom' format='YYYY-MM' v-model='date11' @change="onChange"></bee-picker>
+        </section>
+      </section>
+    </bee-dialog>
   </div>
 </template>
 ```
