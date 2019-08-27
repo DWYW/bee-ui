@@ -10,6 +10,10 @@
     "bee-ui",
     "bee-ui-vue"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DWYW/bee-ui"
+  },
   "license": "ISC",
   "gitHooks": {
     "pre-commit": "npm run lint",
