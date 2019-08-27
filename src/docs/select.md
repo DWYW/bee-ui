@@ -9,6 +9,9 @@ export default {
     return {
       disabled1: 1,
       disabled2: [1, 2],
+      value1: null,
+      value2: null,
+      value3: null,
       options: [{
         label: '香蕉',
         value: 1
@@ -44,6 +47,11 @@ export default {
         value: 11
       }]
     }
+  },
+  methods: {
+    onChanged (value, key) {
+      console.log(value, this[key])
+    }
   }
 }
 </script>
@@ -55,8 +63,8 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select :scroll-dom='scrollDom' :options='options'></bee-select>
-    <bee-select :scroll-dom='scrollDom' :options='[]'></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='options' v-model='value1' @change="onChanged($event, 'value1')"></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='[]' v-model='value2' @change="onChanged($event, 'value2')"></bee-select>
   </p>
 </template>
 ```
@@ -68,7 +76,7 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select :scroll-dom='scrollDom' :options='options' multiple></bee-select>
+    <bee-select :scroll-dom='scrollDom' :options='options' multiple v-model='value3' @change="onChanged($event, 'value3')"></bee-select>
   </p>
 </template>
 ```
@@ -98,6 +106,13 @@ export default {
 |multiple|是否是多选|boolean|—|false|
 |disabled|是否是禁用|boolean|-|false|
 |scrollDom|跟随滚动的DOM节点|HTML DOM|-|document|
+
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|change|选取后的回调|^0.7.7|
+
 
 ```js
 // options 配置信息

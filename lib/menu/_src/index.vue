@@ -146,9 +146,30 @@ export default {
         data.arr[1] = Math.floor(popBounding.height)
         data.direction = 'up'
       } else {
-        data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
-        data.arr[1] = 0
-        data.direction = 'down'
+        // if the scroll rect not document.body, use body mounted it.
+        if (scroll.tagName.toLowerCase() !== 'body') {
+          const _scrollBounding = document.body.getBoundingClientRect()
+          const _topDistance = followedBounding.top + followedBounding.height - _scrollBounding.top
+          const _vertical = _scrollBounding.height - _topDistance
+
+          if (_vertical > popBounding.height + this.distance) {
+            data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
+            data.arr[1] = 0
+            data.direction = 'down'
+          } else if (_topDistance >= popBounding.height + this.distance) {
+            data.pop[1] = Math.floor(followedBounding.top - (popBounding.height + this.distance) - bodyBounding.top)
+            data.arr[1] = Math.floor(popBounding.height)
+            data.direction = 'up'
+          } else {
+            data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
+            data.arr[1] = 0
+            data.direction = 'down'
+          }
+        } else {
+          data.pop[1] = Math.floor(followedBounding.top + followedBounding.height + this.distance - bodyBounding.top)
+          data.arr[1] = 0
+          data.direction = 'down'
+        }
       }
 
       const dl = followedBounding.left - scrollBounding.left + followedBounding.width / 2 - popBounding.width / 2

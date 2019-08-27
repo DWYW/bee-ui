@@ -198,6 +198,7 @@ export default {
       color: @dlg-body-color;
       overflow: hidden;
       font-size: @dlg-font-size;
+      box-sizing: border-box;
     }
 
     .@{root}-footer {

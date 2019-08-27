@@ -12,6 +12,11 @@ export default {
       switch3: false,
       switch4: true
     }
+  },
+  methods: {
+    onChange (value) {
+      console.log(value)
+    }
   }
 }
 </script>
@@ -23,10 +28,10 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-switch v-model='switch1'></bee-switch>
-    <bee-switch v-model='switch2' size='sm'></bee-switch>
-    <bee-switch v-model='switch3' size='lg'></bee-switch>
-    <bee-switch v-model='switch4' disabled></bee-switch>
+    <bee-switch v-model='switch1' @change='onChange'></bee-switch>
+    <bee-switch v-model='switch2' @change='onChange' size='sm'></bee-switch>
+    <bee-switch v-model='switch3' @change='onChange' size='lg'></bee-switch>
+    <bee-switch v-model='switch4' @change='onChange' disabled></bee-switch>
   </div>
 </template>
 
@@ -66,3 +71,10 @@ export default {
 |disabled|是否是禁用|boolean|-|false|
 |openColor|打开状态的颜色|color|-|-|
 |closeColor|关闭状态的颜色|color|-|-|
+
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|change|选取后的回调|^0.7.7|
+

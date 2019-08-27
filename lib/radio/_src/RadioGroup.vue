@@ -39,9 +39,16 @@ export default {
   },
   methods: {
     itemSelected (value, index) {
-      if (value) {
-        this.$emit('input', index)
-      }
+      this.isChanged(this.value, index)
+      value && this.$emit('input', index)
+    },
+
+    isChanged (current, next) {
+      if (current === next) return false
+
+      this.$nextTick(() => {
+        this.$emit('change', next)
+      })
     }
   }
 }
