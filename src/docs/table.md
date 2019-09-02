@@ -128,8 +128,7 @@ export default {
 ``` html
 <template>
   <bee-table :data='data'>
-    <bee-table-column label='姓名' prop='name' >
-    </bee-table-column>
+    <bee-table-column label='姓名' prop='name' :class="['name', {'name-1': true,'name-2': false}]"></bee-table-column>
     <bee-table-column width='100' label='年龄' prop='age'></bee-table-column>
     <bee-table-column width='100' label='年级' prop='grades' placeholder='-'></bee-table-column>
     <bee-table-column width='100' label='专业' prop='subject'></bee-table-column>
