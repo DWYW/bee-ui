@@ -1,5 +1,5 @@
 <style>
-.inline .bee-switch--wp{
+.inline .bee-switch{
   margin: 0 20px 20px 0;
 }
 </style>
@@ -50,7 +50,7 @@ export default {
 ```
 :::
 
-### 其他用法
+### 自定义颜色
 
 ::: demo 
 ``` html
@@ -67,14 +67,16 @@ export default {
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|size|switch的大小|string|sm.lg|-|
-|disabled|是否是禁用|boolean|-|false|
-|openColor|打开状态的颜色|color|-|-|
-|closeColor|关闭状态的颜色|color|-|-|
+|size|大小|String| sm, lg |-|
+|disabled|是否是禁用|Boolean|-|false|
+|openColor|打开状态的颜色|Color|-|-|
+|closeColor|关闭状态的颜色|Color|-|-|
 
+<br/>
+<br/>
 
 ### 事件
 |事件|说明|版本支持|
 |---|---|---|
-|change|选取后的回调|^0.7.7|
+|change|开关变化后的触发回调|^0.7.7|
 

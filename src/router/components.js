@@ -110,8 +110,8 @@ export default [{
     label: 'empty 空内容',
     type: 'doc'
   }, {
-    path: 'scrollrect',
-    label: 'scrollrect 滚动区域',
+    path: 'scrollbar',
+    label: 'scrollbar 滚动区域',
     type: 'doc'
   }]
 }]

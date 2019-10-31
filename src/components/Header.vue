@@ -35,54 +35,65 @@ export default {
 @import '../style/size.less';
 
 .system-header {
+  position: relative;
+
+  overflow: hidden;
+
   width: 100%;
   height: @header-height;
+
   background-color: @header-bg-color;
-  position: relative;
-  overflow: hidden;
   box-shadow: 0 0 6px rgba(0, 0, 0, .2);
 
   &.fixed {
     position: fixed;
+    z-index: 9;
     top: 0;
     left: 0;
-    z-index: 99;
   }
 
   .header-content {
-    max-width: @page-width;
     position: relative;
+
+    max-width: @page-width;
     margin: 0 auto;
   }
 
   .to-home {
-    width: 140px;
-    height: @header-height;
     position: absolute;
     top: 0;
     left: 5px;
+
     display: block;
-    background-image: url(../assets/logo.png);
-    background-size: contain;
+
+    width: 140px;
+    height: @header-height;
+
+    background-image: url(../assets/logo.gif);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: left center;
+    background-size: contain;
   }
 
   .header-nav {
     position: absolute;
     top: (@header-height - @header-nav-height) / 2;
     right: 10px;
-    line-height: @header-nav-height;
+
     font-size: 16px;
+    line-height: @header-nav-height;
 
     .nav-item {
       float: left;
+
       margin-right: 20px;
 
       a {
-        color: inherit;
-        text-decoration: none;
         display: inline-block;
+
+        text-decoration: none;
+
+        color: inherit;
 
         &:hover {
           color: @header-nav-color;
@@ -99,12 +110,13 @@ export default {
     }
     .github {
       a {
-        background-image: url(../assets/github.png);
-        background-size: 24px;
-        background-repeat: no-repeat;
-        background-position: center;
         width: 40px;
         height: @header-nav-height;
+
+        background-image: url(../assets/github.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 24px;
       }
     }
   }

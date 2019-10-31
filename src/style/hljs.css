@@ -7,7 +7,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs {
   display: block;
   overflow-x: auto;
+
   padding: 0.5em;
+
   color: #333;
   background: #f8f8f8;
 }
@@ -15,6 +17,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-comment,
 .hljs-quote {
   color: #998;
+
   font-style: italic;
 }
 
@@ -22,6 +25,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-selector-tag,
 .hljs-subst {
   color: #333;
+
   font-weight: bold;
 }
 
@@ -42,6 +46,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-section,
 .hljs-selector-id {
   color: #900;
+
   font-weight: bold;
 }
 
@@ -52,6 +57,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-type,
 .hljs-class .hljs-title {
   color: #458;
+
   font-weight: bold;
 }
 
@@ -59,6 +65,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-name,
 .hljs-attribute {
   color: #000080;
+
   font-weight: normal;
 }
 
@@ -79,6 +86,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 .hljs-meta {
   color: #999;
+
   font-weight: bold;
 }
 
@@ -99,29 +107,34 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 .md h1, .md h2, .md h3, .md h4, .md h5, .md h6 {
-  line-height: 2em;
   margin: 0.5em 0;
+
+  line-height: 2em;
   /* margin-bottom: 1em; */
 }
 
 .md pre {
-  background-color: #f5f5f5;
-  border:1px solid #ebedf0;
-  box-sizing: border-box;
-  padding: 1em;
-  margin: 1em 0;
-  overflow-x: auto;
   display: block;
+  overflow-x: auto;
+
+  box-sizing: border-box;
   width: 100%;
+  margin: 1em 0;
+  padding: 1em;
+
+  border:1px solid #ebedf0;
+  background-color: #f5f5f5;
 }
 
 .md blockquote {
-  border-left: 5px solid #ffc49c;
-  padding: 12px 8px;
-  line-height: 28px;
   margin-bottom: 15px;
-  background-color: rgba(255, 233, 218, 0.4);
+  padding: 12px 8px;
+
+  border-left: 5px solid #ffc49c;
   border-radius: 6px;
+  background-color: rgba(255, 233, 218, 0.4);
+
+  line-height: 28px;
 }
 
 .md p {
@@ -133,18 +146,29 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 .md>table {
   width: 100%;
+
   border-spacing: 0;
+
   line-height: 24px;
 }
 
 .md>table th {
-  text-align: left;
-  background-color: #f5f5f5;
-  padding: 5px 10px;
   width: 100px;
+  padding: 5px 10px;
+
+  text-align: left;
+
+  background-color: #f5f5f5;
 }
 
 .md>table td {
   padding: 5px 10px;
+
   border-bottom: 1px solid #ebedf0;
+}
+
+.md>table td>span.delete {
+  text-decoration: line-through;
+
+  color: rgb(204, 204, 204);
 }

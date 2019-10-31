@@ -1,8 +1,8 @@
 <style>
-.inline .btn--wp {
+.inline .bee-button {
   margin: 0 10px 10px 0;
 }
-.loading-wrapper {
+.loadingper {
   padding: 20px 0;
 }
 </style>
@@ -10,28 +10,27 @@
 export default {
   data () {
     return {
-      laoding: [],
-      loading1: false
+      instance: null,
+      loading: false
     }
   },
   methods: {
-    addLoading1 (type) {
-      const item = this.$_createLoading({
+    addLoading (type) {
+      this.instance = this.$_createLoading({
         type: type
-      })
-
-      item.show()
+      }).show()
 
       window.setTimeout(() => {
-        item.hide()
-      }, 3000)
+        this.instance.hide()
+        this.instance = null
+      }, 4000)
     },
     toggleLoading () {
-      this.loading1 = true
+      this.loading = true
 
-      setTimeout(() => {
-        this.loading1 = false
-      }, 2000)
+      window.setTimeout(() => {
+        this.loading = false
+      }, 4000)
     }
   }
 }
@@ -44,26 +43,30 @@ export default {
 ::: demo 
 ``` html
 <template>
-  <div class='inline loading-wrapper' ref='base'>
-    <bee-button @click="addLoading1(0)">第一种</bee-button>
-    <bee-button theme='success' @click="addLoading1(1)">第二种</bee-button>
-    <bee-button theme='error' @click="addLoading1(2)">第三种</bee-button>
+  <div class='inline loadingper'>
+    <bee-button @click="addLoading('main')">第一种</bee-button>
+    <bee-button theme='success' @click="addLoading('pie')">第二种</bee-button>
+    <bee-button theme='error' @click="addLoading('undulate')">第三种</bee-button>
   </div>
 </template>
 <script>
 export default {
+  data () {
+    return {
+      instance: null
+    }
+  },
   methods: {
-    addLoading1 (type) {
-      const item = this.$_createLoading({
+    addLoading (type) {
+      this.instance = this.$_createLoading({
         type: type
-      })
-
-      item.show()
+      }).show()
 
       window.setTimeout(() => {
-        item.hide()
-      }, 3000)
-    } 
+        this.instance.hide()
+        this.instance = null
+      }, 4000)
+    }
   }
 }
 </script>
@@ -75,24 +78,24 @@ export default {
 ::: demo 
 ``` html
 <template>
-  <div class='inline loading-wrapper' ref='base' v-loading='loading1' data-type='1' data-text='loading'>
+  <div class='inline loadingper' v-loading='loading' data-type='pie' data-text='loading' data-block='false'>
     <bee-button @click="toggleLoading">显示loading</bee-button>
   </div>
 </template>
 <script>
 export default {
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
-    data () {
-      return {
-        loading1: false
-      }
-    },
     toggleLoading () {
-      this.loading1 = true
+      this.loading = true
 
-      setTimeout(() => {
-        this.loading1 = false
-      }, 2000)
+      window.setTimeout(() => {
+        this.loading = false
+      }, 4000)
     }
   }
 }
@@ -103,10 +106,10 @@ export default {
 
 ### options
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|parent|要添加的节点|-|—|body|
-|type|类型|number|0,1,2|0|
-|display|文字和loading之间的排列方式|string|block,inline|block|
-|text|加载提示的文字|string|—|加载中|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|parent|loading的父级节点|Element|—|body|*|
+|text|加载提示的文字|String|—|加载中|*|
+|type|类型|String|main,pie,undulate|main|1.0.0|
+|block|文字和loading之间的排列方式|Boolean|—|true|1.0.0|
 

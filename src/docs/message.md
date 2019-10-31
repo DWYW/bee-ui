@@ -1,5 +1,5 @@
 <style>
-.inline .btn--wp {
+.inline .bee-button {
   margin: 0 10px 10px 0;
 }
 </style>
@@ -176,10 +176,10 @@ export default {
 
 ### options
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|type|类型|string|warn,success,error|warn|
-|duration|显示的时长|number|—|3|
-|message|提示的文字信息|string|—|-|
-|html|提示的HTML代码|string|—|-|
-|align|提示文字的对其方式|left,center|—|left|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|type|类型|string|warn,success,error|warn|*|
+|message|提示的文字信息|string|—|—|*|
+|html|提示的HTML代码|string|—|—|*|
+|align|提示文字的对其方式|left,center|—|left|*|
+|duration|显示的时长|number|—|3|*|

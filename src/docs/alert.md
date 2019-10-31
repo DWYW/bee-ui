@@ -1,70 +1,31 @@
 <style>
-.inline .btn--wp {
+.inline .bee-button {
   margin: 0 10px 10px 0;
 }
 </style>
 <script>
 export default {
   methods: {
-    base (type) {
-      let options = {
-        message: '这是一段通知内容'
-      }
-
-      if (type >= 1) {
-        options.title = '自定义标题'
-      }
-      
-      if (type >= 2) {
-        options.cancelBtnFun = () => {
-          this.$_createMessage({
-            message: '已取消'
-          }).show()
-        }
-      }
-      
-      if (type >= 3) {
-        options.confirmBtnFun = () => {
-          this.$_createMessage({
-            message: '已确定',
-            type: 'success'
-          }).show()
-        }
-      }
-      
-      if (type >= 4) {
-        options.closeBtnFun = () => {
-          this.$_createMessage({
-            message: '已关闭',
-            type: 'error'
-          }).show()
-        }
-      }
-
-      this.$_createAlert(options).show()
-    },
-
-    center (type) {
-      let options = {
-        title: '居中方式',
-        message: '这是一段提示信息',
-        align: type
-      }
-
-      this.$_createAlert(options).show()
-    },
-
-    useHtml () {
-      this.$_createAlert({
-        title: 'use html',
-        html: `这是一段<span style='color: red; font-size: 18px;'>HTML</span>内容`
+    showMessage (text) {
+      this.$_createMessage({
+        message: text
       }).show()
     },
-
-    noClose () {
+    createBaseAlert () {
       this.$_createAlert({
-        title: 'no close',
-        closeBtnVisible: false
+        title: '自定义标题',
+        message: '是否喜欢吃水果？',
+        cancelText: '不',
+        confirmText: '是',
+        onclose: () => {
+          this.showMessage('已关闭')
+        },
+        oncancel: () => {
+          this.showMessage('已取消')
+        },
+        onconfirm: () => {
+          this.showMessage('已确认')
+        }
       }).show()
     }
   }
@@ -79,113 +40,32 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-button @click="base(0)">默认</bee-button>
-    <bee-button @click="base(1)">自定义标题</bee-button>
-    <bee-button @click="base(2)">取消回调</bee-button>
-    <bee-button @click="base(3)">确定回调</bee-button>
-    <bee-button @click="base(4)">关闭回调</bee-button>
+    <bee-button @click="createBaseAlert">基本用法</bee-button>
   </div>
 </template>
 <script>
 export default {
   methods: {
-    base (type) {
-      let options = {
-        message: '这是一段通知内容'
-      }
-
-      if (type >= 1) {
-        options.title = '自定义标题'
-      }
-      
-      if (type >= 2) {
-        options.cancelBtnFun = () => {
-          this.$_createMessage({
-            message: '已取消'
-          }).show()
-        }
-      }
-      
-      if (type >= 3) {
-        options.confirmBtnFun = () => {
-          this.$_createMessage({
-            message: '已确定',
-            type: 'success'
-          }).show()
-        }
-      }
-      
-      if (type >= 4) {
-        options.closeBtnFun = () => {
-          this.$_createMessage({
-            message: '已关闭',
-            type: 'error'
-          }).show()
-        }
-      }
-
-      this.$_createAlert(options).show()
-    }
-  }
-}
-</script>
-```
-:::
-
-
-### 居中方式
-
-::: demo 
-``` html
-<template>
-  <div class='inline'>
-    <bee-button @click="center('horizontal')">水平居中</bee-button>
-    <bee-button @click="center('vertial')">垂直居中</bee-button>
-    <bee-button @click="center('center')">垂直水平居中</bee-button>
-  </div>
-</template>
-<script>
-export default {
-  methods: {
-    center (type) {
-      let options = {
-        title: '居中方式',
-        message: '这是一段提示信息',
-        align: type
-      }
-
-      this.$_createAlert(options).show()
-    }
-  }
-}
-</script>
-```
-:::
-
-
-### 其他用法
-
-::: demo 
-``` html
-<template>
-  <div class='inline'>
-    <bee-button @click="useHtml">使用HTML</bee-button>
-    <bee-button @click="noClose">取消关闭按钮</bee-button>
-  </div>
-</template>
-<script>
-export default {
-  methods: {
-    useHtml () {
-      this.$_createAlert({
-        title: 'use html',
-        html: `这是一段<span style='color: red; font-size: 18px;'>HTML</span>内容`
+    showMessage (text) {
+      this.$_createMessage({
+        message: text
       }).show()
     },
-    noClose () {
+    createBaseAlert () {
       this.$_createAlert({
-        title: 'no close',
-        closeBtnVisible: false
+        title: '自定义标题',
+        message: '是否喜欢吃水果？',
+        cancelText: '不',
+        confirmText: '是',
+        onclose: () => {
+          this.showMessage('已关闭')
+        },
+        oncancel: () => {
+          this.showMessage('已取消')
+        },
+        onconfirm: () => {
+          this.showMessage('已确认')
+        }
       }).show()
     }
   }
@@ -193,20 +73,24 @@ export default {
 </script>
 ```
 :::
+
 
 ### options
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|title|标题|string|-|提示|
-|message|提示的文字信息|string|—|-|
-|html|提示的HTML代码|string|—|-|
-|align|内容的对齐方式|string|horizontal,vertial,center|-|
-|cancelBtnVisible|是否显示取消按钮|boolean|-|true|
-|cancelBtnText|取消按钮显示的文字|string|-|取消|
-|cancelBtnFun|取消按钮绑定的事件函数|function|-|-|
-|confirmBtnVisible|是否显示确定按钮|boolean|-|true|
-|confirmBtnText|确定按钮显示的文字|string|-|确定|
-|confirmBtnFun|确定按钮绑定的事件函数|function|-|-|
-|closeBtnVisible|是否显示关闭按钮|boolean|-|true|
-|closeBtnFun|关闭按钮绑定的事件函数|function|-|-|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|title|标题|String|—|提示|*|
+|message|提示的文字信息|String|—|—|*|
+|html|提示的HTML代码|String|—|—|*|
+|title|标题|String|—|提示|*|
+|center|内容是否居中|Boolean|—|false|1.0.0|
+|closeVisible|是否显示关闭按钮|Boolean|—|true|1.0.0|
+|cancelVisible|是否显示取消按钮|Boolean|—|true|1.0.0|
+|cancelText|取消按钮显示的文字|String|—|取消|1.0.0|
+|confirmVisible|是否显示确定按钮|Boolean|—|true|1.0.0|
+|confirmText|确定按钮显示的文字|String|—|确定|1.0.0|
+|onclose|关闭行为的回调|Function|—|—|1.0.0|
+|oncancel|取消行为的回调|Function|—|—|1.0.0|
+|onconfirm|确认行为的回调	|Function|—|—|1.0.0|
+
+

@@ -1,62 +1,58 @@
-<style>
-.demo .ipt--wp {
+<style >
+.demo  .bee-input {
   margin-right: 20px;
   margin-bottom: 10px;
 }
 </style>
+
 <script>
 export default {
-  data () {
+  data() {
     return {
-      test1: null,
-      test2: null,
-      test3: null,
-      test4: null,
-      test5: null,
-      test6: null,
-      test7: null,
-      test8: null,
-      test9: null,
-      mobile: null,
-      str1: null,
-      str2: null,
-      readOnly: 'readOnly',
-      icon: [{
-        icon: 'search',
-        position: 'left'
-      }, {
-        icon: 'mobile',
-        position: 'left'
-      }, {
-        icon: 'correct',
-        position: 'right'
-      }, {
-        icon: 'error',
-        position: 'right'
-      }]
-    }
-  },
-  computed: {
-    mobileReg () {
-      return (value) => {
-        return value ? /^(1|1[3-9]|1[3-9]\d{1,9})$/g.test(value) ? value : this.mobile : value
-      }
-    },
-    reg1 () {
-      return (value) => {
-        return /^[a-zA-Z]*$/.test(value)
+      model: {
+        base: [null, null, null, null],
+        icon: [null, null],
+        autofoucs: null,
+        reg: [null, null, null],
+        event: [null, null, null]
+      },
+      leftIcon: {
+        position: 'left',
+        icon: 'search'
+      },
+      rightIcon: {
+        position: 'right',
+        icon: 'success'
+      },
+      mobileIcon: {
+        position: 'left',
+        icon: 'mobile'
+      },
+      eventIcon: {
+        position: 'right',
+        icon: 'success',
+        listeners: {
+          click: this.iconPrint
+        }
       }
     }
   },
   methods: {
-    enterEvent () {
-      console.log(`您输入的手机号为${this.mobile}`)
+    AZReg (value) {
+      return /^[a-zA-Z]+$/.test(value)
     },
-    onChange (value) {
-      console.log(value)
+    regStatic (value) {
+      return 'bee-ui'
+    },
+    print (e) {
+      console.log(e.type, e)
+    },
+    iconPrint(e) {
+      console.log(`icon ${e.type}`, e)
     }
   }
 }
+
 </script>
 
 ## input 输入框
@@ -68,19 +64,27 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input @change='onChange' v-model='test1' placeholder='请输入'></bee-input>
-      <bee-input theme='primary' @change='onChange' v-model='test2' placeholder='请输入'></bee-input>
-      <bee-input theme='success' @change='onChange' v-model='test3' placeholder='请输入'></bee-input>
-      <bee-input theme='error' @change='onChange' v-model='test4' placeholder='请输入'></bee-input>
+      <bee-input v-model='model.base[0]' placeholder='请输入'></bee-input>
+      <bee-input v-model='model.base[1]' theme='primary' placeholder='请输入'></bee-input>
+      <bee-input v-model='model.base[2]' theme='success' placeholder='请输入'></bee-input>
+      <bee-input v-model='model.base[3]' theme='error' placeholder='请输入'></bee-input>
     </p>
-    <p>您输入的是：{{test1}}</p>
-    <p>您输入的是：{{test2}}</p>
-    <p>您输入的是：{{test3}}</p>
-    <p>您输入的是：{{test4}}</p>
+    <p v-for='(item, index) in model.base' :key='index'>您输入的是：{{item}}</p>
   <div>
 </template>
-```
 
+<script>
+export default {
+  data() {
+    return {
+      model: {
+        base: [null, null, null, null]
+      }
+    }
+  }
+}
+</script>
+```
 :::
 
 ### 自动获取焦点
@@ -91,33 +95,61 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input @change='onChange' v-model='test5' placeholder='请输入' :auto-focus='true'></bee-input>
+      <bee-input v-model='model.autofoucs' placeholder='请输入' :autofocus='true'></bee-input>
     </p>
-    <p> 您输入的是：{{test5}}</p>
+    <p> 您输入的是：{{model.autofoucs}}</p>
   <div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: {
+        autofoucs: null
+      }
+    }
+  }
+}
+
+</script>
 ```
 :::
 
-### 带有 icon
+
+### 添加icon
 
 ::: demo
-
 ``` html
 <template>
   <div class='demo'>
     <p>
-      <bee-input @change='onChange' v-model='test6' placeholder='请输入' :icon="icon[0]"></bee-input>
-      <bee-input theme='primary' @change='onChange' v-model='test7' placeholder='请输入' :icon="icon[1]"></bee-input>
-      <bee-input theme='success' @change='onChange' v-model='test8' placeholder='请输入' :icon="icon[2]"></bee-input>
-      <bee-input theme='error' @change='onChange' v-model='test9' placeholder='请输入' :icon="icon[3]"></bee-input>
+      <bee-input v-model='model.icon[0]' placeholder='请输入' :icon='leftIcon'></bee-input>
+      <bee-input v-model='model.icon[1]' theme='success' placeholder='请输入' :icon='rightIcon'></bee-input>
     </p>
-    <p>您输入的是：{{test6}}</p>
-    <p>您输入的是：{{test7}}</p>
-    <p>您输入的是：{{test8}}</p>
-    <p>您输入的是：{{test9}}</p>
+    <p v-for='(item, index) in model.icon' :key='index' >您输入的是：{{item}}</p>
   <div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: {
+        icon: [null, null]
+      },
+      leftIcon: {
+        position: 'left',
+        icon: 'search'
+      },
+      rightIcon: {
+        position: 'right',
+        icon: 'success'
+      }
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -129,13 +161,30 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input placeholder='请输入' :icon="icon[0]" disabled></bee-input>
-      <bee-input theme='primary' placeholder='请输入' :icon="icon[1]" disabled></bee-input>
-      <bee-input theme='success' placeholder='请输入' :icon="icon[2]" disabled></bee-input>
-      <bee-input theme='error' placeholder='请输入' :icon="icon[3]" disabled></bee-input>
+      <bee-input placeholder='请输入' :icon="leftIcon" disabled></bee-input>
+      <bee-input theme='primary' placeholder='请输入' disabled></bee-input>
+      <bee-input theme='success' placeholder='请输入' :icon="rightIcon" disabled></bee-input>
+      <bee-input theme='error' placeholder='请输入'disabled></bee-input>
     </p>
   <div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      leftIcon: {
+        position: 'left',
+        icon: 'search'
+      },
+      rightIcon: {
+        position: 'right',
+        icon: 'success'
+      }
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -147,10 +196,25 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input placeholder='请输入' :icon="icon[0]" :read-only='true' value='readOnly'></bee-input>
-      <bee-input theme='primary' placeholder='请输入' :icon="icon[1]" :read-only='true' value='readOnly'></bee-input>
-      <bee-input theme='success' placeholder='请输入' :icon="icon[2]" :read-only='true' value='readOnly'></bee-input>
-      <bee-input theme='error' placeholder='请输入' :icon="icon[3]" :read-only='true' value='readOnly'></bee-input>
+      <bee-input placeholder='请输入' :readonly='true' value='readOnly'></bee-input>
+      <bee-input theme='primary' placeholder='请输入' :readonly='true' value='readOnly'></bee-input>
+      <bee-input theme='success' placeholder='请输入' :readonly='true' value='readOnly'></bee-input>
+      <bee-input theme='error' placeholder='请输入' :readonly='true' value='readOnly'></bee-input>
+    </p>
+  <div>
+</template>
+```
+:::
+
+### 最大输入长度
+
+::: demo
+
+``` html
+<template>
+  <div class='demo'>
+    <p>
+      <bee-input placeholder='请输入' maxlength=2></bee-input>
     </p>
   <div>
 </template>
@@ -165,44 +229,52 @@ export default {
 <template>
   <div class='demo'>
     <p>
-      <bee-input @change='onChange' v-model='mobile' placeholder='请输入手机号' maxlength='11' :icon="icon[1]" :reg='mobileReg' :enter-event='enterEvent'></bee-input>
+      <bee-input v-model='model.reg[0]' 
+        placeholder='请输入手机号' 
+        :icon="mobileIcon" 
+        reg='^(1|1[3-9]|1[3-9]\d{1,9})$'
+      ></bee-input>
 
-      <bee-input @change='onChange' v-model='str1' placeholder='请输入字母' maxlength='11' :icon="icon[1]" :reg='reg1' ></bee-input>
+      <bee-input v-model='model.reg[1]' 
+        placeholder='只能输人a-zA-Z' 
+        :icon="leftIcon" 
+        :reg=AZReg
+      ></bee-input>
 
-      <bee-input @change='onChange' v-model='str2' placeholder='只能输入数字' maxlength='11' :icon="icon[1]" reg='^[0-9]*$' ></bee-input>
+      <bee-input v-model='model.reg[2]' 
+        placeholder='不管如如啥都是bee-ui' 
+        :icon="leftIcon" 
+        :reg=regStatic
+      ></bee-input>
     </p>
-
-    <p>您输入的是：{{mobile}}</p>
-    <p>您输入的是：{{str1}}</p>
-    <p>您输入的是：{{str2}}</p>
+    <p v-for='(item, index) in model.reg' :key='index'>您输入的是：{{item}}</p>
+  <div>
   <div>
 </template>
 
 <script>
-// 请打开控制台
-export default {
-  data () {
+  export default {
+  data() {
     return {
-      mobile: null,
-      str1: null,
-      str2: null
-    }
-  },
-  computed: {
-    mobileReg () {
-      return (value) => {
-        return value ? /^(1|1[3-9]|1[3-9]\d{1,9})$/g.test(value) ? value : this.mobile : value
-      }
-    },
-    reg1 () {
-      return (value) => {
-        return /^[a-zA-Z]*$/.test(value)
+      model: {
+        reg: [null, null, null]
+      },
+      leftIcon: {
+        position: 'left',
+        icon: 'search'
+      },
+      mobileIcon: {
+        position: 'left',
+        icon: 'mobile'
       }
     }
   },
   methods: {
-    enterEvent () {
-      console.log(`您输入的手机号为${this.mobile}`)
+    AZReg (value) {
+      return /^[a-zA-Z]+$/.test(value)
+    },
+    regStatic (value) {
+      return 'bee-ui'
     }
   }
 }
@@ -210,38 +282,91 @@ export default {
 ```
 :::
 
+### 事件监听
+
+::: demo
+
+``` html
+<template>
+  <div class='demo'>
+    <p>
+      <bee-input 
+        placeholder='打开console面板' 
+        @change='print' 
+        @click='print'
+        v-model='model.event[0]'
+      ></bee-input>
+      <bee-input 
+        placeholder='打开console面板' 
+        @mouseenter='print' 
+        @mouseleave='print' 
+        v-model='model.event[1]'
+      ></bee-input>
+      <bee-input 
+        placeholder='打开console面板' 
+        :icon='eventIcon'
+        v-model='model.event[2]'
+      ></bee-input>
+    </p>
+  <div>
+  <div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: {
+        event: [null, null, null]
+      },
+      eventIcon: {
+        position: 'right',
+        icon: 'success',
+        listeners: {
+          click: this.iconPrint
+        }
+      }
+    }
+  },
+  methods: {
+    print (e) {
+      console.log(e.type, e)
+    },
+    iconPrint(e) {
+      console.log(`icon ${e.type}`, e)
+    }
+  }
+}
+
+</script>
+```
+:::
+
 ### 属性值
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|theme|按钮的类型|string|default,primary,success,error|default|
-|type|输入框的类型|string|*|text|
-|icon|要显示的图标|object|-|-|
-|placeholder|占位符|string|-|-|
-|autoFocus|自动获取焦点|boolean|-|-|
-|readOnly|只读|boolean|-|-|
-|maxlength|输入的最大长度|number|-|-|
-|reg|value的格式化函数或正则表达式字符串|function,string|-|-|
-|enterEvent|enter按键的回调函数|function|-|-|
-|disabled|禁用状态|boolean|-|-|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|type|输入框的类型|String|*|text|*|
+|placeholder|占位符|String|—|—|*|
+|disabled|禁用状态|Boolean|—|—|*|
+|autofocus|自动获取焦点（1.0.0之前为autoFocus）|Boolean|—|—|*|
+|readonly|只读（1.0.0之前为readOnly）|Boolean|—|—|*|
+|maxlength|输入的最大长度|Number|—|—|*|
+|theme|按钮的类型|String|default, primary, success, error|default|*|
+|icon|图标的配置信息|Object|—|—|*|
+|reg|value的格式化函数或正则表达式字符串|Function, String|—|—|1.0.0|
+
+<br/>
+
+> icon 的监听事件， 通过icon.listeners传入BeeIcon组件
+
+<br/>
 
 ### 事件
+
+1.0.0+没有说明的其它事件, 则通过 $listeners 传入到 input 元素中。
+<br/>
+
 |事件|说明|版本支持|
 |---|---|---|
-|click|click事件|-|
-|change|change事件|-|
-|focus|focus事件|-|
-|blur|blur事件|-|
-|keyup|keyup事件|-|
-|iconClick|图标的click事件|^0.7.0|
-
-
-``` js
-// icon的格式
-
-{
-  icon: IconName,
-  fontFamily: fontFamily,
-  position: left|right
-}
-```
+|enter|enter按键的回调函数|1.0.0|
