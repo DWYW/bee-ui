@@ -1,0 +1,104 @@
+@import '../../theme.less';
+
+.bee-popper {
+  position: absolute;
+  z-index: @z-1;
+  top: 0;
+  left: 0;
+
+  display: inline-block;
+
+  .bee-popper--arrow {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    border: @popper-arr-size solid transparent;
+
+    &::after {
+      position: absolute;
+
+      display: block;
+
+      width: 0;
+      height: 0;
+
+      content: '';
+
+      border: @popper-arr-size solid transparent;
+    }
+  }
+
+  .bee-popper--body {
+    overflow: hidden;
+
+    border: 1px solid @popper-border-color;
+    border-radius: @border-radius;
+    background-color: @popper-background-color;
+    box-shadow: 0 0 2px  @popper-shadow-color;
+  }
+
+  &[placement^="bottom"] .bee-popper--arrow {
+    top: -@popper-arr-size * 2;
+    left: @border-radius * 4;
+
+    border-bottom-color: @popper-border-color;
+
+    &::after {
+      top: -@popper-arr-size + 1px;
+      left: -@popper-arr-size;
+
+      border-bottom-color: @popper-background-color;
+    }
+  }
+
+  &[placement^="top"] .bee-popper--arrow {
+    bottom: -@popper-arr-size * 2;
+    left: @border-radius * 4;
+
+    border-top-color: @popper-border-color;
+
+    &::after {
+      top: -@popper-arr-size - 1px;
+      left: -@popper-arr-size;
+
+      border-top-color: @popper-background-color;
+    }
+  }
+
+  &[placement^="left"] .bee-popper--arrow {
+    top: @popper-arr-size * 2;
+    right: -@popper-arr-size * 2;
+
+    border-left-color: @popper-border-color;
+
+    &::after {
+      top: -@popper-arr-size;
+      left: -@popper-arr-size - 1px;
+
+      border-left-color: @popper-background-color;
+    }
+  }
+
+  &[placement^="right"] .bee-popper--arrow {
+    top: @popper-arr-size * 2;
+    left: -@popper-arr-size * 2;
+
+    border-right-color: @popper-border-color;
+
+    &::after {
+      top: -@popper-arr-size;
+      left: -@popper-arr-size + 1px;
+
+      border-right-color: @popper-background-color;
+    }
+  }
+}
+
+.bee-popper-enter-active, .bee-popper-leave-active {
+  transition: opacity .2s;
+}
+.bee-popper-enter, .bee-popper-leave-to {
+  opacity: 0;
+}

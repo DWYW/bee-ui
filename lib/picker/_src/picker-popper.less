@@ -1,0 +1,53 @@
+@import '../../theme.less';
+
+.bee-picker-popper {
+  .bee-picker-popper--body{
+    overflow: hidden;
+  
+    .bee-picker-date, .bee-picker-time {
+      float: left;
+    }
+  }
+  
+  .bee-picker-popper--footer {
+    overflow: hidden;
+
+    padding: 5px 10px;
+
+    border-top: 1px solid @picker-border-color;
+
+    font-size: @picker-quick-button-font-size_inner;
+
+    .change-to-time, .change-to-date, .bee-picker--confirm {
+      cursor: pointer;
+      user-select: none;
+
+      color: @picker-color_primary;
+    }
+
+    .bee-picker--confirm {
+      float: right;
+    }
+
+    &.bee-picker-popper--footer__disabled {
+      .change-to-time, .change-to-date, .bee-picker--confirm {
+        cursor: default;
+
+        color: @picker-border-color;
+      }
+    }
+  }
+
+  &.bee-picker-popper__has-quick-button {
+    .bee-picker-date {
+      box-sizing: border-box;
+
+      border-left: 1px solid @picker-border-color;
+    }
+
+    .bee-picker-time {
+      width: @picker-date-width + @picker-quick-button-width;
+    }
+  }
+}
+

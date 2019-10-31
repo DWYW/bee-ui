@@ -1,0 +1,110 @@
+@import '../../theme.less';
+
+.bee-step {
+  width: 100%;
+
+  user-select: none;
+
+  .bee-step--body {
+    width: 100%;
+
+    .bee-step--item {
+      position: relative;
+
+      display: inline-block;
+
+      text-align: center;
+      vertical-align: text-top;
+      
+      .bee-step--line {
+        &::before, &::after {
+          position: absolute;
+          top: @step-item-size / 2;
+
+          display: block;
+
+          width: 50%;
+          height: @step-line-height;
+
+          content: '';
+          transform: translateY(-50%);
+
+          background-color: @step-background-color;
+        }
+        &::before {
+          left: 0;
+        }
+
+        &::after {
+          right: 0;
+        }
+      }
+
+      .bee-step-item--main {
+        position: relative;
+
+        display: inline-block;
+
+        width: @step-item-size;
+        height: @step-item-size;
+        margin-bottom: 5px;
+
+        color: @step-color;
+        border-radius: 50%;
+        background-color: @step-background-color;
+
+        font-size: 16px;
+        font-weight: bold;
+        line-height: @step-item-size;
+      }
+
+      .bee-step-item--label {
+        padding: 0 5px;
+
+        word-break: break-all;
+
+        color: @font-tint-color;
+
+        font-size: @step-label-font-size;
+        line-height: 1.5;
+      }
+
+      .bee-step-item--desc {
+        margin-bottom: 5px;
+
+        word-break: break-all;
+
+        color: @font-tint-color;
+
+        font-size: @step-desc-font-size;
+      }
+
+      &:first-child {
+        .bee-step--line::before {
+          display: none;
+        }
+      }
+
+      &:last-child {
+        .bee-step--line::after {
+          display: none;
+        }
+      }
+
+      &.bee-step--item__actived {
+        .bee-step--line::before, .bee-step--line::after {
+          background-color: @step-background-color_actived;
+        }
+
+        .bee-step-item--main {
+          color:  @step-color_actived;
+          background-color: @step-background-color_actived;
+        }
+
+        .bee-step-item--label, .bee-step-item--desc {
+          color:  @step-background-color_actived;
+        }
+      }
+    }
+  }
+}

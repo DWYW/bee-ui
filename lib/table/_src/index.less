@@ -1,91 +1,83 @@
 @import '../../theme.less';
-@root: bee-table;
 
-.@{root}--wp {
-  width: 100%;
-  overflow: hidden;
+.bee-table {
   position: relative;
-  background-color: @table-body-bg-color;
-  border: 1px solid @table-border-color;
+
+  overflow: hidden;
+
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  color: @table-body-color;
+  border: 1px solid @table-border-color;
+  background-color: @table-body-background-color;
 
   table {
     width: 100%;
-    padding: 0;
     margin: 0;
+    padding: 0;
+
     border-collapse: collapse;
 
     thead tr th,
     tbody tr td,
-    tfoot tr td {
-      &.@{root}--col {
-        font-size: 14px;
-        line-height: 20px;
+    tfoot tr td { 
+      box-sizing: border-box;
+      
+      &.bee-table--cell {
         padding: 8px;
-        word-break: break-word;
-        border-right: 1px solid @table-border-color;
 
-        &:last-child {
-          border-right: none;
+        word-break: break-word;
+
+        font-size: @font-size;
+        line-height: 1.4;
+
+        &:not(:last-child) {
+          border-right: 1px solid @table-border-color;
         }
       }
 
-      &.@{root}--col__left {
+      &.bee-table--cell__text-left {
         text-align: left;
       }
 
-      &.@{root}--col__center {
+      &.bee-table--cell__text-center {
         text-align: center;
       }
 
-      &.@{root}--col__right {
+      &.bee-table--cell__text-right {
         text-align: right;
       }
 
-      .bee-checkbox-selected, .bee-checkbox-unselected, .bee-selected-part {
-        font-size: 20px;
+      .bee-checkbox-unselected {
         color: @table-body-color;
+      }
+
+      .bee-checkbox-selected, .bee-selected-part {
+        color: @table-primary-color;
+      }
+
+      .bee-checkbox-selected, .bee-checkbox-unselected, .bee-selected-part {
         cursor: pointer;
 
-        &.icon--wp__active {
-          color: @primary-color;
-        }
+        font-size: 20px;
 
-        &.icon--wp__disabled {
+        &.selection__disabled {
           cursor: no-drop;
+
           opacity: .6;
           color: @table-body-color;
-
-          &:hover {
-            color: @table-body-color;
-          }
-        }
-
-        &:hover {
-          color: @primary-color;
         }
       }
     }
 
     thead tr th,
     tfoot tr td {
-      background-color: @table-head-bg-color;
       color: @table-head-color;
+      background-color: @table-head-background-color;
+
       font-weight: normal;
-    }
-
-    tbody tr {
-      td {
-        color: @table-body-color;
-        white-space: normal;
-        background-color: @table-body-bg-color;
-        transition: color 0.25s, background 0.25s;
-        border-bottom: 1px solid @table-border-color;
-      }
-
-      &:last-child td {
-        border-bottom: none;
-      }
     }
 
     thead tr th {
@@ -96,111 +88,77 @@
       border-top: 1px solid @table-border-color;
     }
 
-    tbody .@{root}--row__active td {
-      background-color: @table-tr-actived-bg-color;
+    tbody tr {
+      td {
+        transition: color 0.25s, background 0.25s;
+        white-space: normal;
+      }
+
+      &:not(:last-child) td {
+        border-bottom: 1px solid @table-border-color;
+      }
     }
   }
 
-  .@{root}--header,
-  .@{root}--footer,
-  .@{root}--fixed {
+  .bee-table--header, .bee-table--footer, .bee-table--left, .bee-table--right {
     position: absolute;
+
     overflow: hidden;
+
+    height: 0;
   }
 
-  .@{root}--header,
-  .@{root}--footer {
-    background-color: @table-head-bg-color;
-    width: 100%;
+  .bee-table--header, .bee-table--left, .bee-table--right {
+    top: 0;
+  }
+
+  .bee-table--header, .bee-table--footer, .bee-table--left {
     left: 0;
   }
 
-  .@{root}--header {
-    top: 0;
-    border-bottom: 1px solid @table-border-color;
-    box-sizing: content-box;
+  .bee-table--header, .bee-table--footer {
+    width: 100%;
+  }
 
-    table thead tr th {
-      border-bottom-color: @table-head-bg-color;
+  .bee-table--footer {
+    bottom: 0;
+    
+    >table {
+      transform: translateY(-100%);
     }
   }
 
-  .@{root}--footer {
-    bottom: 0;
-    border-top: 1px solid @table-border-color;
-    box-sizing: content-box;
+  .bee-table--left {
+    box-shadow: 2px 0 6px -2px rgba(0, 0, 0, .4);
+  }
+
+  .bee-table--right {
+    right: 0;
+
+    box-shadow: -2px 0 6px -2px rgba(0, 0, 0, .4);
 
     table {
-      transform: translateY(-100%);
-
-      tfoot tr td {
-        border-top-color: transparent;
-      }
+      transform: translateX(-100%);
     }
   }
 
-  .@{root}--fixed {
-    top: 0;
-    background-color: @table-body-bg-color;
-
-    .@{root}-fixed--header,
-    .@{root}-fixed--footer,
-    .@{root}-fixed--body {
+  .bee-table--left, .bee-table--right {
+    color: @table-body-color;
+    background-color: @table-body-background-color;
+    
+    .bee-table--drawer {
       overflow: hidden;
-      position: absolute;
+
+      width: 100%;
+      height: 100%;
     }
+  }
 
-    .@{root}-fixed--header,
-    .@{root}-fixed--body {
-      top: 0;
-    }
+  &.bee-table__scroll-start .bee-table--left {
+    box-shadow: none;
+  }
 
-    .@{root}-fixed--header {
-      border-bottom: 1px solid @table-border-color;
-      background-color: @table-head-bg-color;
-      box-sizing: content-box;
-
-      table thead tr th {
-        border-bottom-color: @table-head-bg-color;
-      }
-    }
-
-    .@{root}-fixed--footer {
-      bottom: 2px;
-      box-sizing: content-box;
-      border-top: 1px solid @table-border-color;
-
-      table {
-        transform: translateY(-100%);
-
-        tfoot tr td {
-          border-top-color: transparent;
-        }
-      }
-    }
-
-    &.@{root}--fixed__left {
-      left: 0;
-      border-right: 1px solid @table-border-color;
-      box-sizing: content-box;
-      box-shadow: 2px 0 6px -2px rgba(0, 0, 0, .4);
-    }
-
-    &.@{root}--fixed__right {
-      right: 0;
-      box-sizing: content-box;
-      box-shadow: -2px 0 6px -2px rgba(0, 0, 0, .4);
-
-      .@{root}-fixed--header,
-      .@{root}-fixed--footer,
-      .@{root}-fixed--body {
-        right: 0;
-      }
-    }
-
-    &.@{root}--scroll__start,
-    &.@{root}--scroll__end {
-      box-shadow: none;
-    }
+  &.bee-table__scroll-end .bee-table--right {
+    box-shadow: none;
   }
 }

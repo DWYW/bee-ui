@@ -1,0 +1,37 @@
+@import '../../theme.less';
+
+.bee-radio-group {
+  display: inline-block;
+
+  .bee-group--item {
+    display: inline-block;
+
+    white-space: nowrap;
+
+    .bee-group-item--radio {
+      padding-right: 4px;
+    }
+
+    .bee-group-item--desc {
+      padding-right: 15px;
+
+      line-height: @radio-line-height;
+    }
+
+    &.bee-group--item__block {
+      display: block;
+
+      .bee-group-item--desc {
+        display: block;
+
+        padding-left: 24px;
+      }
+    }
+
+    &.bee-group--item__disable {
+      .bee-group-item--desc {
+        color: @radio-color-unselected;
+      }
+    }
+  }
+}

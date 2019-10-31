@@ -1,0 +1,59 @@
+@import '../../theme.less';
+
+.bee-picker {
+  display: inline-block;
+  overflow: hidden;
+  
+  .bee-picker--value {
+    position: relative;
+
+    display: inline-block;
+
+    box-sizing: border-box;
+    height: @normal-height;
+
+    cursor: pointer;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    border: 1px solid @border-color;
+    border-radius: @border-radius;
+
+    font-size: @font-size;
+    line-height: @normal-height - 2px;
+
+    .bee-icon, .bee-picker--value-text, .bee-picker--placeholder{
+      vertical-align: middle;
+    }
+
+    .bee-icon {
+      position: absolute;
+      top: 50%;
+      left: 5px;
+
+      transform: translateY(-50%);
+
+      font-size: 16px;
+    }
+
+    .bee-picker--value-text, .bee-picker--placeholder {
+      display: inline-block;
+
+      min-width: 160px;
+      padding-right: 10px;
+      padding-left: 25px;
+
+      color: @font-color;
+    }
+
+    .bee-picker--placeholder {
+      color: @placeholder-color;
+    }
+  }
+
+  &.bee-picker__disabled .bee-picker--value {
+    cursor: no-drop;
+
+    opacity: .8;
+  }
+}

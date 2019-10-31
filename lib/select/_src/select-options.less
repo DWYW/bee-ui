@@ -1,0 +1,45 @@
+@import '../../theme.less';
+
+.select-options- {
+  .options--body {
+    color: @font-tint-color;
+
+    .bee-scrollbar--body {
+      max-height: @normal-height * 8;
+    }
+
+    .option--item {
+      display: block;
+
+      padding: 0 30px 0 8px;
+
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+
+      line-height: @normal-height;
+
+      .item-icon {
+        float: right;
+
+        margin-right: -20px;
+      }
+
+      &.option--item__selected {
+        color: @primary-color;
+      }
+      
+      &:hover {
+        background-color: @select-options-background-color_hover;
+      }
+    }
+
+    .options__empty {
+      display: block;
+
+      padding: 0 30px 0 8px;
+
+      line-height: @normal-height;
+    }
+  }
+}

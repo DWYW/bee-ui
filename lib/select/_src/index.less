@@ -1,0 +1,130 @@
+@import '../../theme.less';
+
+.bee-select {
+  position: relative;
+
+  display: inline-block;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  height: @select-height;
+
+  cursor: pointer;
+  user-select: none;
+
+  color: @font-color;
+  border: 1px solid @select-border-color;
+  border-radius: @border-radius;
+  background-color: @select-background-color;
+
+  font-size: @font-size;
+  line-height: @select-height;
+
+  .bee-select--body {
+    display: block;
+
+    box-sizing: border-box;
+    width: 100%;
+    min-width: @select-min-width;
+    height: 100%;
+    padding-right: @select-icon-width;
+    padding-left: @select-icon-width/4;
+
+    .bee-search--input, .bee-selected--label {
+      overflow: hidden;
+
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      border: none;
+      outline: none;
+      background-color: transparent;
+
+      font-size: @font-size;
+    }
+
+    .bee-search--input {
+      width: 60px;
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      overflow: hidden;
+
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 @select-icon-width 0 8px;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      color: @placeholder-color;
+
+      line-height: @select-height;
+    }
+  }
+  
+  .bee-select--icon {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+
+    width: @select-icon-width;
+
+    transform: translate3d(0, -50%, 0);
+    text-align: center;
+  }
+
+
+  &.bee-select__multiple {
+    height: auto;
+    min-height: @select-height;
+
+    .bee-select--body .bee-select--item {
+      float: left;
+
+      height: @select-height - 6px;
+      margin: 2px 4px 2px 0;
+      padding: 0 4px;
+
+      white-space: nowrap;
+      word-break: keep-all;
+
+      border-radius: @border-radius;
+      background-color: @select-item-background-color_multiple;
+
+      line-height: @select-height - 6px;
+
+      >span {
+        padding-right: 4px;
+      }
+
+      >.bee-remove--button {
+        color: @select-border-color;
+
+        &:hover {
+          color: @font-tint-color;
+        }
+      }
+    }
+  }
+
+  &.bee-select__disabled {
+    cursor: no-drop;  opacity: .6;
+    background-color: @select-background-color_disabled;
+
+    .bee-search--input {
+      cursor: no-drop; 
+    }
+  }
+}

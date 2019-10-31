@@ -1,100 +1,79 @@
 <template>
-  <transition name='bee-loading' @after-leave='afterLeave'>
-    <div :class='["bee-loading--wp", "bee-loading--wp__" + display, {
-      "bee-loading--wp__root": !parent
-    }]' v-show='toggle'>
-      <loading-logo v-if='type === 0'></loading-logo>
-      <loading-pie v-else-if='type === 1'></loading-pie>
-      <loading-rects v-else></loading-rects>
-      <span class='bee-loading--text'> {{text}}</span>
-    </div>
+  <transition name='loading'
+    @before-enter='beforeEnter'
+    @after-leave='afterLeave'
+  >
+    <section  v-if='open' :class="['bee-loading', {
+      'bee-loading__block': block
+    }]" :style="{
+      'transition-delay': !open ? delay + 'ms' : null
+    }">
+      <section class="bee-loading--body">
+        <component class="bee-loading--animation" :is="loading"></component>
+        <span class="bee-loading--placeholder"> {{text}}</span>
+      </section>
+    </section>
   </transition>
-
 </template>
 
 <script>
-import LoadingLogo from './Logo.vue'
-import LoadingPie from './Pie.vue'
-import LoadingRects from './Rects.vue'
+import MainLoading from './main-loading.vue'
+import PieLoading from './pie-loading.vue'
+import UndulateLoading from './undulate-loading.vue'
 
 export default {
   components: {
-    LoadingLogo,
-    LoadingPie,
-    LoadingRects
+    MainLoading,
+    PieLoading,
+    UndulateLoading
   },
   data () {
     return {
-      toggle: false
+      open: false,
+      parent: document.body,
+      type: 'main',
+      block: true,
+      text: this.$_language('LOADING_PLACEHOLDER'),
+      delay: 400
     }
+  },
+  computed: {
+    loading () {
+      const components = {
+        'main': 'MainLoading',
+        'pie': 'PieLoading',
+        'undulate': 'UndulateLoading'
+      }
+
+      return components[this.type]
+    }
+  },
+  mounted () {
+    this.parent && this.parent.appendChild(this.$el)
+  },
+  destroyed () {
+    this._vnode.elm.parentNode && this._vnode.elm.parentNode.removeChild(this._vnode.elm)
   },
   methods: {
     show () {
-      this.__onShow()
+      this.open = true
       return this
     },
-
     hide () {
-      this.__onHide()
+      this.open = false
+      return this
     },
-
+    beforeEnter () {
+      this.parent.classList.add('bee-loading--parent')
+    },
     afterLeave () {
-      this.__onDestroy()
+      this.$destroy()
+      this.parent.classList.remove('bee-loading--parent')
     }
   }
 }
 </script>
 
 <style lang="less">
-@import '../../theme.less';
-@root: bee-loading;
-
-.@{root}--wp {
-  width: 100%;
-  height: 100%;
-  transition: opacity .4s;
-  position: absolute;
-  left: 0;
-  top: 0;
-  overflow: hidden;
-  z-index: @z-2;
-  background-color: @loading-bg;
-  user-select: none;
-
-  .@{root}--text {
-    color: @font-tint-color;
-    font-size: 13px;
-    line-height: 24px;
-  }
-
-  &.@{root}--wp__block, &.@{root}--wp__inline {
-    display: flex;
-    justify-content: center;
-    align-items: center
-  }
-
-  &.@{root}--wp__block {
-    flex-direction: column;
-  }
-
-  &.@{root}--wp__inline {
-    flex-direction: row;
-
-    .@{root}--text {
-      padding-left: 10px;
-    }
-  }
-
-  &.@{root}--wp__root {
-    position: fixed;
-  }
-}
-
-.@{root}--parent {
-  position: relative;
-}
-
-.@{root}-leave-to {
-  opacity: 0;
-}
+  @import './index.less';
 </style>

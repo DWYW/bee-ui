@@ -1,0 +1,45 @@
+@import '../../theme.less';
+
+.bee-picker-time--item {
+  overflow: hide;
+
+  box-sizing: border-box;
+  height: 100%;
+
+  cursor: pointer;
+  text-align: center;
+
+  font-size: @picker-time-font-size;
+
+  &:not(:last-child) {
+    border-right: 1px solid @picker-border-color;
+  }
+
+  .time-value--item {
+    line-height: @picker-date-line-height;
+
+    &:hover {
+      color: @picker-color_primary;
+      background-color: @picker-background-color_range;
+    }
+
+    &.time-value--item__selected {
+      color: @picker-color_primary;
+      background-color: @picker-background-color_range;
+
+      font-weight: bold;
+    }
+
+    &.time-value--item__disabled {
+      color: @picker-color_disabled;
+      background-color: transparent;
+
+      font-weight: normal;
+
+      &:hover {
+        color: @picker-color_disabled;
+        background-color: transparent;
+      }
+    }
+  }
+}

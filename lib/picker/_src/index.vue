@@ -1,56 +1,44 @@
 <template>
-  <div :class='["picker--wp", {
-    "picker__date": type === "date",
-    "picker__datetime": type === "datetime",
-    "picker__range": type === "range",
-    "picker__rangetime": type === "rangetime"
-  }]'>
-    <quick-btns v-if='hasQuickBtns'
-      :callback="quickCallback"
-      :quick-btns='getQuickBtns()'
-      :quick-btns-type='quickBtnsType'
-      :is-range='isRange'
-      :value='value'></quick-btns>
+  <section :class="['bee-picker', {
+    'bee-picker__disabled': disabled === true
+  }]">
+    <quick-buttons v-if="quickButtonConfigurations.length && quickBtnsType === 'outer'"
+      :quick-btns="quickButtonConfigurations"
+      :quick-btns-type="quickBtnsType"
+      :type='type'
+      :callback="pickerCallback"
+      :disabled='disabled'
+      :value="value"
+    ></quick-buttons>
 
-    <bee-input ref='input'
-      :read-only='true'
-      :icon='iconConfig'
-      :disabled='disabled === true'
-      :placeholder='placeholder'
-      :value='picker.label'
-      @click='openPicker'
-      @iconClick='openPicker' />
-  </div>
+    <section class="bee-picker--value" @click="togglePicker">
+      <bee-icon icon="date"></bee-icon>
+
+      <span class="bee-picker--value-text" v-if='value'>{{labelText}}</span>
+      <span class="bee-picker--placeholder" v-else>{{placeholder}}</span>
+    </section>
+  </section>
 </template>
 
 <script>
 import Vue from 'vue'
-import langs from './lang'
-import Picker from './Picker.vue'
-import QuickBtns from './QuickBtns.vue'
+import PickerPopper from './picker-popper.vue'
+import QuickButtons from './quick-buttons.vue'
+import dateHelpers from '../../utils/date'
+import helpers from '../../utils/helpers'
 import Listener from '../../utils/listener'
-import utils from './utils'
+import getScrollParent from '../../utils/getScrollParent'
 
-const PickerConstructor = Vue.extend(Picker)
+const PickerPopperCtor = Vue.extend(PickerPopper)
 
 export default {
   name: 'BeePicker',
   components: {
-    QuickBtns
+    QuickButtons
   },
   props: {
-    // 滚动事件的目标元素
-    scrollDom: null,
-    // 语言类型
-    lang: {
-      type: String,
-      default: 'zh_cn'
-    },
-    // 日期格式字符串
     format: String,
-    // 最终显示在input框中的label值 参数为选中的日期或者日期范围
     labelFormat: Function,
-    // 日期选择的样式 date 或者 range
     type: {
       type: String,
       validator: function (value) {
@@ -58,7 +46,6 @@ export default {
       },
       default: 'date'
     },
-    // 日期不可用过滤
     disabled: [Function, Boolean],
     timeDisabled: Object,
     timeVisible: {
@@ -72,7 +59,6 @@ export default {
       }
     },
     placeholder: String,
-    // 快捷按钮
     quickBtns: Array,
     quickBtnsType: {
       type: String,
@@ -93,210 +79,171 @@ export default {
   },
   data () {
     return {
-      _instance: null,
-      picker: {
-        label: null,
-        value: null
-      },
-      _before: null,
-      _after: null
+      toggle: false,
+      oldValue: null
     }
   },
   computed: {
-    iconConfig () {
-      return {
-        icon: 'date',
-        position: 'left'
+    scrollParent () {
+      return getScrollParent(this.$el)
+    },
+
+    quickButtonConfigurations () {
+      if (helpers.typeof(this.quickBtns) !== 'array') return []
+
+      return this.quickBtns.reduce((acc, cur) => {
+        if (!cur) return acc
+
+        const { label, value } = cur
+
+        if (!label) return acc
+
+        if (/range/.test(this.type)) {
+          helpers.typeof(value, 'array') && acc.push(cur)
+        } else {
+          helpers.typeof(value, 'date') && acc.push(cur)
+        }
+
+        return acc
+      }, [])
+    },
+
+    labelText () {
+      // If the custom label format already has.
+      if (helpers.typeof(this.labelFormat, 'function')) {
+        return this.labelFormat(this.value)
       }
-    },
-    _TEXT () {
-      return langs[this.lang]
-    },
-    isRange () {
-      return /^range/.test(this.type)
-    },
-    isNeedTime () {
-      return /time$/.test(this.type)
-    },
-    hasQuickBtns () {
-      let quickBtns = this.getQuickBtns()
-      return quickBtns && quickBtns.length && this.quickBtnsType === 'outer'
+
+      // If it is the value in the quick button.
+      const _quick = this.quickButtonConfigurations.find(item => helpers.equal(this.value, item.value))
+      if (_quick) return _quick.label
+
+      // Defult time format.
+      const _format = this.getFormat()
+
+      // The Format of date or datetime
+      if (helpers.typeof(this.value, 'date')) {
+        return dateHelpers.format(this.value, _format)
+      }
+
+      // The Format of range or rangetime
+      if (helpers.typeof(this.value, 'array')) {
+        const strings = this.value.reduce((acc, cur) => {
+          helpers.typeof(cur, 'date') && acc.push(dateHelpers.format(cur, _format))
+          return acc
+        }, [])
+
+        return strings.join(` ${this.$_language('PICKER_RANGE_JOIN')} `)
+      }
+
+      return ''
     }
-  },
-  mounted () {
-    this.value && this.updatedValue(this.value)
   },
   methods: {
-    openPicker () {
-      if (this._instance) return
+    togglePicker (e) {
+      if (this.disabled === true) return
 
-      this._before = this.value
-      let { value, ...props } = this._props
+      if (this.toggle) {
+        let target = e ? e.target : null
 
-      const _config = Object.assign({}, props, {
-        followDom: this.$refs.input.$el,
-        scrollDom: this.scrollDom,
-        callback: this.pickerCallBack,
-        quickCallback: this.quickCallback,
-        isRange: this.isRange,
-        text: this._TEXT,
-        format: this.getFormat(),
-        quickBtns: this.getQuickBtns(),
-        value: this.picker.value,
-        isNeedTime: this.isNeedTime,
-        closePicker: this.closePicker
-      })
-
-      this._instance = new PickerConstructor({ data: _config })
-      this._instance.vm = this._instance.$mount()
-      this._instance.dom = this._instance.vm.$el
-      document.body.appendChild(this._instance.dom)
-
-      setTimeout(() => {
-        this.$emit('opened', this)
-        Listener.addListener(document, 'click', this.closePicker)
-      })
-    },
-
-    /**
-     * 关闭options选择层
-     */
-    closePicker () {
-      if (this._instance) {
-        this.isChanged()
-        this._instance.vm.$destroy()
-        document.body.removeChild(this._instance.dom)
-        this._instance = null
-        Listener.removeListener(document, 'click', this.closePicker)
-      }
-    },
-
-    /**
-     * 获取格式化的方式
-     */
-    getFormat () {
-      return this.format ? this.format : /time$/.test(this.type) ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
-    },
-
-    /**
-     * 过滤获取快速选择按钮
-     */
-    getQuickBtns () {
-      if (utils.typeof(this.quickBtns) !== 'array') {
-        return []
-      }
-
-      let btns = []
-
-      this.quickBtns.forEach((item) => {
-        if (this.isRange && item) {
-          let { label, value } = item
-
-          if (label && utils.typeof(value) === 'array' && ((utils.typeof(value[0]) === 'date' && utils.typeof(value[1]) === 'date') || (utils.typeof(value[0]) === 'date' && utils.typeof(value[1]) === 'date'))) {
-            btns.push(item)
+        while (target) {
+          if (target !== this._pickerInstance.$el) {
+            target = target.parentNode
+            continue
           }
+
+          break
         }
 
-        if (!this.isRange && item) {
-          let { label, value } = item
+        if (target) return
 
-          if (label && utils.typeof(value) === 'date') {
-            btns.push(item)
-          }
-        }
-      })
-
-      return btns
-    },
-
-    /**
-     * 快速选择按钮选择后的回调
-     * @param {Object} data 选中的按钮数据
-     */
-    quickCallback (data) {
-      this._after = data.value
-      this.$set(this.picker, 'label', data.label)
-      this.$set(this.picker, 'value', data.value)
-      this.closePicker()
-      this.$emit('input', data.value)
-    },
-
-    /**
-     * 选取后的回调
-     * @param {Date|Array Date} date 回调值
-     * @param {String} type 回调类型 pick|quickBtn
-     */
-    pickerCallBack (date, type) {
-      this._after = date
-      this.updatedValue(date)
-      this.$emit('input', date)
-
-      if (!this.isNeedTime) {
+        this.toggle = false
         this.closePicker()
-      } else if (this.autoChange && this._instance && this._instance.pickerType !== 'time') {
-        this._instance.pickerTypeSwitch('time')
+      } else {
+        this.toggle = true
+        this.openPicker()
       }
     },
 
-    /**
-     * whether the value is changed.
-     */
-    isChanged () {
-      // whether before equal after
-      if (utils.typeof(this._before) === utils.typeof(this._after)) {
-        if (!this._before) return false
-
-        if (this._before.toString() === this._after.toString()) return false
+    openPicker () {
+      let _data = {
+        type: this.type,
+        quickBtnsType: this.quickBtnsType,
+        disabled: this.disabled,
+        timeDisabled: this.timeDisabled,
+        timeVisible: this.timeVisible,
+        autoChange: this.autoChange,
+        maxDays: this.maxDays,
+        defaultTime: this.defaultTime,
+        value: this.value,
+        scrollParent: this.scrollParent,
+        reference: this.$el,
+        quickButtonConfigurations: this.quickButtonConfigurations,
+        pickerCallback: this.pickerCallback,
+        format: this.getFormat()
       }
 
-      this.$nextTick(() => {
-        this.$emit('change', this._after)
-      })
+      if (helpers.typeof(this.disabled, 'function')) {
+        _data['disabled'] = this.disabled
+      }
+
+      const _beforeEnter = () => {
+        setTimeout(() => {
+          Listener.addListener(window, 'click', this.togglePicker)
+        })
+      }
+
+      const _afterEnter = () => {
+        this.$listeners.opened && this.$listeners.opened()
+      }
+
+      this._pickerInstance = new PickerPopperCtor({
+        data: _data,
+        methods: {
+          beforeEnter: _beforeEnter,
+          afterEnter: _afterEnter
+        }
+      }).$mount()
+
+      // Save the old value for change event.
+      this.oldValue = helpers.deepCopy(this.value)
     },
 
-    /**
-     * 更新选择的日期时间的值
-     * @param {Date|Array Date} date 设置的值
-     */
-    updatedValue (date) {
-      let _label = ''
+    closePicker () {
+      this._pickerInstance.open = false
+      Listener.removeListener(window, 'click', this.togglePicker)
 
-      if (date) {
-        let isUpdateRange = this.isRange && utils.typeof(date) === 'array' && utils.typeof(date[0]) === 'date' && utils.typeof(date[1]) === 'date'
-        let isUpdateDate = !this.isRange && utils.typeof(date) === 'date'
+      if (helpers.equal(this.value, this.oldValue)) return
 
-        if (isUpdateRange) {
-          if (utils.typeof(this.labelFormat) === 'function') {
-            _label = this.labelFormat(date)
-            _label = !_label ? date.map((item) => utils.format(item, this.getFormat())).join(this._TEXT.join) : _label
-          } else {
-            _label = date.map((item) => utils.format(item, this.getFormat())).join(this._TEXT.join)
-          }
-        } else if (isUpdateDate) {
-          if (utils.typeof(this.labelFormat) === 'function') {
-            _label = this.labelFormat(date)
-            _label = !_label ? utils.format(date, this.getFormat()) : _label
-          } else {
-            _label = utils.format(date, this.getFormat())
-          }
-        }
+      this.$listeners.change && this.$listeners.change(this.value)
+    },
 
-        this.$set(this.picker, 'label', _label)
-        this.$set(this.picker, 'value', date)
-      } else {
-        this.$set(this.picker, 'label', null)
-        this.$set(this.picker, 'value', null)
+    getFormat () {
+      return this.format || (/time$/.test(this.type) ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD')
+    },
+
+    pickerCallback (data) {
+      if (data.type === 'confirm' && this.toggle) {
+        this.togglePicker()
+        return
       }
-    }
-  },
-  watch: {
-    'value': function (value, oldValue) {
-      if (utils.typeof(value) !== utils.typeof(oldValue)) {
-        this.updatedValue(value)
-      } else {
-        if (value && value.toString() !== oldValue.toString()) {
-          this.updatedValue(value)
-        }
+
+      // If the selected value is equal the current value, break after.
+      if (helpers.equal(data.value, this.value)) return
+
+      // Emit v-model input event.
+      this.$listeners.input && this.$listeners.input(data.value)
+
+      // If It is triggered by outer quick button, emit change event.
+      if (data.type === 'quick' && this.quickBtnsType === 'outer') {
+        this.$listeners.change && this.$listeners.change(this.value)
+      }
+
+      // auto close picker.
+      if (/^(date|range)$/.test(this.type) && this.toggle) {
+        this.$nextTick(() => {
+          this.togglePicker()
+        })
       }
     }
   }
@@ -304,37 +251,5 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../theme.less';
-@root: picker;
-
-.@{root}--wp {
-  display: inline-block;
-  color: @font-color;
-
-  .ipt--wp {
-    vertical-align: middle;
-    width: 100%;
-
-    .icon--wp {
-      font-size: 15px;
-      top: 1px;
-    }
-  }
-
-  &.@{root}__date .ipt--wp{
-    width: 160px;
-  }
-
-  &.@{root}__datetime .ipt--wp{
-    width: 180px;
-  }
-
-  &.@{root}__range .ipt--wp{
-    width: 210px;
-  }
-
-  &.@{root}__rangetime .ipt--wp{
-    width: 340px;
-  }
-}
+  @import './index.less';
 </style>

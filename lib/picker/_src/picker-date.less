@@ -1,0 +1,187 @@
+@import '../../theme.less';
+
+.bee-picker-date {
+  display: block;
+
+  box-sizing: border-box;
+  width: @picker-date-width;
+  height: @picker-date-height;
+  padding: 10px;
+
+  user-select: none;
+
+  color: @font-color;
+
+  font-size: @picker-font-size;
+
+  .bee-picker-date--header {
+    overflow: hidden;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: @picker-date-header-font-size;
+    line-height: @picker-date-line-height;
+
+    .date-year__prev, .date-month__prev {
+      position:relative;
+      z-index: 1;
+
+      display: block;
+      float: left;
+
+      width: @picker-date-line-height;
+
+      cursor: pointer;
+    }
+    
+    .date-year__next, .date-month__next {
+      position:relative;
+      z-index: 1;
+
+      display: block;
+      float: left;
+
+      width: @picker-date-line-height;
+    }
+
+    .date-header--text {
+      float: left;
+
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0 -@picker-date-line-height * 2;
+      padding: 0 @picker-date-line-height * 2;
+    }
+  }
+
+  .bee-picker-date--body {
+    position: relative;
+
+    width: 100%;
+    padding-top: 20px;
+
+    .bee-picker--days-overflow {
+      position: absolute;
+      top: 8px;
+      left: 0;
+
+      width: 100%;
+      height: @picker-date-day-size;
+
+      text-align: center;
+
+      color: @picker-color_primary;
+      background-color: @picker-background-color;
+
+      line-height: @picker-date-day-size;
+    }
+
+    .date-week--labels {
+      width: 100%;
+
+      border-bottom: 1px solid @picker-border-color;
+      
+      .date-week-label--item {
+        display: inline-block;
+
+        width: 100% / 7;
+
+        text-align: center;
+
+        line-height: @picker-date-line-height;
+      }
+    }
+
+    .date--days {
+      overflow: hidden;
+
+      width: 100%;
+      padding-top: 10px;
+
+      cursor: pointer;
+      
+      .date--item {
+        display: inline-block;
+
+        width: 100% / 7;
+        height: @picker-date-day-size;
+        margin: 3px 0;
+
+        text-align: center;
+
+        line-height: @picker-date-day-size;
+        
+        .date-item--text {
+          display: block;
+
+          width: @picker-date-line-height;
+          height: @picker-date-line-height;
+          margin:  (@picker-date-day-size - @picker-date-line-height) / 2 auto;
+
+          border-radius: 50%;
+
+          line-height: @picker-date-line-height;
+        }
+
+        &.date--item__prev, &.date--item__next {
+          color: @picker-border-color;
+        }
+
+        &.date--item__current {
+          &:hover {
+            color: @picker-color_primary;
+          }
+        }
+
+        &.date--item__today {
+          color: @picker-color_today;
+        }
+
+        &.date--item__range {
+          background-color: @picker-background-color_range;
+        }
+
+        &.date--item__selected, &.date--item__range-start, &.date--item__range-end {
+          color: @picker-color_selected;
+          
+          .date-item--text {
+            background-color: @picker-background-color_selected;
+          }
+
+          &:hover {
+            color: @picker-color_selected;
+          }
+        }
+        
+        &.date--item__range-start {
+          border-top-left-radius: @picker-date-day-size;
+          border-bottom-left-radius: @picker-date-day-size;
+        }
+
+        &.date--item__range-end {
+          border-top-right-radius: @picker-date-day-size;
+          border-bottom-right-radius: @picker-date-day-size;
+        }
+
+        &.date--item__disabled {
+          color: @picker-color_disabled;
+
+          &:hover {
+            color: @picker-color_disabled;
+          }
+        }
+      }
+    }
+  }
+}
+
+.bee-picker-days-overflow-enter-active,
+.bee-picker-days-overflow-leave-active {
+  transition: opacity .2s;
+}
+.bee-picker-days-overflow-enter,
+.bee-picker-days-overflow-leave-to {
+  opacity: 0;
+}

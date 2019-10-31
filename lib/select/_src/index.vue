@@ -1,61 +1,56 @@
 <template>
-  <span :class='["select--wp", {
-    "select__placeholder": selectedItem === null && !selectedItems.toString(),
-    "select__multiple": multiple,
-    "select__disabled": disabled
-  }]' @click='openOptions' ref='wrapper'>
-    <span class="select--body">
-      <!-- multiple -->
-      <span class="select--text" v-if='multiple'>
-        <span class='select-text--wp' v-for='(item, key) in selectedLabels' :key='"label_item_" + key'>
-          {{item}}
-          <bee-icon icon='error' @click.stop='removeItem(key)'></bee-icon>
+  <section :class="['bee-select', {
+    'bee-select__multiple': this.multiple,
+    'bee-select__disabled': this.disabled
+  }]" @click='toggleOptions'>
+    <section class="bee-select--body">
+      <!-- multiple mode -->
+      <template v-if='multiple'>
+        <span class="placeholder" v-if='labels.length === 0'>{{placeholder}}</span>
+
+        <span class="bee-select--item" v-for='(item, key) in labels' :key='key'>
+          <span>{{item}}</span>
+          <bee-icon class='bee-remove--button' icon='error' @click.stop='removeSelectedItem(key)'></bee-icon>
         </span>
-        <span class="select-text--wp" v-if='selectedItems && !selectedItems.length'>{{placeholder}}</span>
-      </span>
+      </template>
 
-      <!-- base -->
-      <span class="select--text" v-else>
-        <!-- use search -->
-        <input type="text" class="select--input" ref='input' v-if='isSearch' :disabled='disabled' :readonly='readonly' v-model='selectedLabel' :placeholder='placeholder'>
+      <!-- single mode -->
+      <template v-else>
+        <span class="placeholder" v-if='labels.length === 0 && !keyword'>{{placeholder}}</span>
 
-        <!-- no search -->
-        <span class="select-text--wp" v-else>
-          {{selectedLabel || placeholder}}
-        </span>
-      </span>
-    </span>
+        <span v-if='searchDisabled' class="bee-selected--label">{{labels.join('')}}</span>
 
-    <bee-icon class="select--icon" icon='arr-down'></bee-icon>
-  </span>
+        <!-- open search -->
+        <input v-else
+          class="bee-search--input"
+          type="text"
+          ref='search'
+          :disabled="disabled"
+          :readonly='readonly'
+          v-model.trim='keyword'
+        >
+      </template>
+    </section>
+    <bee-icon class="bee-select--icon" icon='arr-down'></bee-icon>
+  </section>
 </template>
 
 <script>
 import Vue from 'vue'
+import SelectOptions from './select-options.vue'
 import Listener from '../../utils/listener'
-import Options from './Options.vue'
-import { deepValue } from '../../utils/object'
+import getScrollParent from '../../utils/getScrollParent'
+import helpers from '../../utils/helpers'
 
-const OptionsConstructor = Vue.extend(Options)
+const OptionsConstructor = Vue.extend(SelectOptions)
 
 export default {
   name: 'BeeSelect',
   props: {
-    type: {
-      type: String,
-      default: 'auto'
-    },
-    multiple: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
+    value: null,
     options: {
       type: Array,
-      default: () => []
+      required: true
     },
     optionKey: {
       type: Object,
@@ -66,425 +61,227 @@ export default {
         }
       }
     },
+    type: {
+      type: String,
+      default: 'auto'
+    },
+    placeholder: String,
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     searchLength: {
       type: Number,
       default: 10
-    },
-    placeholder: String,
-    scrollDom: null,
-    value: ''
+    }
   },
   data () {
     return {
-      _wrapper: null,
-      _instance: null,
-      backup: {
-        value: null,
-        label: null
-      },
-      selectedItem: null,
-      selectedLabel: null,
-      selectedItems: [],
-      selectedLabels: [],
-      readonly: true
+      readonly: true,
+      values: [],
+      keyword: '',
+      toggle: false,
+      isMounted: false
     }
   },
   computed: {
-    isSearch () {
-      return (this.type === 'search' || (this.type === 'auto' && this.options.length >= this.searchLength)) && !this.multiple
+    scrollParent () {
+      return getScrollParent(this.$el)
+    },
+
+    searchDisabled () {
+      if (this.multiple) return true
+
+      if (this.type === 'search') return false
+
+      return this.type === 'auto' && this.options.length < this.searchLength
+    },
+
+    labels () {
+      return this.values.reduce((acc, cur) => {
+        const option = this.options.find((item) => cur === helpers.getValueByPath(item, this.optionKey.value))
+        option && acc.push(helpers.getValueByPath(option, this.optionKey.label))
+        return acc
+      }, [])
     }
   },
   mounted () {
-    this._wrapper = this.$refs.wrapper
-    this.init(this.value)
-  },
-  beforeDestroy () {
-    this.closeOptions()
+    if (this.value !== undefined && this.value !== null) {
+      this.setSelected(this.value)
+    }
+
+    this.isMounted = true
   },
   methods: {
-    /**
-     * 数据初始化
-     * @param  {Any} value 当前的this.value值
-     */
-    init (value) {
-      if (value !== undefined && value !== null) {
-        if (this.multiple) {
-          this.selectedItems = value
-          this.selectedLabels = this.getSelectedLabel(this.selectedItems)
-        } else {
-          this.selectedItem = value
-          this.selectedLabel = this.getSelectedLabel(this.selectedItem)
-          this.setBackupData()
+    toggleOptions (e) {
+      if (this.disabled) return
+
+      // If the options has be opened, to try close it.
+      if (this.toggle) {
+        let target = e ? e.target : null
+
+        while (target) {
+          if (target !== this._optionsInstance.$el) {
+            target = target.parentNode
+            continue
+          }
+
+          break
         }
-      } else {
-        // 重置value
-        if (this.multiple) {
-          this.selectedItems = []
-          this.selectedLabels = []
-        } else {
-          this.selectedItem = null
-          this.selectedLabel = null
+
+        if (!target) {
+          this.toggle = false
+          this.hideOptions(e)
         }
+
+        return
       }
+
+      this.toggle = true
+      this.showOptions(e)
     },
 
-    /**
-     * 打开options选择层
-     */
-    openOptions () {
-      if (this.disabled || this._instance) return
-
-      if (this.isSearch) {
-        this.readonly = false
-        this.$refs.input.focus()
-        this.$refs.input.select()
-      }
-
-      const _config = {
-        followDom: this._wrapper,
-        scrollDom: this.scrollDom,
-        multiple: this.multiple,
-        options: this.options,
-        optionKey: this.optionKey,
-        pickerCallBack: this.pickerCallBack,
-        value: this.multiple ? this.selectedItems : this.selectedItem,
-        textContainerWidth: this._wrapper.offsetWidth,
-        textContainerHeight: !this.multiple ? this._wrapper.offsetHeight : null
-      }
-
-      this._instance = new OptionsConstructor({ data: _config })
-      this._instance.vm = this._instance.$mount()
-      this._instance.dom = this._instance.vm.$el
-      document.body.appendChild(this._instance.dom)
-
-      setTimeout(() => {
-        Listener.addListener(document, 'click', this.closeOptions)
-      })
-    },
-
-    /**
-     * 关闭options选择层
-     */
-    closeOptions () {
-      if (this._instance) {
-        const scrollRect = this._instance.$refs.ScrollRect
-
-        if (scrollRect && scrollRect.switch) {
-          return false
-        }
-
-        this.readonly = true
-        this._instance.vm.$destroy()
-        document.body.removeChild(this._instance.dom)
-        this._instance = null
-        Listener.removeListener(document, 'click', this.closeOptions)
-
-        if (this.isSearch && this.selectedLabel !== this.backup.label && this.selectedItem === this.backup.value) {
-          this.selectedLabel = this.backup.label
+    showOptions (e) {
+      const _data = () => {
+        return {
+          selected: helpers.deepCopy(this.values),
+          options: this.options,
+          optionKey: this.optionKey,
+          multiple: this.multiple,
+          minWidth: this.$el.offsetWidth,
+          scrollParent: this.scrollParent,
+          reference: this.$el,
+          onSelected: this.onSelected
         }
       }
-    },
 
-    /**
-     * 值是否发生了改变
-     * @param  {any} option 选中的options item
-     * @param  {any} option 选中的options item
-     */
-    isChanged (current, next) {
-      if (this.multiple) {
-        if (this.arrayIsEqual(current, next)) return false
-      } else {
-        if (current === next) return false
-      }
-
-      this.$nextTick(() => {
-        this.$emit('change', next)
-      })
-    },
-
-    /**
-     * 拾取后的回调函数
-     * @param  {Object} option 选中的options item
-     * @param  {Number} index  选中的item的索引号
-     */
-    pickerCallBack (option, index) {
-      option = Object.assign({}, option)
-
-      if (this.multiple) {
-        let findIndex = this.selectedItems.indexOf(deepValue(this.optionKey.value, option))
-
-        if (findIndex === -1) {
-          // add
-          this.selectedItems.push(deepValue(this.optionKey.value, option))
-          this.selectedLabels.push(deepValue(this.optionKey.label, option))
-        } else {
-          // remove
-          this.selectedItems.splice(findIndex, 1)
-          this.selectedLabels.splice(findIndex, 1)
+      const _beforeEnter = () => {
+        // if the search function be enabled, the input value is auto selected.
+        if (!this.searchDisabled) {
+          this.readonly = false
+          this.$refs.search.focus()
+          this.$refs.search.select()
         }
 
-        this.isChanged(this.value, this.selectedItems)
-        this.$emit('input', [].concat(this.selectedItems))
-        this.$nextTick(() => {
-          this._instance.vm.$refs.menu.setPosition()
-          this._instance.textContainerWidth = this._wrapper.offsetWidth
+        setTimeout(() => {
+          Listener.addListener(window, 'click', this.toggleOptions)
         })
-      } else {
-        this.setBackupData()
-        this.selectedItem = deepValue(this.optionKey.value, option)
-        this.selectedLabel = deepValue(this.optionKey.label, option)
-        this.isChanged(this.value, this.selectedItem)
-        this.$emit('input', deepValue(this.optionKey.value, option))
-        this.closeOptions()
       }
+
+      this._optionsInstance = new OptionsConstructor({
+        data: _data,
+        methods: {
+          beforeEnter: _beforeEnter
+        }
+      }).$mount()
     },
 
-    /** 设置备份数据，用于搜索类型的下拉组件恢复数据 */
-    setBackupData () {
-      if (this.isSearch) {
-        this.$set(this.backup, 'value', this.selectedItem)
-        this.$set(this.backup, 'label', this.selectedLabel)
+    hideOptions (e) {
+      if (!this.searchDisabled) {
+        // if the search function be enabled, the input will be readonly.
+        this.readonly = true
+
+        // if the search function be used and nothing selected, to restore the label.
+        if (this.labels.indexOf(this.keyword) === -1) {
+          this.keyword = this.labels.join('')
+        }
       }
+
+      this._optionsInstance.open = false
+      Listener.removeListener(window, 'click', this.toggleOptions)
     },
 
-    /**
-     * 获取选中的label值
-     * @param  {String} value 当前选中的值
-     * @return {String}       当前选中值对应的label值
-     */
-    getSelectedLabel (value) {
-      let label = value instanceof Array ? [] : ''
-      if (this.options.length === 0) return label
+    onSelected (data) {
+      if (!this.multiple && this._optionsInstance && this._optionsInstance.open) {
+        this.toggleOptions()
+      }
 
-      if (value instanceof Array) {
-        for (let i = 0; i < value.length; i++) {
-          let _item = this.options.find((item) => {
-            let _value = deepValue(this.optionKey.value, item)
-            return _value === value[i] || _value === (value[i] + '')
+      // If the value to equal old vlaueo or undefined, break after.
+      // When the length of the this.options is 0, the data will be undefined.
+      if (!data || helpers.equal(data, this.values)) return
+
+      this.values = helpers.deepCopy(data)
+      let eventData = data
+
+      if (this.multiple) {
+        // resolve the options position error by reference resize.
+        if (this.toggle && this._optionsInstance) {
+          this.$nextTick(() => {
+            this._optionsInstance.$refs.popper.updatePosition()
           })
-
-          if (_item) {
-            label.push(deepValue(this.optionKey.label, _item))
-          }
         }
       } else {
-        // 单选下拉
-        for (let i = 0; i < this.options.length; i++) {
-          let _value = deepValue(this.optionKey.value, this.options[i])
+        eventData = data[0]
 
-          if (_value === value || _value === (value + '')) {
-            label = deepValue(this.optionKey.label, this.options[i])
-            break
-          }
+        if (!this.searchDisabled) {
+          this.keyword = this.labels[0]
         }
       }
 
-      return label
-    },
+      // resolve emit events when mounted.
+      if (!this.isMounted) {
+        this.isMounted = true
+        return
+      }
 
-    /**
-     * 通过过滤字段过滤options
-     * @param  {String} filterWord 过滤字段
-     * @return {Array}
-     */
-    filterOptions (filterWord) {
-      if (!filterWord) return this.options
+      // Emit evetns.
+      const events = ['input', 'change']
 
-      let _options = []
-
-      this.options.forEach((item) => {
-        deepValue(this.optionKey.label, item).match(filterWord) ? _options.push(item) : null
+      events.forEach((eventName) => {
+        if (this.$listeners[eventName]) {
+          this.$listeners[eventName](eventData)
+        }
       })
-
-      return _options
     },
 
-    /**
-     * 多选时，点击叉号，删除点击项
-     * @param  {Number} index item的索引值
-     */
-    removeItem (index) {
-      if (this.disabled) return false
-
-      this.selectedItems.splice(index, 1)
-      this.selectedLabels.splice(index, 1)
-      this.isChanged(this.value, this.selectedItems)
-      this.$emit('input', [].concat(this.selectedItems))
+    removeSelectedItem (index) {
+      let _values = helpers.deepCopy(this.values)
+      _values.splice(index, 1)
+      this.onSelected(_values)
     },
 
-    /**
-     * 判断两个简单数组是否相等
-     * @param {Array} arr1
-     * @param {Array} arr2
-     */
-    arrayIsEqual (arr1, arr2) {
-      if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false
-
-      if (arr1.length !== arr2.length) return false
-
-      for (let i = 0; i < arr1.length; i++) {
-        if (arr1[i] !== arr2[i]) {
-          return false
-        }
+    setSelected (data) {
+      if (helpers.typeof(data, 'array')) {
+        this.onSelected(data)
+      } else {
+        this.onSelected([data])
       }
-
-      return true
     }
   },
   watch: {
-    options (opts) {
-      // 如果不存在下拉选项，则将选中内容置空
-      if (opts.length === 0) {
-        if (this.multiple) {
-          this.selectedItems = []
-          this.selectedLabels = []
-        } else {
-          this.selectedItem = null
-        }
-      } else {
-        this.init(this.value)
-      }
+    'options': function (value, oldValue) {
+      if (value.length === 0 && oldValue.length === 0) return false
+
+      this._optionsInstance.options = value
+      this._optionsInstance.setSelected(this.values)
     },
-    value (value) {
+
+    'value': function (value) {
       if (this.multiple) {
-        if (!this.arrayIsEqual(value, this.selectedItems)) this.init(value)
+        !helpers.equal(value, this.values) && this.setSelected(value)
       } else {
-        this.init(value)
+        !helpers.equal([value], this.values) && this.setSelected(value)
       }
     },
-    selectedLabel (value) {
-      if (this._instance) {
-        this._instance.options = this.filterOptions(value)
-      }
+
+    'keyword': function (value) {
+      if (this.readonly) return
+
+      const reg = value.length ? new RegExp(value.split('').join('.*')) : /.*/
+
+      this._optionsInstance.options = this.options.filter(item => {
+        const _label = helpers.getValueByPath(item, this.optionKey.label)
+        return reg.test(_label)
+      })
     }
   }
 }
 </script>
 
 <style lang='less'>
-@import '../../theme.less';
-@root: select;
-
-.@{root}--wp {
-  min-width: @select-min-width;
-  height: @select-height;
-  line-height: @select-height;
-  display: inline-flex;
-  border: 1px solid @select-border-color;
-  border-radius: @border-radius;
-  box-sizing: border-box;
-  position: relative;
-  align-items: center;
-  cursor: pointer;
-  color: @font-color;
-  user-select: none;
-  background-color: @select-bg-color;
-
-  .@{root}--body, .@{root}--icon {
-    display: inline-block;
-  }
-
-  .@{root}--icon {
-    flex: 0 1 20px;
-    color: @font-tint-color;
-  }
-
-  .@{root}--body {
-    flex: 1 1 auto;
-    width: calc(~'100% - 20px');
-
-    .@{root}--text {
-      display: inline-block;
-      width: 100%;
-      overflow: hidden;
-      height: @select-height;
-      vertical-align: middle;
-
-      .@{root}-text--wp, .@{root}--input {
-        outline: none;
-        border: none;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        box-sizing: border-box;
-        padding: 0 5px;
-        font-size: 13px;
-      }
-
-      .@{root}--input {
-        height: @select-height;
-        background: transparent;
-        color: @font-color;
-
-        &::placeholder {
-          color: @placeholder-color;
-        }
-      }
-
-      .@{root}-text--wp {
-        display: inline-block;
-      }
-    }
-  }
-
-  &.@{root}__placeholder {
-    color: @placeholder-color;
-  }
-
-  &.@{root}__multiple {
-
-    line-height: @select-height;
-
-    &:not(.@{root}__placeholder) {
-      height: auto;
-      line-height: initial;
-
-      .@{root}--body {
-        .@{root}--text {
-          overflow: hidden;
-          line-height: initial;
-          height: auto;
-          .@{root}-text--wp {
-            display: block;
-            width: auto;
-            height: 24px;
-            line-height: 24px;
-            border-radius: @border-radius;
-            margin: 2px auto 2px 2px;
-            background-color: @select-multiple-item-bg;
-            float: left;
-
-            .bee--font {
-              color: @border-color;
-
-              &:hover {
-                color: @font-tint-color;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &.@{root}__disabled {
-    cursor: no-drop;
-    background-color: @select-disabled-bg;
-    opacity: .6;
-
-    &.@{root}__multiple {
-      .@{root}--body {
-        .@{root}--text {
-          .@{root}-text--wp {
-            .bee--font:hover {
-              color: @border-color;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
+@import './index.less';
 </style>

@@ -1,0 +1,125 @@
+@import '../../theme.less';
+
+.bee-notification {
+  position: fixed;
+  z-index: @z-2;
+  top: 10px;
+  right: 10px;
+
+  width: @notification-width;
+  padding: 14px 26px 14px 13px;
+
+  transition: top 0.4s;
+
+  border: 1px solid @notification-border-color;
+  border-radius: @border-radius;
+  background-color: @notification-body-background-color;
+  box-shadow: @notification-shadow;
+
+  .bee-notification--body {
+    position: relative;
+
+    font-size: 14px;
+
+    .bee-notification--close {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      margin-top: -5px;
+      margin-right: -15px;
+
+      cursor: pointer;
+    }
+    .bee-notification--content {
+      overflow: hidden;
+
+      .bee-notification--icon {
+        float: left;
+
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .content--main {
+        padding-left: 30px;
+
+        .content-main--title {
+          color: @notification-title-color;
+
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 24px;
+        }
+        
+        .content-main--content {
+          padding-top: 5px;
+
+          color: @notification-body-color;
+        }
+      }
+    }
+  }
+
+  &.bee-notification__info {
+    .bee-notification--icon {
+      color: @notification-body-color;
+    }
+  }
+
+  &.bee-notification__warn {
+    .bee-notification--icon {
+      color: @notification-color_warn;
+    }
+  }
+
+  &.bee-notification__success {
+    .bee-notification--icon {
+      color: @notification-color_success;
+    }
+  }
+
+  &.bee-notification__error {
+    .bee-notification--icon {
+      color: @notification-color_error;
+    }
+  }
+}
+
+.notification-enter-active {
+  animation-name: notifyEntry;
+  animation-duration: .6s;
+  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+
+  animation-fill-mode: both;
+}
+
+.notification-leave-active {
+  transition: all .4s;
+}
+
+.notification-leave-to {
+  opacity: 0;
+}
+
+@keyframes notifyEntry {
+  0% {
+    transform: translate3d(200%, 0, 0);
+
+    opacity: 0;
+  }
+  60% {
+    transform: translate3d(-25px, 0, 0);
+
+    opacity: 1;
+  }
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+  100% {
+    transform: none;
+  }
+}

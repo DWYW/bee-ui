@@ -1,0 +1,60 @@
+@import '../../theme.less';
+
+.bee-message {
+  position: fixed;
+  z-index: @z-2;
+  top: @message-top;
+  left: 50%;
+
+  box-sizing: border-box;
+  width: @message-width;
+  margin-left: -@message-width/2;
+  padding: 8px 15px;
+
+  border-radius: @border-radius;
+
+  font-size: 14px;
+
+  .bee-message--icon, .bee-message--body {
+    vertical-align: middle;
+  }
+
+  .bee-message--icon {
+    padding-right: 4px;
+
+    font-size: 16px;
+  }
+
+  &.bee-message__warn {
+    color: @message-color_warn;
+    background-color: @message-background-color_warn;
+  }
+
+  &.bee-message__success {
+    color: @message-color_success;
+    background-color: @message-background-color_success;
+  }
+
+  &.bee-message__error {
+    color: @message-color_error;
+    background-color: @message-background-color_error;
+  }
+
+  &.bee-message__center {
+    text-align: center
+  }
+}
+
+.slid-down-enter-active, .slid-down-leave-active {
+  transition: all .4s;
+}
+
+.slid-down-enter {
+  transform: translateY(-100px);
+
+  opacity: 0;
+}
+
+.slid-down-leave-to {
+  opacity: 0;
+}

@@ -1,7 +1,7 @@
 <template>
-  <div class="bee--empty">
-    <div class="empty--icon" :style='style'></div>
-    <div class="empty--placeholder">{{placeholder}}</div>
+  <div class="bee-empty">
+    <div class="bee-empty--icon" :style='style'></div>
+    <div class="placeholder">{{placeholder}}</div>
   </div>
 </template>
 
@@ -11,7 +11,9 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: '暂无数据'
+      default: function () {
+        return this.$_language('DATA_EMPTY')
+      }
     },
     size: {
       type: Number,
@@ -32,27 +34,30 @@ export default {
 <style lang="less">
 @import '../../theme.less';
 
-.bee--empty {
-  width: 100%;
-  height: 100%;
+.bee-empty {
   display: flex;
+  overflow: hidden;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  padding: 20px 0;
-  box-sizing: border-box;
 
-  .empty--icon {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+
+  .bee-empty--icon {
     flex: 0 1 auto;
+
+    opacity: .7;
     background-image: @empty-image;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    opacity: .7;
   }
-  .empty--placeholder {
-    color: #aaaaaa;
+  .placeholder {
+    color: @empty-color_placeholder;
+
     line-height: 32px;
   }
 }

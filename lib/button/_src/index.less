@@ -1,0 +1,244 @@
+@import '../../theme.less';
+
+.bee-button {
+  position: relative;
+
+  display: inline-block;
+  overflow: hidden;
+
+  min-width: @button-width;
+  height: @button-height;
+
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+
+  border: 0;
+  border-radius: @border-radius;
+  outline: none;
+
+  font-size: @font-size;
+  font-weight: normal;
+  line-height: @button-height;
+
+  &.bee-button__sm {
+    min-width: @button-sm-width;
+    height: @button-sm-height;
+
+    line-height: @button-sm-height;
+  }
+
+  &.bee-button__lg {
+    min-width: @button-lg-width;
+    height: @button-lg-height;
+
+    line-height: @button-lg-height;
+  }
+
+  .bee-button--animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    > span {
+      position: absolute;
+
+      display: block;
+
+      transform-origin: center;
+      animation: btnClick .5s ease;
+
+      border-radius: 100%;
+    }
+  }
+
+  .bee-button--content {
+    position: relative;
+
+    display: inline-block;
+    overflow: hidden;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 12px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .bee-button--icon {
+      margin-right: 6px;
+    }
+  }
+
+  // default
+  &.bee-button__default {
+    transition: border 0.15s, color 0.15s;
+
+    color: @button-color;
+    border: 1px solid @border-color;
+    background-color: @button-background-color;
+
+    line-height: @button-height - 2;
+
+    &.bee-button__sm {
+      line-height: @button-sm-height - 2;
+    }
+
+    &.bee-button__lg {
+      line-height: @button-lg-height - 2;
+    }
+
+    &:active {
+      color: @button-color_active;
+      border-color: @button-border-color_active;
+    }
+
+    &.bee-button__animation {
+      .bee-button--animation > span {
+        background-color: @button-animation-background-color;
+      }
+
+      &:active {
+        color: @button-color;
+        border-color: @border-color;
+        background-color: @button-background-color;
+      }
+    }
+  }
+
+  // primary
+  &.bee-button__primary {
+    transition: background 0.15s;
+
+    color: @button-primary-color;
+    background-color: @button-primary-background-color;
+
+    &:hover {
+      background-color: @button-primary-background-color_hover;
+    }
+
+    &:active {
+      background-color: @button-primary-background-color_active;
+    }
+
+    &.bee-button__animation {
+      border: none;
+
+      .bee-button--animation > span {
+        background-color: @button-primary-animation-background-color;
+      }
+
+      &:hover {
+        background-color: @button-primary-background-color;
+      }
+
+      &:active {
+        background-color: @button-primary-background-color;
+      }
+    }
+  }
+
+  // success
+  &.bee-button__success {
+    transition: background 0.15s;
+
+    color: @button-success-color;
+    background-color: @button-success-background-color;
+
+    &:hover {
+      background-color: @button-success-background-color_hover;
+    }
+
+    &:active {
+      background-color: @button-success-background-color_active;
+    }
+
+    &.bee-button__animation {
+      border: none;
+
+      .bee-button--animation > span {
+        background-color: @button-success-animation-background-color;
+      }
+
+      &:hover {
+        background-color: @button-success-background-color;
+      }
+
+      &:active {
+        background-color: @button-success-background-color;
+      }
+    }
+  }
+
+  // error
+  &.bee-button__error {
+    transition: background 0.15s;
+
+    color: @button-error-color;
+    background-color: @button-error-background-color;
+
+    &:hover {
+      background-color: @button-error-background-color_hover;
+    }
+
+    &:active {
+      background-color: @button-error-background-color_active;
+    }
+
+    &.bee-button__animation {
+      border: none;
+
+      .bee-button--animation > span {
+        background-color: @button-error-animation-background-color;
+      }
+
+      &:hover {
+        background-color: @button-error-background-color;
+      }
+
+      &:active {
+        background-color: @button-error-background-color;
+      }
+    }
+  }
+
+  // disabled
+  &[disabled] {
+    cursor: no-drop;
+
+    opacity: .8;
+    border-color: @border-color;
+
+    &.bee-button__default {
+      color: @font-tint-color;
+      
+      &:active {
+        color: @font-tint-color;
+        border-color: @border-color;
+      }
+    }
+
+    &.bee-button__primary, &.bee-button__success, &.bee-button__error {
+      background-color: @button-background-color_disabled;
+
+      &:hover {
+        background-color: @button-background-color_disabled;
+      }
+
+      &:active {
+        background-color: @button-background-color_disabled;
+      }
+    }
+  }
+}
+
+@keyframes btnClick {
+  0% {
+    transform: scale(.1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
