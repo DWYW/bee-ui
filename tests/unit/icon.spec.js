@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeIcon } from '../../lib'
+import { BeeIcon } from './_components'
+
 describe('bee-icon', () => {
   it('class attribute', () => {
     let icon = shallowMount(BeeIcon)

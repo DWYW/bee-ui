@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeIcon, BeeRadio, BeeRadioGroup } from '../../lib'
+import { BeeIcon, BeeRadio, BeeRadioGroup } from './_components'
 
 describe('bee-radio-group', () => {
   const groups = [{

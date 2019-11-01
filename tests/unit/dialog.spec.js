@@ -1,7 +1,8 @@
 import { shallowMount, TransitionStub } from '@vue/test-utils'
 import { expect } from 'chai'
 import Vue from 'vue'
-import BeeUI, { BeeButton, BeeDialog, BeeIcon } from '../../lib'
+import BeeUI from '../../lib'
+import { BeeButton, BeeDialog, BeeIcon } from './_components'
 
 describe('bee-dialog', () => {
   Vue.use(BeeUI)

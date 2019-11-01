@@ -1,7 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
 import Vue from 'vue'
-import BeeUI, { BeeEmpty } from '../../lib'
+import BeeUI from '../../lib'
+import { BeeEmpty } from './_components'
 
 describe('bee-empty', () => {
   Vue.use(BeeUI)

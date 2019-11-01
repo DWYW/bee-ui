@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import Vue from 'vue'
-
 import { BeeLanguage } from '../../lib'
 
 describe('language:', () => {

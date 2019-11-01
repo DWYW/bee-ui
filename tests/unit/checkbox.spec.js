@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeCheckbox, BeeIcon } from '../../lib'
+import { BeeCheckbox, BeeIcon } from './_components'
 
 describe('bee-checkbox', () => {
   it('props.icons', () => {

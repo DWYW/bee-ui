@@ -1,6 +1,6 @@
 import { RouterLinkStub, shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeBreadcrumb } from '../../lib'
+import { BeeBreadcrumb } from './_components'
 
 describe('bee-breadcrumb', () => {
   it('props.crumbs', () => {

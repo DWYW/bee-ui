@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeButton, BeeIcon } from '../../lib'
+import { BeeButton, BeeIcon } from './_components'
+
 
 describe('button', () => {
   it('props.theme', () => {

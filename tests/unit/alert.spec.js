@@ -1,7 +1,8 @@
 import { createWrapper } from '@vue/test-utils'
 import { expect } from 'chai'
 import Vue from 'vue'
-import BeeUI, { BeeDialog } from '../../lib'
+import BeeUI from '../../lib'
+import { BeeDialog } from './_components'
 
 describe('$_createAlert', () => {
   Vue.use(BeeUI)

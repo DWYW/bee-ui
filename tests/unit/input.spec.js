@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
-import { BeeInput } from '../../lib'
+import { BeeInput } from './_components'
 
 describe('bee-input', () => {
   it('props.type', () => {
