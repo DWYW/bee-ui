@@ -59,20 +59,11 @@ class Publish {
       const temp = JSON.parse(fs.readFileSync(originJson, {
         encoding: 'utf-8'
       }))
-      const hold = ['vue', 'vue-router']
-      const dependencies = {}
-
-      hold.forEach(item => {
-        if (temp.dependencies[item]) {
-          dependencies[item] = temp.dependencies[item]
-        }
-      })
 
       this.package = Object.assign({}, temp, {
         main: 'index.js',
-        scripts: {},
-        dependencies: dependencies,
-        devDependencies: {}
+        typings: 'types/index.d.ts',
+        scripts: {}
       })
 
       const version = shell.exec(`npm view ${this.package.name} version`).stdout.trim()
