@@ -25,5 +25,12 @@ describe('bee-breadcrumb', () => {
     })
 
     expect(breadcrumb.text()).to.contain('首页 > 安装 > 面包屑')
+
+    const items = breadcrumb.findAll('.breadcrumb--item')
+    let i = items.length
+
+    while (i--) {
+      expect(items.at(i).text()).contain(breadcrumb.props('crumbs')[i].label)
+    }
   })
 })
