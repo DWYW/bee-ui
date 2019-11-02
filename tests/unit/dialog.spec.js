@@ -1,22 +1,14 @@
-import { shallowMount, TransitionStub } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { expect } from 'chai'
 import Vue from 'vue'
 import BeeUI from '../../lib'
-import { BeeButton, BeeDialog, BeeIcon } from './_components'
+import { BeeButton, BeeDialog, BeeIcon, delay } from './_components'
 
 describe('bee-dialog', () => {
   Vue.use(BeeUI)
 
   it('default', () => {
-    const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
-      propsData: {}
-    })
-
+    const dialog = shallowMount(BeeDialog)
     expect(dialog.props('value')).to.eq(false)
     expect(dialog.props('title')).to.eq('提示')
     expect(dialog.props('width')).to.eq('500px')
@@ -29,44 +21,20 @@ describe('bee-dialog', () => {
     expect(dialog.props('stopPenetrate')).not.ok
   })
 
-  it('toggle', () => {
-    let toggle = true
+  it('v-model', async () => {
+    const dialog = shallowMount(BeeDialog)
 
-    const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
-      propsData: {
-        value: toggle
-      },
-      listeners: {
-        input: (value) => {
-          toggle = value
-        }
-      }
-    })
+    dialog.setProps({value: true})
+    await delay(300)
+    expect(dialog.isEmpty()).not.ok
 
-    dialog.find('.bee-dialog--btn__confirm').trigger('click')
-    expect(toggle).not.ok
-
-    toggle = true
-    dialog.find('.bee-dialog--btn__cancel').trigger('click')
-    expect(toggle).not.ok
-
-    toggle = true
-    dialog.find('.bee-dialog--close').trigger('click')
-    expect(toggle).not.ok
+    dialog.setProps({value: false})
+    await delay(300)
+    expect(dialog.isEmpty()).to.ok
   })
 
   it('props.title', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         title: 'this is test title'
@@ -78,11 +46,6 @@ describe('bee-dialog', () => {
 
   it('props.width', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         width: '50%'
@@ -94,11 +57,6 @@ describe('bee-dialog', () => {
 
   it('props.closeVisible', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         closeVisible: false
@@ -110,11 +68,6 @@ describe('bee-dialog', () => {
 
   it('props.cancelVisible', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         cancelVisible: false
@@ -126,11 +79,6 @@ describe('bee-dialog', () => {
 
   it('props.confirmVisible', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         confirmVisible: false
@@ -142,11 +90,6 @@ describe('bee-dialog', () => {
 
   it('props.cancelText', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         cancelText: 'text content'
@@ -158,11 +101,6 @@ describe('bee-dialog', () => {
 
   it('props.confirmText', () => {
     const dialog = shallowMount(BeeDialog, {
-      stubs: {
-        'transition': TransitionStub,
-        'bee-button': BeeButton,
-        'bee-icon': BeeIcon
-      },
       propsData: {
         value: true,
         confirmText: 'text content'
@@ -170,5 +108,74 @@ describe('bee-dialog', () => {
     })
 
     expect(dialog.find('.bee-dialog--btn__confirm').text()).to.contain('text content')
+  })
+
+  it('event.close', async () => {
+    let count = 0
+
+    const dialog = shallowMount(BeeDialog, {
+      propsData: {
+        value: true
+      },
+      stubs: {
+        'bee-button': BeeButton,
+        'bee-icon': BeeIcon
+      },
+      listeners: {
+        close: () => {
+          count += 1
+        }
+      }
+    })
+
+    await delay(300)
+    dialog.find('.bee-dialog--close').trigger('click')
+    expect(count).to.eq(1)
+  })
+
+  it('event.cancel', async () => {
+    let count = 0
+
+    const dialog = shallowMount(BeeDialog, {
+      propsData: {
+        value: true
+      },
+      stubs: {
+        'bee-button': BeeButton,
+        'bee-icon': BeeIcon
+      },
+      listeners: {
+        cancel: () => {
+          count += 1
+        }
+      }
+    })
+
+    await delay(300)
+    dialog.find('.bee-dialog--btn__cancel').trigger('click')
+    expect(count).to.eq(1)
+  })
+
+  it('event.confirm', async () => {
+    let count = 0
+
+    const dialog = shallowMount(BeeDialog, {
+      propsData: {
+        value: true
+      },
+      stubs: {
+        'bee-button': BeeButton,
+        'bee-icon': BeeIcon
+      },
+      listeners: {
+        confirm: () => {
+          count += 1
+        }
+      }
+    })
+
+    await delay(300)
+    dialog.find('.bee-dialog--btn__confirm').trigger('click')
+    expect(count).to.eq(1)
   })
 })
