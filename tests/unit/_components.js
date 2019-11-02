@@ -26,3 +26,11 @@ import BeeTableColumn from '../../lib/table/_src/table-column.vue'
 import BeeToolTip from '../../lib/tooltip/_src/index.vue'
 
 export { BeeAlertBody, BeeBreadcrumb, BeeButton, BeeCheckbox, BeeDialog, BeeEmpty, BeeIcon, BeeInput, BeeLoading, BeeMessageBody, BeeNotifyBody, BeePagination, BeePicker, BeePopper, BeeRadio, BeeRadioGroup, BeeScrollbar, BeeSelect, BeeSelectOptions, BeeStep, BeeSwitch, BeeTab, BeeTabItem, BeeTable, BeeTableColumn, BeeToolTip }
+
+export const delay = (time) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
