@@ -100,12 +100,12 @@ export default {
         }
 
         const popperStyle = this.getPopperStyle(this.scrollParent, this.reference, this.$el)
-        this.$refs.wrap.style = `transform: translate3d(${popperStyle.left}px, ${popperStyle.top}px, 0);`
+        this.$refs.wrap.style = `left: ${popperStyle.left}px; top: ${popperStyle.top}px;`
         this.setArrowStyle(popperStyle)
       } else {
         this.placement = this.position
         const popperStyle = this.getPopperStyle(this.scrollParent, this.reference, this.$el)
-        this.$refs.wrap.style = `transform: translate3d(${popperStyle.left}px, ${popperStyle.top}px, 0);`
+        this.$refs.wrap.style = `left: ${popperStyle.left}px; top: ${popperStyle.top}px;`
         this.setArrowStyle(popperStyle)
       }
     },

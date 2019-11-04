@@ -39,7 +39,6 @@
     .bee-picker--value-text, .bee-picker--placeholder {
       display: inline-block;
 
-      min-width: 160px;
       padding-right: 10px;
       padding-left: 25px;
 
@@ -48,6 +47,30 @@
 
     .bee-picker--placeholder {
       color: @placeholder-color;
+    }
+  }
+
+  &.bee-picker__date .bee-picker--value {
+    .bee-picker--value-text, .bee-picker--placeholder {
+      min-width: 75px;
+    }
+  }
+
+  &.bee-picker__datetime .bee-picker--value {
+    .bee-picker--value-text, .bee-picker--placeholder {
+      min-width: 135px;
+    }
+  }
+
+  &.bee-picker__range .bee-picker--value {
+    .bee-picker--value-text, .bee-picker--placeholder {
+      min-width: 170px;
+    }
+  }
+
+  &.bee-picker__rangetime .bee-picker--value {
+    .bee-picker--value-text, .bee-picker--placeholder {
+      min-width: 285px;
     }
   }
 

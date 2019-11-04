@@ -1,5 +1,5 @@
 <template>
-  <section :class="['bee-picker', {
+  <section :class="['bee-picker', 'bee-picker__' + type, {
     'bee-picker__disabled': disabled === true
   }]">
     <quick-buttons v-if="quickButtonConfigurations.length && quickBtnsType === 'outer'"
