@@ -254,7 +254,10 @@ export default {
   },
   watch: {
     'options': function (value, oldValue) {
-      if (value.length === 0 && oldValue.length === 0) return false
+      if (
+        (value.length === 0 && oldValue.length === 0) ||
+        !this._optionsInstance
+      ) return false
 
       this._optionsInstance.options = value
       this._optionsInstance.setSelected(this.values)
