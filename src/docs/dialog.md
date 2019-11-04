@@ -10,7 +10,8 @@ export default {
       cancelDisabled: false,
       confirmDisabled: false,
       footerDisabled: false,
-      stopConfirmHide: false
+      stopConfirmHide: false,
+      loading: false
     }
   },
   computed: {
@@ -49,6 +50,14 @@ export default {
     confirm () {
       console.log('confirm event')
       console.log('you selected:', this.base.fruit, this.options.find(item => item.value === this.base.fruit))
+    },
+    confirmSync (done) {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        done()
+      }, 1000)
     }
   }
 }
@@ -157,8 +166,40 @@ export default {
 ```html
 <template>
   <bee-button @click='stopConfirmHide = true'>阻止提交关闭</bee-button>
-  <bee-dialog v-model='stopConfirmHide' :auto-hide='false' @cancel='cancel' @confirm='confirm'>阻止提交关闭</bee-dialog>
+  <bee-dialog 
+    v-model='stopConfirmHide' 
+    loading-text='处理中'
+    loading-type='pie'
+    :loading='loading'
+    :sync='false' 
+    @cancel='cancel' 
+    @confirm='confirmSync' 
+  >阻止提交关闭</bee-dialog>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      stopConfirmHide: false,
+      loading: false
+    }
+  },
+  methods: {
+    cancel () {
+      console.log('cancel event')
+    },
+    confirmSync (done) {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        done()
+      }, 1000)
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -174,7 +215,10 @@ export default {
 |cancelText|取消按钮显示的文字|String|—|取消|1.0.0|
 |confirmVisible|是否显示确定按钮|Boolean|—|true|1.0.0|
 |confirmText|确定按钮显示的文字|String|—|确定|1.0.0|
-|autoHide|点击确定后是否自动关闭dialog|Boolean|—|true|1.0.0|
+|loading|是否添加loading效果|Boolean|—|true|1.0.0|
+|loadingType|loading类型|String|[详细见loading](#/components/loading)|[详细见loading](#/components/loading)|1.0.0|
+|loadingText|loading加载提示的文字|String|[详细见loading](#/components/loading)|[详细见loading](#/components/loading)|1.0.0|
+|sync|confirm事件是否是同步事件|Boolean|—|true|1.0.0|
 |stopPenetrate|是否阻止鼠标的穿透行为|Boolean|—|false|1.0.0|
 
 <br/>

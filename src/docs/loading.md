@@ -109,7 +109,7 @@ export default {
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
 |parent|loading的父级节点|Element|—|body|*|
-|text|加载提示的文字|String|—|加载中|*|
+|text|加载提示的文字|String|—|正在加载，请稍后|*|
 |type|类型|String|main,pie,undulate|main|1.0.0|
 |block|文字和loading之间的排列方式|Boolean|—|true|1.0.0|
 

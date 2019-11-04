@@ -3,7 +3,11 @@
     <div class='bee-dialog' v-if='value'>
       <div class='bee-dialog--panel' :style='{
         "width": this.width
-      }'>
+      }'
+        v-loading='loading'
+        :data-type='loadingType'
+        :data-text='loadingText'
+      >
         <div class='bee-dialog--title'>
           <span class='bee-dialog-title--text'>{{title}}</span>
 
@@ -77,7 +81,13 @@ export default {
         return this.$_language('CONFIRM')
       }
     },
-    autoHide: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    loadingType: String,
+    loadingText: String,
+    sync: {
       type: Boolean,
       default: true
     },
@@ -159,10 +169,10 @@ export default {
     },
 
     confirm () {
-      // If the confirm event was be bound.
-      this.$listeners.confirm && this.$listeners.confirm()
+      if (this.sync) this.hide()
 
-      if (this.autoHide) this.hide()
+      // If the confirm event was be bound.
+      this.$listeners.confirm && this.$listeners.confirm(this.hide)
     }
   }
 }
