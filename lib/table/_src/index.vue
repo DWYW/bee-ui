@@ -1,6 +1,6 @@
 <template>
   <section class="bee-table bee-table__scroll-start" :style="{
-    'max-height': maxHeight ? maxHeight + 'px' : size.tableMaxHeight + 'px'
+    'height': size.tableMaxHeight + 'px'
   }">
     <!-- table main -->
     <bee-scrollbar
@@ -227,7 +227,7 @@ export default {
       },
       visible: {
         header: false,
-        footer: this.summary,
+        footer: false,
         left: false,
         right: false
       },
@@ -293,12 +293,22 @@ export default {
 
       this.size.tableHeaderHeight = table.querySelector('thead').offsetHeight + 1
 
-      if (this.$el.parentNode) {
-        this.tableMaxHeight = Math.min(this.$el.parentNode.clientHeight, this.$el.offsetHeight)
-      } else {
-        this.tableMaxHeight = this.$el.clientWidth
+      const borderWidth = {
+        top: parseInt(helpers.getCss(this.$el, 'border-top-width')),
+        bottom: parseInt(helpers.getCss(this.$el, 'border-bottom-width'))
       }
 
+      let heights = [table.offsetHeight + borderWidth.top + borderWidth.bottom]
+
+      if (this.maxHeight) {
+        heights.push(this.maxHeight)
+      }
+
+      if (this.$el.parentNode) {
+        heights.push(this.$el.parentNode.clientHeight)
+      }
+
+      this.size.tableMaxHeight = Math.min(...heights)
       this.size.tableDrawerHeight = this.$el.clientHeight
 
       if (table.querySelector('tfoot')) {
@@ -310,6 +320,7 @@ export default {
       const table = this.$el.querySelector('table')
 
       this.visible.header = this.size.tableMaxHeight < table.offsetHeight
+      this.visible.footer = this.summary && this.size.tableMaxHeight < table.offsetHeight
       this.visible.left = this.data.length > 0 && this.$el.clientWidth < table.offsetWidth && this.size.tableLeftWidth > 1
       this.visible.right = this.data.length > 0 && this.$el.clientWidth < table.offsetWidth && this.size.tableRightWidth > 1
     },
@@ -393,12 +404,15 @@ export default {
   watch: {
     'data': function () {
       this.updateTableConfig()
-      this.onResize()
 
       if (this.resetScroll) {
         this.scorllElement.scrollTop = 0
         this.scorllElement.scrollLeft = 0
       }
+
+      this.$nextTick(() => {
+        this.onResize()
+      })
     },
     'maxHeight': function (value, oldValue) {
       if (value !== oldValue) {
