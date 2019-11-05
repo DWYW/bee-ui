@@ -1,0 +1,71 @@
+@import '../../theme.less';
+
+.bee-scrollbar {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+
+  .bee-scrollbar--body {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .scrollbar {
+    position: absolute;
+    z-index: @z-0;
+
+    cursor: default;
+    user-select: none;
+    transition: background .2s;
+
+    border-radius: @scrollbar-size / 2;
+    background-color: @scrollbar-background-color;
+
+    &:hover {
+      background-color: @scrollbar-background-color_active;
+    }
+
+    &.horizontal {
+      top: 0;
+      right: 1px;
+
+      width: @scrollbar-size;
+      min-height: 20px;
+    }
+
+    &.vertical {
+      bottom: 1px;
+      left: 0;
+
+      min-width: 20px;
+      height: @scrollbar-size;
+    }
+
+    &.scrollbar__active {
+       opacity: 1;
+       background-color: @scrollbar-background-color_active;
+    }
+  }
+
+  &.show-type__hover {
+    .scrollbar {
+      transition: opacity .2s;
+
+      opacity: 0;
+    }
+
+    &:hover .scrollbar {
+      opacity: 1;
+    }
+  }
+
+  .scrollbar__moving .scrollbar {
+    opacity: 1;
+  }
+}

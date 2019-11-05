@@ -1,15 +1,19 @@
 <template>
   <div class="home">
     <div class="home--panel">
-      <img src="../assets/logo.png" alt="" class="logo">
+      <div style="position: relative;">
+        <img src="../assets/logo.gif" alt="" class="logo">
 
-      <div class="home--btns">
-        <router-link to='/components/install'>
-          <span>开始使用</span>
-        </router-link>
-        <a href='https://github.com/DWYW/bee-ui' target="_blank">
-          GitHub
-        </a>
+        <div class='dependencies'>vue 2.4.0  &nbsp;&nbsp;&nbsp;&nbsp; less 2.3.0</div>
+
+        <div class="home--btns">
+          <router-link to='/components/install'>
+            <span>开始使用</span>
+          </router-link>
+          <a href='https://github.com/DWYW/bee-ui' target="_blank">
+            GitHub
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -26,43 +30,58 @@ export default {
   width: 100%;
   height: 100vh;
   .home--panel {
-    width: 400px;
-    height: 200px;
     position: absolute;
     top: 50%;
     left: 50%;
+
+    width: 400px;
+
     transform: translate3d(-50%, -100%, 0);
     text-align: center;
 
     .logo {
       width: 400px;
-      height: 78px;
 
       path {
         fill: #174a6e;
       }
     }
+
+    .dependencies {
+      position: absolute;
+      top: 55%;
+      right: 5%;
+
+      color: #888888;
+
+      font-size: 15px;
+    }
   }
   .home--btns {
-    margin-top: 60px;
     display: flex;
     justify-content: space-between;
 
+    margin-top: 60px;
+
     a {
-      font-size: 20px;
-      color: #666666;
-      text-decoration: none;
-      transition: color 0.3s, border-color 0.3s;
-      border: 1px solid #88888888;
-      padding: 6px;
-      border-radius: 500px;
       display: inline-block;
-      width: 140px;
+
       box-sizing: border-box;
+      width: 140px;
+      padding: 6px;
+
+      transition: color 0.2s, border-color 0.2s;
+      text-decoration: none;
+
+      color: #666666;
+      border: 1px solid #88888888;
+      border-radius: 500px;
+
+      font-size: 20px;
 
       &:hover {
-        color: #174a6e;
-        border-color: #174a6e;
+        color: #333333;
+        border-color: #333333;
       }
     }
   }

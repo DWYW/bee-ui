@@ -12,6 +12,7 @@ export default {
   methods: {
     onChange (page) {
       this.$set(this.pagination, 'page', page)
+      console.log('current page is:' + page)
     }
   }
 }
@@ -43,18 +44,18 @@ export default {
 
 ### 属性值
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|page|当前页码|number|—|1|
-|pageTotal|总页数|number|—|-|
-|total|总条数|number|—|-|
-|totalVisible|是否显示总条数|boolean|—|true|
-|maxlength|连续显示的页码个数|number|—|5|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|page|当前页码|number|—|1|*|
+|pageTotal|总页数|number|—|—|*|
+|total|总条数|number|—|—|*|
+|totalVisible|是否显示总条数|boolean|—|true|*|
+|maxlength|连续显示的页码个数|number|—|5|*|
 
 <br/>
 
 ### 事件
 
-|方法|说明
-|---|---|
-|change|页码改变事件|
+|方法|说明|版本支持|
+|---|---|---|
+|change|页码改变事件|*|

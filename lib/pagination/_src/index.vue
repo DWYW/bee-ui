@@ -1,38 +1,45 @@
 <template>
-  <div class="bee-pagination--wp" v-if='pageTotal'>
-    <bee-button class="bee-pagination--btn bee-pagination--btn__prev"
-      :disabled='prevDisabled'
-      @click='prev'
-    >上一页</bee-button>
+  <div class="bee-pagination" v-if="pageTotal">
+    <bee-button class="bee-pagination--button bee-pagination--button__prev"
+      :disabled="prevDisabled"
+      @click="prev"
+    >{{$_language("PREV_PAGE")}}</bee-button>
 
-    <bee-button :class='["bee-pagination--btn", {
-        "bee-pagination--btn__more": !item,
-        "bee-pagination--btn__actived": page === item
-      }]'
-      :disabled='pageTotal === 1'
-      v-for='(item, key) in btns'
-      :key='"btn" + key'
-      @click='specifyPage(item)'
-    >
-      {{item || '...'}}
-    </bee-button>
+    <template v-for="(item, key) in pages">
 
-    <bee-button class="bee-pagination--btn bee-pagination--btn__next"
-      :disabled='nextDisabled'
-      @click='next'
-    >下一页</bee-button>
+      <bee-button v-if="item" :key="'button' + key"
+        :class="['bee-pagination--button', {
+          'bee-pagination--button__actived': item === page && pageTotal !== 1
+        }]"
+        :disabled="pageTotal === 1"
+        @click="specifyPage(item)"
+      >
+        {{item}}
+      </bee-button>
 
-    <span class="bee-pagination--total" v-if='total && totalVisible'>共 <span>{{total}}</span> 条</span>
+      <span v-else :key="'button' + key"
+        class="bee-pagination--button__more"
+      >...</span>
+    </template>
 
-    <span class="bee-pagination--quick" v-if='pageTotal > 1'>
-      <bee-input class='quick--ipt'
-        placeholder='页数'
-        v-model='insert'
-        :enter-event='confirm'
-        :reg='insertReg'
+    <bee-button class="bee-pagination--button bee-pagination--button__next"
+      :disabled="nextDisabled"
+      @click="next"
+    >{{$_language("NEXT_PAGE")}}</bee-button>
+
+    <span class="bee-pagination--total" v-if="total && totalVisible">
+      {{$_language("PAGE_COUNT")}} <span>{{total}}</span> {{$_language("PAGE_UNIT")}}
+    </span>
+
+    <span class="bee-pagination--quick" v-if="pageTotal > 1">
+      <bee-input class="page--input"
+        :placeholder="$_language('PAGE_PLACEHOLDER')"
+        :reg="insertReg"
+        @enter="confirm"
+        v-model="pageInsert"
       ></bee-input>
 
-      <bee-button class='quick--btn' theme='primary' @click='confirm'>确定</bee-button>
+      <bee-button class="quick--button" theme="primary" @click="confirm">{{$_language("CONFIRM")}}</bee-button>
     </span>
   </div>
 </template>
@@ -61,30 +68,24 @@ export default {
   },
   data () {
     return {
-      insert: null
+      pageInsert: null
     }
   },
   computed: {
-    btns () {
-      if (!this.pageTotal) return null
+    pages () {
+      if (!this.pageTotal) return
 
-      const pageTotal = this.pageTotal
-      const page = this.page
-      const maxlength = this.maxlength
+      const { pageTotal, page, maxlength } = this
 
-      if (pageTotal < maxlength + 2) {
-        return this.range(1, pageTotal)
-      } else {
-        const splitNum = Math.floor(maxlength / 2)
+      if (pageTotal < maxlength + 2) return this.pageRange(1, pageTotal)
 
-        if (page < maxlength) {
-          return this.range(1, maxlength).concat([null, pageTotal])
-        } else if (page >= pageTotal - splitNum) {
-          return [1, null].concat(this.range(pageTotal - maxlength, pageTotal))
-        } else {
-          return [].concat([1, null], this.range(page - splitNum, page + splitNum), [null, pageTotal])
-        }
-      }
+      if (page < maxlength) return this.pageRange(1, maxlength).concat([null, pageTotal])
+
+      const split = Math.floor(maxlength / 2)
+
+      if (page >= pageTotal - split) return [1, null].concat(this.pageRange(pageTotal - maxlength, pageTotal))
+
+      return [].concat([1, null], this.pageRange(page - split, page + split), [null, pageTotal])
     },
     prevDisabled () {
       return this.page <= 1
@@ -94,21 +95,22 @@ export default {
     },
     insertReg () {
       return (page) => {
-        if (page) {
-          page = page << 0
-          return page > 0 && page <= this.pageTotal ? page : this.insert
-        } else {
-          return page
-        }
+        page = Number(page)
+
+        if (!page) return ''
+
+        if (page <= 0 || page > this.pageTotal) return this.pageInsert
+
+        return page
       }
     }
   },
   methods: {
-    range (start, end) {
+    pageRange (start, end) {
       let _range = []
 
-      for (let i = start; i <= end; i++) {
-        _range.push(i)
+      while (start <= end) {
+        _range.push(start++)
       }
 
       return _range
@@ -123,99 +125,19 @@ export default {
     },
 
     specifyPage (page) {
-      if (!page) return false
+      if (!page || page === this.page) return false
 
-      this.$emit('change', page)
+      this.$listeners.change && this.$listeners.change(page)
     },
 
     confirm () {
-      if (this.insert) {
-        this.specifyPage(this.insert << 0)
-      }
+      const page = Number(this.pageInsert)
+      page && this.specifyPage(page)
     }
   }
 }
 </script>
 
 <style lang="less">
-@import '../../theme.less';
-@root: bee-pagination;
-
-.@{root}--wp {
-  width: 100%;
-  user-select: none;
-  .@{root}--btn {
-    min-width: 40px;
-    margin-right: 5px;
-    height: @pagination-btn-height;
-    line-height: @pagination-btn-height - 2px;
-    vertical-align: middle;
-    color: @font-tint-color;
-
-    &.@{root}--btn__more {
-      border-color: transparent;
-      cursor: default !important;
-
-      &:active {
-        color: @font-color;
-        border-color: transparent;
-      }
-    }
-
-    &.@{root}--btn__actived {
-      color: @primary-color;
-      border-color: @primary-color;
-    }
-
-    &[disabled] {
-      background-color: @pagination-btn-disabled-color !important;
-      border-color: @pagination-btn-disabled-color !important;
-
-      &.@{root}--btn__actived, &:active {
-        border-color: @pagination-btn-disabled-color !important;
-        color: @font-tint-color !important;
-      }
-    }
-  }
-
-  .@{root}--total {
-    color: @font-tint-color;
-    font-size: 12px;
-    vertical-align: middle;
-    margin: 0 10px;
-
-    > span {
-      color: @primary-color;
-    }
-  }
-  .@{root}--quick {
-    vertical-align: middle;
-    display: inline-block;
-
-    .quick--ipt, .quick--btn {
-      vertical-align: bottom;
-    }
-
-    .quick--ipt {
-      width: 60px;
-      margin-right: 6px;
-      font-size: 14px;
-
-      input {
-        color: @font-tint-color;
-        text-align: center;
-        height: @pagination-btn-height;
-        line-height: @pagination-btn-height;
-
-      }
-    }
-
-    .quick--btn {
-      width: 60px;
-      min-width: 60px;
-      height: @pagination-btn-height;
-      line-height: @pagination-btn-height - 2px;
-    }
-  }
-}
+  @import './index.less';
 </style>

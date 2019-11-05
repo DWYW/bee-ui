@@ -1,5 +1,5 @@
 <style>
-  .inline .checkbox--wp {
+  .inline .bee-checkbox {
     margin-right: 20px;
   }
 </style>
@@ -38,15 +38,33 @@ export default {
 ```
 :::
 
+
 ### 属性值
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|icons|选项的图标配置信息|array|-|['radio-unselected', 'radio-selected']|
-|disabled|禁用状态|boolean|-|-|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|icons|选项的图标配置信息|Array|—|见下方|*|
+|disabled|禁用状态|Boolean|—|—|*|
 
+```js
+/** 
+ * icons 默认值 
+ */ 
+
+// v0.x.x
+['checkbox-unselected', 'checkbox-selected']
+
+// v1.x.x
+[{
+  fontFamily: 'beefont',
+    icon: 'checkbox-unselected'
+  }, {
+    fontFamily: 'beefont',
+    icon: 'checkbox-selected'
+}]
+```
+<br/>
 
 ### 事件
-|事件|说明|版本支持|
-|---|---|---|
-|change|选取后的回调|^0.7.7|
+
+1.0.0+没有说明的其它事件, 则通过 $listeners 传入到根元素中。

@@ -1,0 +1,118 @@
+@import '../../theme.less';
+
+.bee-input {
+  position: relative;
+
+  display: inline-block;
+
+  background-color: @input-background-color;
+
+  font-size: @font-size;
+
+  >input {
+    box-sizing: border-box;
+    width: 100%;
+    height: @input-height;
+    padding: 0 @padding-vertial;
+
+    border: 1px solid @input-border-color;
+    border-radius: @border-radius;
+    outline: none;
+    background-color: transparent;
+
+    font-size: inherit;
+
+    &::placeholder {
+      color: @input-placeholder-color;
+    }
+  }
+
+  .adorn-icon {
+    position: absolute;
+    top: 0;
+
+    color: @input-adorn-color;
+
+    font-size: @font-size + 2px;
+    line-height: @input-height;
+  }
+
+  &.left--icon {
+    >input {
+      padding-left: @font-size + 8px;
+    }
+
+    .adorn-icon {
+      left: 4px;
+    }
+  }
+
+  &.right--icon {
+    >input {
+      padding-right: @font-size + 8px;
+    }
+
+    .adorn-icon {
+      right: 4px;
+    }
+  }
+
+  &.bee-input__primary {
+    >input {
+      color: @input-color_primary;
+      border-color: @input-border-color_primary;
+
+      &::placeholder {
+        color: @input-placeholder-color_primary;
+      }
+    }
+
+    .adorn-icon {
+      color: @input-adorn-color_primary;
+    }
+  }
+
+  &.bee-input__success {
+    >input {
+      color: @input-color_success;
+      border-color: @input-border-color_success;
+
+      &::placeholder {
+        color: @input-placeholder-color_success;
+      }
+    }
+
+    .adorn-icon {
+      color: @input-adorn-color_success;
+    }
+  }
+
+  &.bee-input__error {
+    >input {
+      color: @input-color_error;
+      border-color: @input-border-color_error;
+
+      &::placeholder {
+        color: @input-placeholder-color_error;
+      }
+    }
+
+    .adorn-icon {
+      color: @input-adorn-color_error;
+    }
+  }
+
+  &.bee-input__disabled {
+    cursor: no-drop;
+
+    opacity: .6;
+
+    >input {
+      cursor: no-drop;
+    }
+
+    .adorn-icon {
+      cursor: no-drop;
+    }
+  }
+}

@@ -1,16 +1,19 @@
 <template>
-  <span class='bee-bread-crumb--wp'>
-    <template v-for='(crumb, $index) in crumbs'>
-      <span  :class='["crumb--item", {
-          "crumb--item__actived": $index === (crumbs.length - 1)
-        }]'
-
-        :key='"crumb_" + $index'
-        v-if='crumb.route !== undefined'
+  <span class="bee-breadcrumb">
+    <template v-for="(crumb, key) in crumbs">
+      <span :key="'breadcrumb_' + key" v-if="crumb"
+        :class="['breadcrumb--item', {
+          'breadcrumb--item__active': key === (crumbs.length - 1)
+        }]"
       >
-        <router-link :to='crumb.route' v-if='$index !== (crumbs.length - 1) && crumb.route'>{{crumb.label}}</router-link>
-        <span v-else>{{crumb.label}}</span>
-        <span v-if='$index !== (crumbs.length - 1)'>></span>
+        <router-link v-if="key + 1 < crumbs.length && crumb.route"
+          :to="crumb.route" >
+          {{crumb.label}}
+        </router-link>
+
+        <span v-else> {{crumb.label}} </span>
+
+        <span v-if="key + 1 < crumbs.length">></span>
       </span>
     </template>
 
@@ -20,7 +23,7 @@
 
 <script>
 export default {
-  name: 'BeeBreadCrumb',
+  name: 'BeeBreadcrumb',
   props: {
     crumbs: [Array]
   },
@@ -32,28 +35,32 @@ export default {
 
 <style lang="less">
 @import '../../theme.less';
-@root: bee-bread-crumb;
 
-.@{root}--wp {
+.bee-breadcrumb {
   width: 100%;
 
-  .crumb--item {
-    font-size: 14px;
+  .breadcrumb--item {
     vertical-align: middle;
+
     color: @font-tint-color;
 
+    font-size: 14px;
+
     a {
-      color: @font-tint-color;
       text-decoration: none;
 
+      color: @font-tint-color;
+
       &:link {
-        color: @font-tint-color;
         text-decoration: none;
+
+        color: @font-tint-color;
       }
     }
 
-    &.crumb--item__actived {
+    &.breadcrumb--item__active {
       color: @primary-color;
+
       font-size: 16px;
     }
   }

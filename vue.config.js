@@ -1,8 +1,9 @@
 const markdownRender = require('markdown-it')()
 
 module.exports = {
-  baseUrl: process.env.NODE_ENV === 'production' ? '/bee-ui/' : '/',
-  outputDir: '../DWYW.github.io/bee-ui',
+  publicPath: process.env.NODE_ENV === 'production' ? '/bee-ui' : '/',
+  outputDir: '../../DWYW.github.io/bee-ui',
+  parallel: process.env.NODE_ENV !== 'production',
   chainWebpack: config => {
     config.module
       .rule('md')

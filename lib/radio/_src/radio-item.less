@@ -1,0 +1,65 @@
+@import '../../theme.less';
+
+.bee-radio {
+  display: inline-block;
+
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  font-size: 14px;
+  line-height: @radio-line-height;
+
+  >span, .bee-radio--label {
+    position: relative;
+
+    display: inline-block;
+
+    vertical-align: middle;
+  }
+
+  input[type=radio] {
+    display: none;
+  }
+
+  i.beefont {
+    position: absolute;
+    top: 50%;
+    left: 0;
+
+    transform: translateY(-50%);
+    vertical-align: middle;
+
+    color: @radio-color-unselected;
+
+    font-size: 20px;
+  }
+
+  .bee-radio--label {
+    padding-left: 24px;
+  }
+
+  &.bee-radio__selected {
+    i.beefont {
+      color: @radio-color-selected;
+    }
+  }
+
+  &.bee-radio__disabled {
+    cursor: no-drop;
+
+    opacity: .4;
+
+    i.beefont {
+      color: @radio-color-unselected;
+    }
+  }
+
+  .bee-radio-fade-enter-active, .bee-radio-fade-leave-active {
+    transition: opacity .3s, color .3s;;
+  }
+
+  .bee-radio-fade-enter, .bee-radio-fade-leave-to {
+    opacity: 0;
+  }
+}

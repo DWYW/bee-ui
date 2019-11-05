@@ -5,7 +5,7 @@
 ::: demo 
 ``` html
 <template>
-  <bee-bread-crumb :crumbs='crumbs'></bee-bread-crumb>
+  <bee-breadcrumb :crumbs='crumbs'></bee-breadcrumb>
 </template>
 
 <script>
@@ -34,6 +34,6 @@ export default {
 
 ### 属性值
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|crumbs|数据源|array|—|-|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|crumbs|数据源|array|—|—|*|

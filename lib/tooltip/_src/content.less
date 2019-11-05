@@ -1,0 +1,56 @@
+@import '../../theme.less';
+
+.bee-tooltip-content {
+  font-size: @tooptip-font-size;
+
+  .bee-tooltip-content--body {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    white-space: pre;
+  }
+}
+
+.bee-popper.bee-tooltip-content__dark {
+  &[placement^="bottom"] .bee-popper--arrow {
+    border-bottom-color: @tooptip-background-color;
+    
+    &::after {
+      border-bottom-color: @tooptip-background-color;
+    }
+  }
+
+  &[placement^="top"] .bee-popper--arrow {
+    border-top-color: @tooptip-background-color;
+
+    &::after {
+      border-top-color: @tooptip-background-color;
+    }
+  }
+
+  &[placement^="left"] .bee-popper--arrow {
+    border-left-color: @tooptip-background-color;
+
+    &::after {
+      border-left-color: @tooptip-background-color;
+    }
+  }
+
+  &[placement^="right"] .bee-popper--arrow {
+    border-right-color: @tooptip-background-color;
+
+    &::after {
+      border-right-color: @tooptip-background-color;
+    }
+  }
+
+  .bee-popper--body {
+    border-color: @tooptip-background-color;
+  }
+
+  .bee-tooltip-content--body {
+    color: @tooptip-color;
+    background-color: @tooptip-background-color;
+  }
+}

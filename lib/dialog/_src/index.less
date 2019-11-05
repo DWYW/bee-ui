@@ -1,0 +1,103 @@
+@import '../../theme.less';
+
+.bee-dialog {
+  position: fixed;
+  z-index: @z-1;
+  top: 0;
+  left: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: @dialog-mask-background-color;
+
+  .bee-dialog--panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate3d(-50%, -50%, 0);
+
+    border: 1px solid @dialog-panel-border-color;
+    border-radius: @border-radius;
+    background-color: @dialog-panel-background-color;
+    
+    .bee-dialog--title {
+      height: @dialog-title-height;
+      padding: 0 20px;
+
+      background-color: @dialog-title-background-color;
+
+      line-height: @dialog-title-height;
+
+      .bee-dialog-title--text {
+        color: @dialog-title-color;
+
+        font-size: @dialog-title-font-size;
+      }
+
+      .bee-dialog--close {
+        float: right;
+
+        margin-right: -10px;
+
+        cursor: pointer;
+
+        color: @dialog-close-color;
+      }
+    }
+
+    .bee-dialog--body {
+      overflow: hidden;
+
+      box-sizing: border-box;
+      width: 100%;
+      min-height: @dialog-body-height;
+      padding: 20px;
+
+      color: @dialog-body-color;
+
+      font-size: @dialog-font-size;
+    }
+
+    .bee-dialog--footer {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 20px 24px;
+
+      text-align: center;
+
+      [class*="bee-dialog--btn"] {
+        height: @dialog-footer-button-height;
+
+        vertical-align: middle;
+
+        line-height: @dialog-footer-button-height;
+
+        &:not(:last-child) {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+}
+
+.bee-dialog-enter-active, .bee-dialog-leave-active {
+  transition: all .3s;
+
+  .bee-dialog--panel {
+    transition: all .3s;
+  }
+}
+
+.bee-dialog-enter, .bee-dialog-leave-to {
+  opacity: 0;
+}
+
+.bee-dialog-enter {
+  .bee-dialog--panel {
+    margin-top: -50px;
+  }
+}

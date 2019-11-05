@@ -16,6 +16,17 @@
   height: 40px;
 }
 </style>
+
+<script>
+export default {
+  methods: {
+    print (e) {
+      console.log(e.type)
+    }
+  }
+}
+</script>
+
 ## 图标
 
 图标来源于 iconfont 。
@@ -24,12 +35,12 @@
 
 ```html
 <span class='icon--item'>
-  <bee-icon icon="prev"> </bee-icon>
+  <bee-icon icon="prev" @click='print'> </bee-icon>
   <span class='icon--name'>prev</span>
 </span>
 
 <span class='icon--item'>
-  <bee-icon icon="next"> </bee-icon>
+  <bee-icon icon="next" @mouseenter='print'  @mouseleave='print'> </bee-icon>
   <span class='icon--name'>next</span>
 </span>
 
@@ -184,3 +195,17 @@
 ```
 
 :::
+
+
+### 属性值
+
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|icon|要显示的图标|String|—|—|*|
+|fontFamily|字体集|String|—|—|0.6.2|
+
+<br/>
+<br/>
+
+### 事件
+1.0.0+没有说明的其它事件, 则通过 $listeners 传入到根元素中。

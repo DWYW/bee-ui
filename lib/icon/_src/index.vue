@@ -1,7 +1,10 @@
 <template>
-  <i :class='["icon--wp", fontFamily,
-    fontFamily === "bee--font" ? "bee-" + icon : icon
-  ]' @click='handleClick'>
+  <i :class="['bee-icon', fontFamily,
+    fontFamily === 'beefont' ? 'bee-' + icon : icon,
+    {
+      'pointer': hasListeners
+    }
+  ]" v-on=$listeners>
     <slot></slot>
   </i>
 </template>
@@ -13,17 +16,17 @@ export default {
     icon: String,
     fontFamily: {
       type: String,
-      default: 'bee--font'
+      default: 'beefont'
     }
   },
-  methods: {
-    handleClick (evt) {
-      this.$emit('click', evt)
+  computed: {
+    hasListeners () {
+      return Object.keys(this.$listeners || {}).length !== 0
     }
   }
 }
 </script>
 
 <style lang="less">
-@import './assets/iconfont.css';
+  @import './index.less';
 </style>

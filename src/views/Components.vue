@@ -4,11 +4,13 @@
 
     <div class="page-body">
       <Nav :left='left'></Nav>
-      <bee-scroll ref='BeeScroll' :scroll-dom.sync='scrollDom' >
-        <div class="page-wraper" ref='PW'>
-          <router-view class="content-wrapper md"/>
+      <bee-scrollbar ref='scrollbar'>
+        <div class="pageer" ref='PW'>
+          <router-view class="contentper md"/>
+
+          <iframe ref='reference' src="about:blank" frameborder="0" class='resize-reference'></iframe>
         </div>
-      </bee-scroll>
+      </bee-scrollbar>
     </div>
   </div>
 </template>
@@ -32,6 +34,10 @@ export default {
   mounted () {
     this.mountLeft()
     Listener.add(window, 'resize', this.mountLeft)
+
+    this.$refs.reference.contentWindow.onresize = () => {
+      this.$refs.scrollbar.updateSizeConfig()
+    }
   },
   beforeDestroy () {
     Listener.remove(window, 'resize', this.mountLeft)
@@ -44,7 +50,7 @@ export default {
   watch: {
     '$route': function () {
       this.$nextTick(() => {
-        this.$refs.BeeScroll.init()
+        // this.$refs.BeeScroll.init()
       })
     }
   }
@@ -54,27 +60,43 @@ export default {
 <style lang="less">
 @import '../style/size.less';
 .components-page {
+  overflow: hidden;
+
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   padding-top: @header-height;
-  box-sizing: border-box;
 
   .page-body {
-    width: 100%;
-    height: calc(~'100vh - '@header-height);
     position: relative;
 
-    .page-wraper {
+    width: 100%;
+    height: calc(~'100vh - '@header-height);
+
+    .pageer {
       position: relative;
-      max-width: @page-width;
-      width: 100%;
-      margin: 0 auto;
-      box-sizing: border-box;
-      padding-left: @nav-width + 20px;
-      padding-bottom: 50px;
+
       overflow: hidden;
+
+      box-sizing: border-box;
+      width: 100%;
+      max-width: @page-width;
+      margin: 0 auto;
+      padding-bottom: 50px;
+      padding-left: @nav-width + 20px;
     }
   }
+}
+
+.resize-reference {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
 }
 </style>

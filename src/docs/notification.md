@@ -1,5 +1,5 @@
 <style>
-.inline .btn--wp {
+.inline .bee-button {
   margin: 0 10px 10px 0;
 }
 </style>
@@ -19,7 +19,7 @@ export default {
 
       type ? options.type = type : null
 
-      this.$_createNotify(options).show()
+      this.$_createNotification(options).show()
     },
 
     notify2 (type) {
@@ -31,7 +31,7 @@ export default {
 
       type ? options.type = type : null
 
-      this.$_createNotify(options).show()
+      this.$_createNotification(options).show()
     }
   }
 }
@@ -62,7 +62,7 @@ export default {
 
       type ? options.type = type : null
 
-      this.$_createNotify(options).show()
+      this.$_createNotification(options).show()
     }
   }
 }
@@ -94,7 +94,7 @@ export default {
 
       type ? options.type = type : null
 
-      this.$_createNotify(options).show()
+      this.$_createNotification(options).show()
     }
   }
 }
@@ -106,9 +106,14 @@ export default {
 
 ### options
 
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|type|类型|string|info,warn,success,error|info|
-|duration|显示的时长|number|—|3|
-|title|通知的标题|string|—|-|
-|message|通知的信息|string|—|-|
+|参数|说明|类型|可选值|默认值|版本支持|
+|---|---|---|---|---|---|
+|type|类型|string|info,warn,success,error|info|*|
+|title|通知的标题|string|—|—|*|
+|message|通知的信息|string|—|—|*|
+|duration|显示的时长|number|—|3|*|
+
+<br/>
+<br/>
+
+> 1.0.0开始，由 $_createNotify 更名为 $_createNotification。

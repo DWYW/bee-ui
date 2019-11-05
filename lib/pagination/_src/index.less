@@ -1,0 +1,90 @@
+@import '../../theme.less';
+
+.bee-pagination {
+  width: 100%;
+  padding: 1px 0;
+
+  user-select: none;
+
+  .bee-pagination--button {
+    min-width: 40px;
+    height: @pagination-height;
+    margin-right: 5px;
+
+    vertical-align: middle;
+
+    color: @font-tint-color;
+
+    line-height: @pagination-height - 2px;
+
+    &.bee-pagination--button__actived {
+      color: @primary-color;
+      border-color: @primary-color;
+    }
+
+    &[disabled] {
+      border-color: @pagination-background-color_disabled;
+      background-color: @pagination-background-color_disabled;
+
+      &.bee-pagination--button__actived, &:active {
+        color: @font-tint-color !important;
+        border-color: @pagination-background-color_disabled;
+      }
+    }
+  }
+
+  .bee-pagination--button__more {
+    display: inline-block;
+
+    margin-right: 5px;
+  }
+
+  .bee-pagination--total {
+    margin: 0 10px;
+
+    vertical-align: middle;
+
+    color: @font-tint-color;
+
+    font-size: 12px;
+
+    > span {
+      color: @primary-color;
+    }
+  }
+
+  .bee-pagination--quick {
+    display: inline-block;
+
+    vertical-align: middle;
+
+    .page--input, .quick--button {
+      vertical-align: bottom;
+    }
+
+    .page--input {
+      width: 60px;
+      margin-right: 6px;
+
+      font-size: 14px;
+
+      input {
+        height: @pagination-height;
+
+        text-align: center;
+
+        color: @font-tint-color;
+
+        line-height: @pagination-height;
+      }
+    }
+
+    .quick--button {
+      width: 60px;
+      min-width: 60px;
+      height: @pagination-height;
+
+      line-height: @pagination-height - 2px;
+    }
+  }
+}

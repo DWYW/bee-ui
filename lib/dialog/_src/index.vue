@@ -1,21 +1,40 @@
 <template>
-  <transition name='dlg'>
-    <div class='dlg--wp' v-if='show'>
-        <div :class='["dlg--panel"]' :style='{
-          "width": this.width
-        }'>
-          <div class='dlg--title' v-if='title'>
-            <span class='dlg-title--text'>{{title}}</span>
-            <bee-icon class='dlg--close' icon='close' v-if='closeBtnVisible' @click='cancelClose'></bee-icon>
-          </div>
-          <div class='dlg--body'>
-            <slot></slot>
-          </div>
-          <div class='dlg-footer' v-if='confirmBtnVisible || cancelBtnVisible'>
-            <bee-button class='dlg--btn__cancel' v-if='cancelBtnVisible' @click='cancel'>{{cancelBtnText}}</bee-button>
-            <bee-button class="dlg--btn__confirm" theme='primary' v-if='confirmBtnVisible' @click='confirm'>{{confirmBtnText}}</bee-button>
-          </div>
+  <transition name='bee-dialog' @before-enter='beforeEnter' @after-leave='afterLeave'>
+    <div class='bee-dialog' v-if='value'>
+      <div class='bee-dialog--panel' :style='{
+        "width": this.width
+      }'
+        v-loading='loading'
+        :data-type='loadingType'
+        :data-text='loadingText'
+      >
+        <div class='bee-dialog--title'>
+          <span class='bee-dialog-title--text'>{{title}}</span>
+
+          <bee-icon v-if='closeVisible'
+            class='bee-dialog--close'
+            icon='close'
+            @click='close'
+          ></bee-icon>
         </div>
+
+        <div class='bee-dialog--body'>
+          <slot></slot>
+        </div>
+
+        <div class='bee-dialog--footer' v-if='cancelVisible || confirmVisible'>
+          <bee-button v-if='cancelVisible'
+            class='bee-dialog--btn__cancel'
+            @click='cancel'
+          >{{cancelText}}</bee-button>
+
+          <bee-button v-if='confirmVisible'
+            class="bee-dialog--btn__confirm"
+            theme='primary'
+            @click='confirm'
+          >{{confirmText}}</bee-button>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -24,7 +43,7 @@
 export default {
   name: 'BeeDialog',
   props: {
-    show: {
+    value: {
       type: Boolean,
       default: false
     },
@@ -34,207 +53,131 @@ export default {
     },
     title: {
       type: String,
-      default: '提示'
+      default: function () {
+        return this.$_language('TAP')
+      }
     },
-    cancelBtnText: {
+    closeVisible: {
+      type: Boolean,
+      default: true
+    },
+    cancelVisible: {
+      type: Boolean,
+      default: true
+    },
+    cancelText: {
       type: String,
-      default: '取消'
+      default: function () {
+        return this.$_language('CANCEL')
+      }
     },
-    cancelBtnFun: {
-      type: Function
-    },
-    cancelBtnVisible: {
+    confirmVisible: {
       type: Boolean,
       default: true
     },
-    confirmBtnText: {
+    confirmText: {
       type: String,
-      default: '确定'
+      default: function () {
+        return this.$_language('CONFIRM')
+      }
     },
-    confirmBtnFun: {
-      type: Function
+    loading: {
+      type: Boolean,
+      default: false
     },
-    confirmBtnVisible: {
+    loadingType: String,
+    loadingText: String,
+    sync: {
       type: Boolean,
       default: true
     },
-    closeBtnVisible: {
-      type: Boolean,
-      default: true
-    },
-    closeBtnFun: {
-      type: Function
-    },
-    stopScroll: {
+    stopPenetrate: {
       type: Boolean,
       default: false
     }
   },
   data () {
     return {
-      bodyScrollTop: null,
-      bodyStyle: ''
+      scrollBehavior: {
+        style: null,
+        top: null,
+        left: null
+      }
     }
   },
   methods: {
-    /** 消除body的滚动 */
-    bodyOverHide () {
-      this.bodyScrollTop = document.body.scrollTop || document.documentElement.scrollTop
-      this.bodyStyle = document.body.style
+    beforeEnter (el) {
+      this.$listeners.beforeEnter && this.$listeners.beforeEnter(el)
 
-      // 修复360安全浏览器8.1，body.style直接设置报错
-      try {
-        document.body.style = 'height: 100vh;overflow: hidden;'
-      } catch (e) {
-        document.body.setAttribute('style', 'height: 100vh;overflow: hidden;')
+      if (this.stopPenetrate) {
+        this.scrollBehavior.top = document.body.scrollTop || document.documentElement.scrollTop
+        this.scrollBehavior.left = document.body.scrollLeft || document.documentElement.scrollLeft
+        this.scrollBehavior.style = document.body.getAttribute('style')
+
+        let style = this.scrollBehavior.style
+
+        if (/height:\s*\w+;/.test(style)) {
+          style.replace(/height:\s*\w+;/, 'height: 100vh;')
+        } else {
+          style += 'height: 100vh;'
+        }
+
+        if (/overflow:\s*\w+;/.test(style)) {
+          style.replace(/overflow:\s*\w+;/, 'overflow: hidden;')
+        } else {
+          style += 'overflow: hidden;'
+        }
+
+        document.body.setAttribute('style', style)
       }
     },
 
-    /** 重置body的滚动 */
-    bodyOverShow () {
-      // 修复360安全浏览器8.1，body.style 直接设置报错
-      try {
-        document.body.style = this.bodyStyle
-      } catch (e) {
-        document.body.setAttribute('style', this.bodyStyle)
-      }
+    afterLeave (el) {
+      this.$listeners.afterLeave && this.$listeners.afterLeave(el)
 
-      document.body.scrollTop = this.bodyScrollTop
-      document.documentElement.scrollTop = this.bodyScrollTop
-      this.bodyStyle = ''
-      this.bodyScrollTop = 0
+      if (this.stopPenetrate) {
+        this.scrollBehavior.style ? document.body.setAttribute('style', this.scrollBehavior.style) : document.body.removeAttribute('style')
+        this.scrollBehavior.style = null
+
+        document.body.scrollTop = this.scrollBehavior.top
+        document.documentElement.scrollTop = this.scrollBehavior.top
+        this.scrollBehavior.top = null
+
+        document.body.scrollLeft = this.scrollBehavior.left
+        document.documentElement.scrollLeft = this.scrollBehavior.left
+        this.scrollBehavior.left = null
+      }
     },
 
-    /** 关闭dialog */
     hide () {
-      this.$emit('update:show', false)
+      // If the update:value event was be bound.
+      this.$listeners.input && this.$listeners.input(false)
     },
 
-    /** 点击取消按钮 */
+    close () {
+      // If the close event was be bound.
+      this.$listeners.close && this.$listeners.close(false)
+
+      this.hide()
+    },
+
     cancel () {
-      this.cancelBtnFun ? this.cancelBtnFun() : null
-      this.hide()
+      // If the cancel event was be bound.
+      this.$listeners.cancel && this.$listeners.cancel()
+
+      this.close()
     },
 
-    /** 点击X号 */
-    cancelClose () {
-      if (this.closeBtnFun) {
-        this.closeBtnFun()
-      } else if (this.cancelBtnFun) {
-        this.cancelBtnFun()
-      }
-
-      this.hide()
-    },
-
-    /** 点击确认按钮 */
     confirm () {
-      let res = 'next'
+      if (this.sync) this.hide()
 
-      if (this.confirmBtnFun) {
-        res = this.confirmBtnFun()
-      }
-
-      if (res === false) return null
-
-      this.hide()
-    }
-  },
-  watch: {
-    show: function (newValue) {
-      if (this.stopScroll) {
-        newValue ? this.bodyOverHide() : this.bodyOverShow()
-      }
+      // If the confirm event was be bound.
+      this.$listeners.confirm && this.$listeners.confirm(this.hide)
     }
   }
 }
 </script>
 
 <style lang='less'>
-@import '../../theme.less';
-@root: dlg;
-
-.@{root}--wp {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: @dlg-mask-bg-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // be lt bee-menu z-index
-  z-index: @z-1;
-
-  .@{root}--panel {
-    background-color: @dlg-panel-bg-color;
-    border-radius: @border-radius;
-    border: 1px solid @dlg-panel-border-color;
-
-    .@{root}--title {
-      height: @dlg-title-height;
-      line-height: @dlg-title-height;
-      padding: 0 20px;
-      background-color: @dlg-title-bg-color;
-
-      .@{root}-title--text {
-        color: @dlg-title-color;
-        font-size: @dlg-title-font-size;
-      }
-
-      .@{root}--close {
-        float: right;
-        margin-right: -10px;
-        color: @dlg-colse-color;
-        cursor: pointer;
-      }
-    }
-
-    .@{root}--body {
-      width: 100%;
-      padding: 20px;
-      min-height: @dlg-body-height;
-      color: @dlg-body-color;
-      overflow: hidden;
-      font-size: @dlg-font-size;
-      box-sizing: border-box;
-    }
-
-    .@{root}-footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 24px;
-
-      .@{root}--btn__cancel, .@{root}--btn__confirm {
-        height: @dlg-footer-btn-height;
-        line-height: @dlg-footer-btn-height;
-      }
-
-      .@{root}--btn__cancel {
-        margin-right: 16px;
-      }
-    }
-  }
-}
-
-.@{root}-enter-active, .@{root}-leave-active {
-  transition: all .4s;
-
-  .@{root}--panel {
-    transition: all .4s;
-  }
-}
-
-.@{root}-enter, .@{root}-leave-to {
-  opacity: 0;
-}
-
-.@{root}-enter {
-  .@{root}--panel {
-    transform: translate3d(0, -50px, 0);
-  }
-}
-
+  @import './index.less';
 </style>

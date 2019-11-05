@@ -1,64 +1,77 @@
 @import '../../theme.less';
 
-@root: tab;
-
-.@{root}--wp {
-  width: 100%;
-  background-color: @tab-bg-color;
+.bee-tab {
   box-sizing: border-box;
+  width: 100%;
+  
+  .bee-tab--header {
+    position: relative;
 
-  &.tab--wp__card {
-    border: 1px solid @tab-bg-color;
-    border-top: none;
+    width: 100%;
+
+    background-color: @tab-background-color;
+    
+    .bee-tab-bar {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+
+      display: block;
+
+      width: 0;
+
+      transition: all .25s;
+
+      border-top: 2px solid @tab-color_active;
+    }
+
+    .bee-tab--label {
+      display: inline-block;
+
+      padding: 6px 20px;
+
+      cursor: pointer;
+      transition: color 0.25s, borderColor 0.25s;
+
+      color: @font-tint-color;
+
+      &.bee-tab--label__active {
+        position: relative;
+
+        color: @tab-color_active;
+        background-color: @tab-background-color_active;
+      }
+    }
+  }
+
+  .bee-tab--body {
+    position: relative;
+
+    box-sizing: border-box;
+    padding: 20px;
+
+    background-color: @tab-background-color_active;
   }
   
-  .@{root}--labels {
-    width: 100%;
-
-    .@{root}-label--item {
-      display: inline-block;
-      padding: 6px 20px;
-      border-top: 2px solid transparent;
-      color: #888888;
-      transition: color 0.25s, borderColor 0.25s;
-      cursor: pointer;
-
-      &.@{root}-label--item__active {
-        border-top-color: @tab-active-color;
-        color: @tab-active-color;
-        background-color: @tab-active-bg-color;
-      }
-    }
-  }
-
-  .@{root}--contents {
-    width: 100%;
-    background: @tab-active-bg-color;
-    padding: 20px;
-    position: relative;
-    box-sizing: border-box;
-
-    .@{root}--items {
-      width: 100%;
-
-      .@{root}--item {
-        width: 100%;
-      }
-    }
+  &.bee-tab__card {
+    border: 1px solid @tab-background-color;
+    border-top: none;
   }
 }
 
-
-.@{root}-change-enter {
+.bee-tab-enter {
  opacity: 0;
 }
 
-.@{root}-change-enter-active{
-  transition: opacity .5s;
+.bee-tab-enter-active{
+  transition: opacity .4s;
 }
 
-.@{root}-change-leave-active {
+.bee-tab-leave-active {
   position: absolute;
-  opacity: 0;
+
   visibility: hidden;
+
+  opacity: 0;
 }

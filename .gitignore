@@ -21,6 +21,5 @@ yarn-error.log*
 *.sw*
 
 # other
-package-lock.json
 lib/package.json
 lib/README.md
