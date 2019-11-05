@@ -5,9 +5,14 @@
     @before-leave='beforeLeave'
     @after-leave='afterLeave'
   >
-    <section class="bee-popper" v-show="value" ref='wrap' :placement='placement'>
+    <section ref='wrap' class="bee-popper"
+      :placement='placement'
+      v-show="value"
+    >
       <div class="bee-popper--arrow" v-if='arrow' ref='arrow'></div>
-      <div class="bee-popper--body">
+      <div class="bee-popper--body" :style="{
+        'border-radius': borderRadius + 'px'
+      }">
         <slot></slot>
       </div>
     </section>
@@ -36,7 +41,10 @@ const ALIGN = {
 export default {
   name: 'BeePopper',
   props: {
-    scrollParent: Element,
+    scrollParent: {
+      type: Element,
+      default: () => document.body
+    },
     reference: {
       type: Element,
       required: true
@@ -48,6 +56,10 @@ export default {
     distance: {
       type: Number,
       default: 6
+    },
+    borderRadius: {
+      type: Number,
+      default: 4
     },
     arrow: {
       type: Boolean,
