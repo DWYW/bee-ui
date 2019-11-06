@@ -17,7 +17,7 @@ describe('bee-dialog', () => {
     expect(dialog.props('confirmVisible')).to.ok
     expect(dialog.props('cancelText')).to.eq('取消')
     expect(dialog.props('confirmText')).to.eq('确定')
-    expect(dialog.props('autoHide')).to.ok
+    expect(dialog.props('sync')).to.ok
     expect(dialog.props('stopPenetrate')).not.ok
   })
 
@@ -108,6 +108,41 @@ describe('bee-dialog', () => {
     })
 
     expect(dialog.find('.bee-dialog--btn__confirm').text()).to.contain('text content')
+  })
+
+  it('props.sync', (done) => {
+    const dialog = shallowMount(BeeDialog, {
+      propsData: {
+        value: true,
+        sync: false,
+      },
+      stubs: {
+        'bee-button': BeeButton,
+        'bee-icon': BeeIcon
+      },
+      listeners: {
+        input: (value) => {
+          dialog.setProps({
+            value: value
+          })
+        },
+        confirm: async (hide) => {
+          await delay(500)
+          hide()
+        }
+      }
+    })
+
+    dialog.find('.bee-dialog--btn__confirm').trigger('click')
+
+    setTimeout(() => {
+      expect(dialog.isEmpty()).not.ok
+    }, 300)
+
+    setTimeout(() => {
+      expect(dialog.isEmpty()).to.ok
+      done()
+    }, 1000)
   })
 
   it('event.close', async () => {

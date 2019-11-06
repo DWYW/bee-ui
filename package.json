@@ -2,7 +2,7 @@
   "name": "bee-ui-vue",
   "version": "0.1.0",
   "description": "vue ui compontents.",
-  "author": "colin",
+  "author": "scolint",
   "main": "lib/index.js",
   "typings": "lib/types/index.d.ts",
   "keywords": [
