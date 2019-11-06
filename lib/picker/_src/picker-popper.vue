@@ -26,6 +26,7 @@
         :max-days="maxDays"
         :default-time="defaultTime"
         :callback="dateCallback"
+        :update-time-disabled="pickerTimeIsDisabled"
       ></picker-date>
 
       <!-- picker time -->
@@ -82,16 +83,13 @@ export default {
       reference: null,
       quickButtonConfigurations: [],
       pickerCallback: null,
-      format: null
-    }
-  },
-  computed: {
-    pickerTimeDisabled () {
-      return !this.value || helpers.equal(this.value, []) || helpers.equal(this.value, [null, null])
+      format: null,
+      pickerTimeDisabled: false
     }
   },
   mounted () {
     document.body.appendChild(this.$el)
+    this.pickerTimeIsDisabled(this.value)
 
     this.$nextTick(() => {
       this.open = true
@@ -109,6 +107,10 @@ export default {
       this.$destroy()
     },
 
+    pickerTimeIsDisabled (value) {
+      this.pickerTimeDisabled = !value || helpers.equal(value, []) || helpers.equal(value, [null, null])
+    },
+
     pickerTypeSwitch (type) {
       if (this.pickerTimeDisabled) return false
 
@@ -122,6 +124,7 @@ export default {
 
     dateCallback (value) {
       this.value = value
+      this.pickerTimeIsDisabled(value)
 
       helpers.typeof(this.pickerCallback, 'function') && this.pickerCallback({
         value: helpers.deepCopy(value),

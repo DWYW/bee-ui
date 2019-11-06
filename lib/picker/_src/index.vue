@@ -223,16 +223,16 @@ export default {
     },
 
     pickerCallback (data) {
-      if (data.type === 'confirm' && this.toggle) {
-        this.togglePicker()
+      // If comfirm callback, break after.
+      if (data.type === 'confirm') {
+        this.toggle && this.togglePicker()
         return
       }
 
-      // If the selected value is equal the current value, break after.
-      if (helpers.equal(data.value, this.value)) return
-
       // Emit v-model input event.
-      this.$listeners.input && this.$listeners.input(data.value)
+      if (!helpers.equal(data.value, this.value)) {
+        this.$listeners.input && this.$listeners.input(data.value)
+      }
 
       // If It is triggered by outer quick button, emit change event.
       if (data.type === 'quick' && this.quickBtnsType === 'outer') {
@@ -240,7 +240,7 @@ export default {
       }
 
       // auto close picker.
-      if (/^(date|range)$/.test(this.type) && this.toggle) {
+      if (this.toggle && /^(date|range)$/.test(this.type)) {
         this.$nextTick(() => {
           this.togglePicker()
         })

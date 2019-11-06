@@ -37,7 +37,7 @@
         <div :class="['date--item', 'date--item__prev']"
           v-for="day in mounteDate.prevDays"
           :key="'prev-' + day"
-          @click="onSelected(day, 'prevMonth')"
+          @click.stop="onSelected(mounteDate.prevMonthDays - mounteDate.prevDays + day, 'prevMonth')"
         >
           <span class="date-item--text">{{mounteDate.prevMonthDays - mounteDate.prevDays + day}}</span>
         </div>
@@ -53,7 +53,7 @@
         }]"
           v-for='day in mounteDate.days'
           :key="'current-' + day"
-          @click="onSelected(day, 'currentMonth')"
+          @click.stop="onSelected(day, 'currentMonth')"
           @mouseenter="rangeEndPreview(day, 'currentMonth')"
         >
           <div class="date-item--text">{{day}}</div>
@@ -63,7 +63,7 @@
         <div :class="['date--item', 'date--item__next']"
           v-for="day in mounteDate.nextDays"
           :key="'next-' + day"
-          @click="onSelected(day, 'nextMonth')"
+          @click.stop="onSelected(day, 'nextMonth')"
         >
           <div class="date-item--text">{{day}}</div>
         </div>
@@ -82,6 +82,7 @@ export default {
     disabled: [Function, Boolean],
     defaultTime: [Function, Object],
     callback: Function,
+    updateTimeDisabled: Function,
     maxDays: [Number, String],
     value: [Date, Array]
   },
@@ -297,6 +298,7 @@ export default {
       // The picker type in [range, rangetime]
       if (/range/.test(this.type)) {
         const setRangeStart = (value) => {
+          this.updateTimeDisabled(null)
           this.rangeStart = value
           this.rangeEnd = value
         }
