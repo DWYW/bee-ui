@@ -6,19 +6,19 @@
     <section class="bee-select--body">
       <!-- multiple mode -->
       <template v-if='multiple'>
-        <span class="placeholder" v-if='labels.length === 0'>{{placeholder}}</span>
+        <span class="placeholder" v-if='values.length === 0'>{{placeholder}}</span>
 
-        <span class="bee-select--item" v-for='(item, key) in labels' :key='key'>
-          <span>{{item}}</span>
+        <span class="bee-select--item" v-for='(item, key) in values' :key='key'>
+          <span>{{item[1]}}</span>
           <bee-icon class='bee-remove--button' icon='error' @click.stop='removeSelectedItem(key)'></bee-icon>
         </span>
       </template>
 
       <!-- single mode -->
       <template v-else>
-        <span class="placeholder" v-if='labels.length === 0 && !keyword'>{{placeholder}}</span>
+        <span class="placeholder" v-if='values.length === 0 && !keyword'>{{placeholder}}</span>
 
-        <span v-if='searchDisabled' class="bee-selected--label">{{labels.join('')}}</span>
+        <span v-if='searchDisabled' class="bee-selected--label">{{values[1]}}</span>
 
         <!-- open search -->
         <input v-else
@@ -84,8 +84,7 @@ export default {
       readonly: true,
       values: [],
       keyword: '',
-      toggle: false,
-      isMounted: false
+      toggle: false
     }
   },
   computed: {
@@ -99,53 +98,45 @@ export default {
       if (this.type === 'search') return false
 
       return this.type === 'auto' && this.options.length < this.searchLength
-    },
-
-    labels () {
-      return this.values.reduce((acc, cur) => {
-        const option = this.options.find((item) => cur === helpers.getValueByPath(item, this.optionKey.value))
-        option && acc.push(helpers.getValueByPath(option, this.optionKey.label))
-        return acc
-      }, [])
     }
   },
   mounted () {
     if (this.value !== undefined && this.value !== null) {
-      this.setSelected(this.value)
+      this.valuesInit()
     }
-
-    this.isMounted = true
   },
   methods: {
+    targetInOptions (e) {
+      let target = e ? e.target : null
+
+      while (target) {
+        if (target !== this._optionsInstance.$el) {
+          target = target.parentNode
+          continue
+        }
+
+        break
+      }
+
+      return target
+    },
+
     toggleOptions (e) {
       if (this.disabled) return
 
-      // If the options has be opened, to try close it.
-      if (this.toggle) {
-        let target = e ? e.target : null
-
-        while (target) {
-          if (target !== this._optionsInstance.$el) {
-            target = target.parentNode
-            continue
-          }
-
-          break
-        }
-
-        if (!target) {
-          this.toggle = false
-          this.hideOptions(e)
-        }
-
+      if (this.toggle && !this.targetInOptions(e)) {
+        this.hideOptions(e)
         return
       }
 
-      this.toggle = true
-      this.showOptions(e)
+      if (!this.toggle) {
+        this.showOptions(e)
+      }
     },
 
-    showOptions (e) {
+    showOptions () {
+      this.toggle = true
+
       const _data = () => {
         return {
           selected: helpers.deepCopy(this.values),
@@ -180,94 +171,109 @@ export default {
       }).$mount()
     },
 
-    hideOptions (e) {
+    hideOptions () {
       if (!this.searchDisabled) {
         // if the search function be enabled, the input will be readonly.
         this.readonly = true
 
         // if the search function be used and nothing selected, to restore the label.
-        if (this.labels.indexOf(this.keyword) === -1) {
-          this.keyword = this.labels.join('')
+        if (this.value && !this.values.find(item => item && item[1] === this.keyword)) {
+          this.keyword = this.values[0][1]
         }
       }
 
+      this.toggle = false
       this._optionsInstance.open = false
       Listener.removeListener(window, 'click', this.toggleOptions)
     },
 
     onSelected (data) {
       if (!this.multiple && this._optionsInstance && this._optionsInstance.open) {
-        this.toggleOptions()
+        this.hideOptions()
       }
 
       // If the value to equal old vlaueo or undefined, break after.
       // When the length of the this.options is 0, the data will be undefined.
       if (!data || helpers.equal(data, this.values)) return
 
-      this.values = helpers.deepCopy(data)
-      let eventData = data
+      this.updateSelected(helpers.deepCopy(data), true)
+    },
+
+    updateSelected (data, emit) {
+      this.values = data
+      let _value = null
 
       if (this.multiple) {
         // resolve the options position error by reference resize.
-        if (this.toggle && this._optionsInstance) {
+        if (this._optionsInstance && this._optionsInstance.open) {
           this.$nextTick(() => {
             this._optionsInstance.$refs.popper.updatePosition()
           })
         }
+
+        _value = data.map(item => item[0])
       } else {
-        eventData = data[0]
+        _value = helpers.getValueByPath(data, '[0][0]')
 
         if (!this.searchDisabled) {
-          this.keyword = this.labels[0]
+          this.keyword = helpers.getValueByPath(data, '[0][1]')
         }
       }
 
-      // resolve emit events when mounted.
-      if (!this.isMounted) {
-        this.isMounted = true
-        return
-      }
+      if (!emit) return
 
       // Emit evetns.
       const events = ['input', 'change']
 
       events.forEach((eventName) => {
         if (this.$listeners[eventName]) {
-          this.$listeners[eventName](eventData)
+          this.$listeners[eventName](_value)
         }
       })
+    },
+
+    valuesInit () {
+      const data = helpers.typeof(this.value) !== 'array' ? [this.value] : this.value
+
+      const values = this.options.reduce((acc, item) => {
+        const _value = helpers.getValueByPath(item, this.optionKey.value)
+        const _label = helpers.getValueByPath(item, this.optionKey.label)
+
+        if (data.indexOf(_value) > -1) {
+          acc.push([_value, _label])
+        }
+
+        return acc
+      }, [])
+
+      this.updateSelected(values)
     },
 
     removeSelectedItem (index) {
       let _values = helpers.deepCopy(this.values)
       _values.splice(index, 1)
       this.onSelected(_values)
-    },
 
-    setSelected (data) {
-      if (helpers.typeof(data, 'array')) {
-        this.onSelected(data)
-      } else {
-        this.onSelected([data])
+      if (this._optionsInstance && this._optionsInstance.open) {
+        this._optionsInstance.selected = _values
       }
     }
   },
   watch: {
     'options': function (value, oldValue) {
-      if (
-        (value.length === 0 && oldValue.length === 0) ||
-        !this._optionsInstance
-      ) return false
+      if (value.length === 0 && oldValue.length === 0) return
 
-      this._optionsInstance.options = value
-      this._optionsInstance.setSelected(this.values)
+      this.valuesInit()
+
+      if (this._optionsInstance) {
+        this._optionsInstance.options = value
+        this._optionsInstance.selected = this.values
+      }
     },
 
-    'value': function (value) {
-      if (this.multiple) {
-        !helpers.equal(value, this.values) && this.setSelected(value)
-      } else {
-        !helpers.equal([value], this.values) && this.setSelected(value)
+    'value': function (value, oldValue) {
+      if (helpers.equal(value, oldValue) === false) {
+        this.valuesInit()
       }
     },
 

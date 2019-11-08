@@ -79,29 +79,25 @@ export default {
       }
 
       const _value = this.optionValue(option)
+      const _label = this.optionLabel(option)
 
       if (this.multiple) {
-        const _index = this.selected.findIndex(item => item === _value)
+        const _index = this.selected.findIndex(item => item[0] === _value)
 
         if (_index > -1) {
           this.selected.splice(_index, 1)
         } else {
-          this.selected.push(_value)
+          this.selected.push([_value, _label])
         }
       } else {
-        this.selected = [_value]
+        this.selected = [[_value, _label]]
       }
 
       this.onSelected(this.selected)
     },
 
     itemIsSelected (option) {
-      return this.selected.findIndex(item => item === this.optionValue(option)) > -1
-    },
-
-    setSelected (values) {
-      this.selected = values
-      this.onSelected(this.selected)
+      return this.selected.findIndex(item => item[0] === this.optionValue(option)) > -1
     }
   },
   watch: {

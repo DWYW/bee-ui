@@ -293,6 +293,17 @@ describe('helpers.getValueByPath', () => {
     expect(helpers.getValueByPath(target, 'b')).to.eq(0)
     expect(helpers.getValueByPath(target, 'b.test')).to.eq(undefined)
     expect(helpers.getValueByPath(target, 'b.test.t', 'test')).to.eq('test')
+
+
+    const arr = [{
+      a: 'b'
+    }, [
+      [3, 4]
+    ]]
+
+    expect(helpers.getValueByPath(arr, '[0]a')).to.eq('b')
+    expect(helpers.getValueByPath(arr, '[1][0][0]')).to.eq(3)
+    expect(helpers.getValueByPath(arr, '[1][0][d]')).to.eq(undefined)
   })
 })
 
