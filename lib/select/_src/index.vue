@@ -18,7 +18,7 @@
       <template v-else>
         <span class="placeholder" v-if='values.length === 0 && !keyword'>{{placeholder}}</span>
 
-        <span v-if='searchDisabled' class="bee-selected--label">{{values[1]}}</span>
+        <span v-if='searchDisabled' class="bee-selected--label">{{selectedLabel}}</span>
 
         <!-- open search -->
         <input v-else
@@ -98,6 +98,10 @@ export default {
       if (this.type === 'search') return false
 
       return this.type === 'auto' && this.options.length < this.searchLength
+    },
+
+    selectedLabel () {
+      return helpers.getValueByPath(this.values, '[0][1]')
     }
   },
   mounted () {

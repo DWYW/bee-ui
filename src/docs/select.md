@@ -67,7 +67,7 @@ export default {
 ``` html
 <template>
   <p class='inline'>
-    <bee-select  :options='options' placeholder='请选择' v-model='model.base[0]' @change='onChanged'></bee-select>
+    <bee-select  :options='options' placeholder='请选择' v-model='model.base[0]' @change='onChanged' :search-length="15"></bee-select>
     <bee-select  :options='options' placeholder='请选择' v-model='model.base[1]' @change='onChanged'></bee-select>
   </p>
 </template>
@@ -218,6 +218,7 @@ export default {
 |placeholder|占位符|String|—|—|*|
 |multiple|是否是多选|Boolean|—|false|*|
 |disabled|是否是禁用|Boolean|—|false|*|
+|searchLength|单选模式下，选项超过设定值时，使用搜索功能|Number|—|10|*|
 
 <br/>
 <br/>
