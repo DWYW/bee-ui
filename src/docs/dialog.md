@@ -215,7 +215,7 @@ export default {
 |cancelText|取消按钮显示的文字|String|—|取消|1.0.0|
 |confirmVisible|是否显示确定按钮|Boolean|—|true|1.0.0|
 |confirmText|确定按钮显示的文字|String|—|确定|1.0.0|
-|loading|是否添加loading效果|Boolean|—|true|1.0.0|
+|loading|是否添加loading效果|Boolean|—|false|1.0.0|
 |loadingType|loading类型|String|[详细见loading](#/components/loading)|[详细见loading](#/components/loading)|1.0.0|
 |loadingText|loading加载提示的文字|String|[详细见loading](#/components/loading)|[详细见loading](#/components/loading)|1.0.0|
 |sync|confirm事件是否是同步事件|Boolean|—|true|1.0.0|
@@ -232,7 +232,7 @@ export default {
 |afterLeave|消失之后的回调|1.0.0|
 |close|关闭行为的回调|1.0.0|
 |cancel|取消行为的回调|1.0.0|
-|confrim|确认行为的回调|1.0.0|
+|confirm|确认行为的回调|1.0.0|
 
 <br/>
 

@@ -57,7 +57,7 @@ export default {
   watch: {
     value (value) {
       if (value !== this.checked) {
-        this.checked(value)
+        this.checked = value
       }
     }
   }
