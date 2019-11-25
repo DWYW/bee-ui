@@ -82,7 +82,6 @@ export default {
 |title|标题|String|—|提示|*|
 |message|提示的文字信息|String|—|—|*|
 |html|提示的HTML代码|String|—|—|*|
-|title|标题|String|—|提示|*|
 |center|内容是否居中|Boolean|—|false|1.0.0|
 |closeVisible|是否显示关闭按钮|Boolean|—|true|1.0.0|
 |cancelVisible|是否显示取消按钮|Boolean|—|true|1.0.0|

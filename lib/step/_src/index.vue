@@ -3,7 +3,7 @@
     <div class="bee-step--body">
       <div :class="['bee-step--item', {
         'bee-step--item__actived': Number(step) >= index + 1
-      }]" v-for="(item, index) in labels" :key='index'
+      }]" v-for="(item, index) in config" :key='index'
       :style="itemStyle">
         <section class="bee-step--line"></section>
 
@@ -28,7 +28,7 @@ import helpers from '../../utils/helpers'
 export default {
   name: 'BeeStep',
   props: {
-    labels: {
+    config: {
       type: Array,
       required: true
     },
@@ -40,7 +40,7 @@ export default {
   computed: {
     itemStyle () {
       return {
-        width: `${100 / this.labels.length}%`
+        width: `${100 / this.config.length}%`
       }
     },
     isString () {

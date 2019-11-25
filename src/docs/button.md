@@ -82,11 +82,11 @@ export default {
 
 | 参数 | 说明 |	类型 |	可选值 |	默认值 | 版本支持|
 |---|---|---|---|---|---|
-| theme | 按钮的类型 |	String |	default, primary, success,  error |	default |*|
-| size | 按钮的大小 |	String |	md, sm, lg |	md |*|
 | animation | 是否启用动画效果 |	Boolean |	— |	false |*|
 | disabled | 是否禁用 |	Boolean |	— |	false |*|
 | icon | 添加的图标类型 |	String, Object |	— |	— |1.0.0|
+| size | 按钮的大小 |	String |	md, sm, lg |	md |*|
+| theme | 按钮的类型 |	String |	default, primary, success,  error |	default |*|
 
 <br/>
 <br/>

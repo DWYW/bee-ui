@@ -10,7 +10,7 @@
       :disabled=disabled
       :placeholder=placeholder
       :readonly=readonly
-      :value=value
+      :value='maxlength ? value.slice(0, maxlength) : value'
     >
     <bee-icon v-if='icon'
       :class="['adorn-icon']"
@@ -33,7 +33,7 @@ export default {
     maxlength: [Number, String],
     placeholder: String,
     readonly: Boolean,
-    reg: [Function, String],
+    reg: [Function, String, RegExp],
     theme: {
       type: String,
       default: 'default'
@@ -50,7 +50,7 @@ export default {
   computed: {
     listeners () {
       return Object.assign({}, this.$listeners, {
-        input: this.customChange,
+        input: this.customInput,
         keyup: this.customKeyup
       })
     }
@@ -70,16 +70,22 @@ export default {
       if (this.$listeners.keyup) this.$listeners.keyup(e)
     },
 
-    customChange (e) {
-      if (e.target.value && this.reg) {
-        const validator = this.validator(e.target.value)
+    customInput (e) {
+      let _value = e.target.value
 
-        if (validator !== e.target.value) {
-          e.target.value = validator
+      if (this.maxlength) {
+        _value = _value.slice(0, this.maxlength)
+      }
+
+      if (_value && this.reg) {
+        _value = this.validator(_value)
+
+        if (_value !== e.target.value) {
+          e.target.value = _value
         }
       }
 
-      this.$listeners.input && this.$listeners.input(e.target.value)
+      this.$listeners.input && this.$listeners.input(_value)
     },
 
     validator (value) {
@@ -90,6 +96,10 @@ export default {
           value = this.value
         } else if (validator !== true) {
           value = validator
+        }
+      } else if (helpers.typeof(this.reg, 'regexp')) {
+        if (this.reg.test(value) === false) {
+          value = this.value
         }
       } else {
         const regExp = new RegExp(this.reg)

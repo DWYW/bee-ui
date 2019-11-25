@@ -46,11 +46,11 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|page|当前页码|number|—|1|*|
-|pageTotal|总页数|number|—|—|*|
-|total|总条数|number|—|—|*|
-|totalVisible|是否显示总条数|boolean|—|true|*|
-|maxlength|连续显示的页码个数|number|—|5|*|
+|page|当前页码|Number|—|1|*|
+|pageTotal|总页数|Number|—|—|*|
+|total|总条数|Number|—|—|*|
+|totalVisible|是否显示总条数|Boolean|—|true|*|
+|maxlength|连续显示的页码个数|Number|—|5|*|
 
 <br/>
 

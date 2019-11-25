@@ -201,8 +201,8 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|icon|要显示的图标|String|—|—|*|
 |fontFamily|字体集|String|—|—|0.6.2|
+|icon|要显示的图标|String|—|—|*|
 
 <br/>
 <br/>

@@ -346,15 +346,15 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|type|输入框的类型|String|*|text|*|
-|placeholder|占位符|String|—|—|*|
-|disabled|禁用状态|Boolean|—|—|*|
 |autofocus|自动获取焦点（1.0.0之前为autoFocus）|Boolean|—|—|*|
-|readonly|只读（1.0.0之前为readOnly）|Boolean|—|—|*|
+|disabled|禁用状态|Boolean|—|—|*|
 |maxlength|输入的最大长度|Number|—|—|*|
-|theme|按钮的类型|String|default, primary, success, error|default|*|
 |icon|图标的配置信息|Object|—|—|*|
-|reg|value的格式化函数或正则表达式字符串|Function, String|—|—|1.0.0|
+|placeholder|占位符|String|—|—|*|
+|readonly|只读（1.0.0之前为readOnly）|Boolean|—|—|*|
+|reg|value的格式化函数或正则表达式字符串|Function, String, RegExp|—|—|1.0.0 <br/> RegExp 1.0.5|
+|theme|按钮的类型|String|default, primary, success, error|default|*|
+|type|输入框的类型|String|*|text|*|
 
 <br/>
 

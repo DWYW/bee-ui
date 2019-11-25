@@ -2,7 +2,7 @@
 export default {
   data () {
     return {
-      steps: [{
+      config: [{
         label: "步骤1",
         desc: "这是一段说明文字"
       }, "步骤2", {
@@ -20,8 +20,8 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-step :labels='steps'></bee-step>
-    <bee-step :labels='steps' :step='2'></bee-step>
+    <bee-step :config='config'></bee-step>
+    <bee-step :config='config' :step='2'></bee-step>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
 export default {
   data () {
     return {
-      steps: [{
+      config: [{
         label: "步骤1",
         desc: "这是一段说明文字"
       }, "步骤2", {
@@ -46,9 +46,11 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|labels|数据源|array|—|—|*|
+|config|数据源|array|—|—|*|
 |step|当前步骤|number|—|1|*|
 
 <br/>
 
-labels配置项，1.0.0 开始支持 Object 类型。
+config配置项，1.0.0 开始支持 Object 类型。
+
+labels 1.0.5 更名为 config

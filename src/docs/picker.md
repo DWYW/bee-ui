@@ -111,10 +111,10 @@ export default {
         this.testDom = this.$refs.test
       })
     },
-    range (staft, end) {
+    range (start, end) {
       let res = []
 
-      for (let i = staft; i <= end; i++) {
+      for (let i = start; i <= end; i++) {
         res.push(i)
       }
 
@@ -236,10 +236,10 @@ export default {
     }
   },
   methods: {
-    range (staft, end) {
+    range (start, end) {
       let res = []
 
-      for (let i = staft; i <= end; i++) {
+      for (let i = start; i <= end; i++) {
         res.push(i)
       }
 
@@ -375,9 +375,9 @@ export default {
 <br/>
 <br/>
 
-> **disabled 为 true 时，将禁止选取<br/>**
-> 当type为date或者datetime时， format默认值为 YYYY-MM-DD <br/>
-> 当type为range或者rangetime时， format默认值为 YYYY-MM-DD hh:mm:ss
+> disabled 为 true 时，将禁止选取<br/>
+> 当type为date或range时， format默认值为 YYYY-MM-DD <br/>
+> 当type为datetime或rangetime时， format默认值为 YYYY-MM-DD hh:mm:ss
 
 ```js
 // timeVisible 默认值
@@ -391,15 +391,15 @@ export default {
 {
   hour: (date, index) => {
     // do something ...
-    return // disabled
+    return [] // disabled
   },
   minute: (date, index) => {
     // do something ...
-    return // disabled
+    return [] // disabled
   },
   second: (date, index) => {
     // do something ...
-    return // disabled
+    return [] // disabled
   }
 }
 
