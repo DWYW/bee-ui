@@ -1,20 +1,19 @@
 import Vue, { Component } from 'vue'
 
-declare enum NotificationTypes {
-  'warn',
-  'success',
-  'error'
-}
+type NotificationTypes = 'warn'|'success'|'error'
 
 interface NotificationOptions {
-  type: NotificationTypes;
-  duration: number;
-  title: string;
   message: string;
+  type?: NotificationTypes;
+  duration?: number;
+  title?: string;
 }
 
 interface CreateNotification {
-  (options?: NotificationOptions): Component;
+  (options?: NotificationOptions): {
+    show: () => void;
+    hide: () => void;
+  };
 }
 
 declare module 'vue/types/vue' {

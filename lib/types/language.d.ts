@@ -1,7 +1,11 @@
 import Vue from 'vue'
 
+interface Languages {
+  [key: string]: any
+}
+
 interface GetLanguage {
-  (path: string, languages: Object): string;
+  (path: string, languages: Languages): string;
 }
 
 declare module 'vue/types/vue' {

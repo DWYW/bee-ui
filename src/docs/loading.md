@@ -11,8 +11,13 @@ export default {
   data () {
     return {
       instance: null,
-      loading: false
+      loading: true
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.loading = false
+    }, 1000)
   },
   methods: {
     addLoading (type) {
