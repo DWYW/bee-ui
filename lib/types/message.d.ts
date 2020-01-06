@@ -1,26 +1,21 @@
-import Vue, { Component } from 'vue'
+import Vue from 'vue'
 
-declare enum MessageTypes {
-  'warn',
-  'success',
-  'error'
-}
-
-declare enum AlignTypes {
-  'left',
-  'center'
-}
+type MessageTypes = 'warn'|'success'|'error'
+type AlignTypes = 'left'|'center'
 
 interface MessageOptions {
-  type: MessageTypes;
-  duration: number;
-  html: string;
   message: string;
-  align: AlignTypes;
+  type?: MessageTypes;
+  duration?: number;
+  html?: string;
+  align?: AlignTypes;
 }
 
 interface CreateMessage {
-  (options?: MessageOptions): Component;
+  (options?: MessageOptions): {
+    show: () => void;
+    hide: () => void;
+  };
 }
 
 declare module 'vue/types/vue' {

@@ -1,20 +1,19 @@
 import Vue, { Component } from 'vue'
 
-declare enum LoadingTypes {
-  'main',
-  'pie',
-  'undulate'
-}
+type LoadingTypes = 'main'|'pie'|'undulate'
 
 interface LoadingOptions {
-  parent: Element;
-  type: LoadingTypes;
-  block: boolean;
-  text: String;
+  parent?: Element;
+  type?: LoadingTypes;
+  block?: boolean;
+  text?: String;
 }
 
 interface CreateLoading {
-  (options?: LoadingOptions): Component;
+  (options?: LoadingOptions): {
+    show: () => void;
+    hide: () => void;
+  };
 }
 
 declare module 'vue/types/vue' {

@@ -64,11 +64,14 @@ export default {
       return this
     },
     beforeEnter () {
-      this.parent.classList.add('bee-loading--parent')
+      const classList = this.parent.classList
+
+      if (!classList.contains('bee-loading--parent')) {
+        classList.add('bee-loading--parent')
+      }
     },
     afterLeave () {
       this.$destroy()
-      this.parent.classList.remove('bee-loading--parent')
     }
   }
 }
