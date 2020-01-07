@@ -111,7 +111,7 @@ export default {
           return new Date(year - 1, month, date, hours, minutes, seconds)
         },
         nextYear: (year, month, date, hours = 0, minutes = 0, seconds = 0) => {
-          return new Date(year - 1, month, date, hours, minutes, seconds)
+          return new Date(year + 1, month, date, hours, minutes, seconds)
         },
         prevMonth: (year, month, date, hours = 0, minutes = 0, seconds = 0) => {
           if (month-- < 1) {
