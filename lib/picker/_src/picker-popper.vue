@@ -101,9 +101,16 @@ export default {
     }
   },
   methods: {
-    beforeEnter () {},
+    beforeEnter () {
+      this._beforeOpen()
+    },
+
+    afterEnter () {
+      this._opened()
+    },
 
     afterLeave () {
+      this._closed()
       this.$destroy()
     },
 

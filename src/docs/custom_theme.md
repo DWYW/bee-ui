@@ -11,11 +11,11 @@ bee-ui提供了一套默认的主题颜色。
 @primary-font-color: #ffffff;
 
 @success-color: #00b450;
-@success-tint-color: #00b450;
+@success-tint-color: #45b577;
 @success-font-color: #ffffff;
 
-@error-color: #c92d00;
-@error-tint-color: #c92d00;
+@error-color: #ba3c2d;
+@error-tint-color: #d45344;
 @error-font-color: #ffffff;
 
 @font-color: #333333;
@@ -160,6 +160,7 @@ bee-ui提供了一套默认的主题颜色。
 @picker-color_selected: #ffffff;
 @picker-background-color_selected:  @primary-color;
 @picker-background-color_range: rgba(255, 133, 51, .2);
+@picker-background-color_disabled: #f5f5f5;
 
 // popper
 @popper-border-color: #dedede;

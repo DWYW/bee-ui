@@ -74,9 +74,12 @@
     }
   }
 
-  &.bee-picker__disabled .bee-picker--value {
-    cursor: no-drop;
+  &.bee-picker__disabled {
+    .bee-picker--value {
+      cursor: no-drop;
 
-    opacity: .8;
+      opacity: .8;
+      background-color: @picker-background-color_disabled;
+    }
   }
 }

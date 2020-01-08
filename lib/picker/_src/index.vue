@@ -161,7 +161,9 @@ export default {
         this.closePicker()
       } else {
         this.toggle = true
-        this.openPicker()
+        this.$listeners.beforeOpen && this.$listeners.beforeOpen()
+        // resolve value changed，picker popper instance value not sync.
+        this.$nextTick(this.openPicker)
       }
     },
 
@@ -187,21 +189,28 @@ export default {
         _data['disabled'] = this.disabled
       }
 
-      const _beforeEnter = () => {
+      const _beforeOpen = () => {
         setTimeout(() => {
           Listener.addListener(window, 'click', this.togglePicker)
         })
       }
 
-      const _afterEnter = () => {
+      const _opened = () => {
         this.$listeners.opened && this.$listeners.opened()
+      }
+
+      const _closed = () => {
+        if (this.$listeners.closed) {
+          this.$listeners.closed()
+        }
       }
 
       this._pickerInstance = new PickerPopperCtor({
         data: _data,
         methods: {
-          beforeEnter: _beforeEnter,
-          afterEnter: _afterEnter
+          _beforeOpen: _beforeOpen,
+          _opened: _opened,
+          _closed: _closed
         }
       }).$mount()
 

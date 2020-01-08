@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       date1: null,
-      date2: null,
+      date2: new Date(Date.now() + 1000 * 60),
+      // date2: null,
       date3: null,
       date4: null,
       date5: null,
@@ -55,6 +56,20 @@ export default {
   computed: {
     scrollDom: (vm) => {
       return vm.$parent.scrollDom
+    },
+    statistic () {
+      return {
+        name: '无',
+        time: () => {
+          const _now = new Date()
+
+          return {
+            startHour: _now.getHours(),
+            startMinute: _now.getMinutes(),
+            startSecond: _now.getSeconds()
+          }
+        }
+      }
     },
     quickBtns () {
       const _now = new Date()
@@ -147,6 +162,9 @@ export default {
       console.log('--------- picker onChange strart ---------')
       console.log(value)
       console.log('---------   picker onChange end  ---------')
+    },
+    onClosed () {
+      console.log('onClosed')
     }
   }
 }
@@ -159,8 +177,16 @@ export default {
 ``` html
 <template>
   <div class='inline'>
-    <bee-picker v-model='date1' @change="onChange"></bee-picker>
-    <bee-picker type='datetime' :default-time='defaultTime' v-model='date2' @change="onChange"></bee-picker> <br/>
+    <bee-picker v-model='date1' @change="onChange" @closed='onClosed'></bee-picker>
+    <bee-picker 
+      type='datetime' 
+      :default-time='defaultTime' 
+      @change="onChange"
+      v-model='date2' 
+    ></bee-picker> 
+    
+    <br/>
+
     <bee-picker type='range' v-model='date3' @change="onChange"></bee-picker>
     <bee-picker type='rangetime' :default-time='defaultTime' v-model='date4' @change="onChange" placeholder='请选择'></bee-picker>
   </div>
@@ -371,6 +397,8 @@ export default {
 |---|---|---|
 |opened|选项面板打开后的回调事件|^0.7.3|
 |change|选取后的回调|^0.7.7|
+|beforeOpen|选项面板打开之前的回调事件|^1.1.0|
+|closed|选项面板关闭之后的回调事件|^1.1.0|
 
 <br/>
 <br/>
