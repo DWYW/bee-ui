@@ -10,7 +10,7 @@
       :disabled=disabled
       :placeholder=placeholder
       :readonly=readonly
-      :value='maxlength ? value.slice(0, maxlength) : value'
+      :value='value'
     >
     <bee-icon v-if='icon'
       :class="['adorn-icon']"
@@ -55,6 +55,9 @@ export default {
       })
     }
   },
+  created () {
+    this.initValue()
+  },
   mounted () {
     this.$nextTick(() => {
       // auto focus
@@ -64,6 +67,16 @@ export default {
     })
   },
   methods: {
+    initValue () {
+      let _value = this.value || ''
+
+      if (this.maxlength) {
+        _value = _value.slice(0, this.maxlength)
+      }
+
+      this.$listeners.input && this.$listeners.input(_value)
+    },
+
     customKeyup (e) {
       if (e.keyCode === 13 && this.$listeners.enter) this.$listeners.enter(e)
 
