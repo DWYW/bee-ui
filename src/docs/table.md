@@ -12,6 +12,11 @@
   margin-right: 20px;
 }
 
+td.red, th.red {
+  background-color: red !important;;
+  color: #ffffff !important;;
+}
+
 .custom-tr-odd td {
   color: #ff6701 !important;
   background-color: #fce9d3 !important;
@@ -79,6 +84,9 @@ export default {
           })
         }
       }
+    },
+    cellClassName(data) {
+      return data.columnIndex % 2 === 0 && data.rowIndex % 2 === 0 ? 'red' : ''
     }
   }
 }
@@ -505,6 +513,47 @@ export default {
 ```
 :::
 
+### 自定义className
+
+::: demo
+``` html
+<template>
+  <bee-table :data='students' :cell-class-name='cellClassName'>
+    <bee-table-column label='姓名' prop='name'></bee-table-column>
+    <bee-table-column width='100' label='年龄' prop='age'></bee-table-column>
+    <bee-table-column width='100' label='年级' prop='grade' placeholder='-'></bee-table-column>
+    <bee-table-column width='100' label='专业' prop='subject'></bee-table-column>
+  </bee-table>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      students: [
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
+      ]
+    }
+  },
+  methods: {
+    /**
+     * data.type 
+     * data.rowIndex
+     * data.columnIndex
+     */
+    cellClassName(data) {
+      return data.columnIndex % 2 === 0 && data.rowIndex % 2 === 0 ? 'red' : ''
+    }
+  }
+}
+</script>
+```
+:::
+
 
 #### BeeTable
 
@@ -520,6 +569,7 @@ export default {
 |summaryText|合计的默认文字| String|—|合计|*|
 |summaryMethod|计算合计的方法|Function|—|见下方|*|
 |rowClassName|自定义行className的方法|Function|—|—|1.0.0|
+|cellClassName|自定义行className的方法|Function|—|—|1.1.0|
 
 ### 事件
 

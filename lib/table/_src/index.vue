@@ -16,6 +16,7 @@
         :data="data"
         :placeholder="placeholder"
         :row-class-name="rowClassName"
+        :cell-class-name='cellClassName'
         :selections="selections"
         :slots="$slots.default"
         :summary="summary"
@@ -35,6 +36,7 @@
         :columns-config="columnsConfig"
         :data="data"
         :placeholder="placeholder"
+        :cell-class-name='cellClassName'
         :selections="selections"
         :slots="$slots.default"
         @selection='onSelection'
@@ -52,6 +54,7 @@
         :columns-config="columnsConfig"
         :data="data"
         :placeholder="placeholder"
+        :cell-class-name='cellClassName'
         :slots="$slots.default"
         :summary="summary"
         :summary-text="summaryText"
@@ -73,6 +76,7 @@
           :data="data"
           :placeholder="placeholder"
           :row-class-name="rowClassName"
+          :cell-class-name='cellClassName'
           :selections="selections"
           :slots="$slots.default"
           :summary="summary"
@@ -92,6 +96,7 @@
           :columns-config="columnsConfig"
           :data="data"
           :placeholder="placeholder"
+          :cell-class-name='cellClassName'
           :selections="selections"
           :slots="$slots.default"
           @selection='onSelection'
@@ -109,6 +114,7 @@
           :columns-config="columnsConfig"
           :data="data"
           :placeholder="placeholder"
+          :cell-class-name='cellClassName'
           :slots="$slots.default"
           :summary="summary"
           :summary-text="summaryText"
@@ -131,6 +137,7 @@
           :columns-config="columnsConfig"
           :data="data"
           :placeholder="placeholder"
+          :cell-class-name='cellClassName'
           :row-class-name="rowClassName"
           :selections="selections"
           :slots="$slots.default"
@@ -152,6 +159,7 @@
           :columns-config="columnsConfig"
           :data="data"
           :placeholder="placeholder"
+          :cell-class-name='cellClassName'
           :selections="selections"
           :slots="$slots.default"
           @selection='onSelection'
@@ -170,6 +178,7 @@
           :columns-config="columnsConfig"
           :data="data"
           :placeholder="placeholder"
+          :cell-class-name='cellClassName'
           :slots="$slots.default"
           :summary="summary"
           :summary-text="summaryText"
@@ -202,6 +211,7 @@ export default {
       default: true
     },
     rowClassName: Function,
+    cellClassName: Function,
     summary: {
       type: Boolean,
       default: false
