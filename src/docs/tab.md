@@ -2,7 +2,9 @@
 export default {
   data () {
     return {
-      tab: 1
+      tab: 1,
+      cardTab: 0,
+      headerTab: 0
     }
   },
   methods: {
@@ -38,10 +40,31 @@ export default {
       </div>
     </bee-tab-item>
   </bee-tab>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      tab: 1
+    }
+  },
+  methods: {
+    tabChange(idx) {
+      console.log(idx)
+    }
+  }
+}
+</script>
+```
+:::
 
+### card类型
 
-  <bee-tab type='card' v-model='tab'>
-    <bee-tab-item label='文章'>
+::: demo
+``` html
+<template>
+  <bee-tab @change='tabChange' v-model='cardTab' type='card'>
+    <bee-tab-item label='文章' class='test'>
       <div>
         这里是 文章 下面的内容
       </div>
@@ -59,13 +82,40 @@ export default {
       </div>
     </bee-tab-item>
   </bee-tab>
-  <br/>
 </template>
 <script>
 export default {
   data () {
     return {
-      activeIndex: 1
+      cardTab: 0
+    }
+  },
+  methods: {
+    tabChange(idx) {
+      console.log(idx)
+    }
+  }
+}
+</script>
+```
+:::
+
+### header类型
+
+::: demo
+``` html
+<template>
+  <bee-tab @change='tabChange' v-model='headerTab' type='header'>
+    <bee-tab-item label='文章' class='test'></bee-tab-item>
+    <bee-tab-item label='图片'></bee-tab-item>
+    <bee-tab-item label='其他'></bee-tab-item>
+  </bee-tab>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      headerTab: 0
     }
   },
   methods: {
@@ -85,7 +135,7 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|type|选项卡的类型|string|card|—|*|
+|type|选项卡的类型|string|card,header|—|*|
 |value|显示的索引值，可使用 v-model 双向绑定数据。|Number|[0, BeeTabItem.length]|0|1.0.0|
 
 <br/>
