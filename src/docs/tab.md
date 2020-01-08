@@ -135,7 +135,7 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|type|选项卡的类型|string|card,header|—|*|
+|type|选项卡的类型|string|card,header|—|card * <br> header ^1.1.0|
 |value|显示的索引值，可使用 v-model 双向绑定数据。|Number|[0, BeeTabItem.length]|0|1.0.0|
 
 <br/>
