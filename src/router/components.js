@@ -88,6 +88,10 @@ export default [{
     path: 'tooltip',
     label: 'tooltip 文字提示',
     type: 'doc'
+  }, {
+    path: 'drawer',
+    label: 'drawer 抽屉',
+    type: 'doc'
   }]
 }, {
   path: null,
