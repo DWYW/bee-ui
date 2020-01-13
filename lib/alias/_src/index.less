@@ -1,0 +1,66 @@
+@import '../../theme.less';
+
+.bee-alias {
+  position: relative;
+
+  display: inline-block;
+
+  box-sizing: border-box;
+  min-width: 80px;
+
+  cursor: pointer;
+
+  line-height: @normal-height;
+  
+  .alias-name {
+    display: inline-block;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 5px;
+
+    user-select: none;
+    transition: border-color .3s;
+
+    border-bottom: 1px solid @border-color;
+    
+    .placeholder {
+      color: @placeholder-color;
+    }
+  }
+
+  .remove-button {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+
+    display: none;
+
+    transition: color .1s;
+    transform: translateY(-50%);
+
+    color: @font-tint-color;
+
+    font-size: 14px;
+    
+    &:active {
+      color: @font-color;
+    }
+  }
+
+  &:hover {
+    .alias-name {
+      padding-right: 25px;
+    }
+
+    .remove-button {
+      display: block;
+    }
+  }
+
+  &.bee-alias_focus {
+    .alias-name {
+      border-bottom-color: @primary-color;
+    }
+  }
+}

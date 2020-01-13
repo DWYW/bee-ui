@@ -1,0 +1,30 @@
+@import '../../theme.less';
+
+.alias-select-option {
+  .bee-popper--body {
+    padding: 5px;
+
+    cursor: pointer;
+  }
+
+  .option--item {
+    display: inline-block;
+
+    padding: 4px;
+
+    .option-item--content {
+      padding: 2px 10px;
+
+      transition: all .1s;
+
+      border: 1px solid @border-color;
+      border-radius: @border-radius;
+      background-color: @alias-option-background-color;
+
+      &:hover {
+        color: @primary-color;
+        border-color: @primary-color;
+      }
+    }
+  } 
+}

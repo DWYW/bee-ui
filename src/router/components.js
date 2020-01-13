@@ -92,6 +92,10 @@ export default [{
     path: 'drawer',
     label: 'drawer 抽屉',
     type: 'doc'
+  }, {
+    path: 'alias',
+    label: 'alias 别名',
+    type: 'doc'
   }]
 }, {
   path: null,

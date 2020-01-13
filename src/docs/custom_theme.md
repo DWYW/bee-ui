@@ -167,6 +167,7 @@ bee-ui提供了一套默认的主题颜色。
 @popper-shadow-color: rgba(0, 0, 0, .2);
 @popper-background-color: #ffffff;
 @popper-arr-size: 6px;
+@popper-zindex: @z-2 - 10;
 
 // radio
 @radio-line-height: @normal-height;
@@ -231,5 +232,13 @@ bee-ui提供了一套默认的主题颜色。
 @tooptip-background-color: #333333;
 @tooptip-color: #ffffff;
 @tooptip-font-size: 12px;
+
+// drawer
+@drawer-background-color: #ffffff;
+@drawer-mask-color: @mask-background-color;
+@drawer-zindex: @z-1;
+
+// alias
+@alias-option-background-color: #f5f5f5;
 
 ```

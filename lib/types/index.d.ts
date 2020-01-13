@@ -32,6 +32,7 @@ export const BeeTable: typeof BeeComponent
 export const BeeTableColumn: typeof BeeComponent
 export const BeeToolTip: typeof BeeComponent
 export const BeeDrawer: typeof BeeComponent
+export const BeeAlias: typeof BeeComponent
 export {
   Alert,
   Language,
