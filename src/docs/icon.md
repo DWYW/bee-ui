@@ -192,6 +192,16 @@ export default {
   <span class='icon--name'>exit</span>
 </span>
 
+<span class='icon--item'>
+  <bee-icon icon="fill-help"> </bee-icon>
+  <span class='icon--name'>fill-help</span>
+</span>
+
+<span class='icon--item'>
+  <bee-icon icon="line-help"> </bee-icon>
+  <span class='icon--name'>line-help</span>
+</span>
+
 ```
 
 :::
