@@ -319,7 +319,11 @@ export default {
       }
 
       this.size.tableMaxHeight = Math.min(...heights)
-      this.size.tableDrawerHeight = this.$el.clientHeight
+
+      // await dom update, prevent get the value that before update.
+      this.$nextTick(() => {
+        this.size.tableDrawerHeight = this.$el.clientHeight
+      })
 
       if (table.querySelector('tfoot')) {
         this.size.tableFooterHeight = table.querySelector('tfoot').offsetHeight + 1
