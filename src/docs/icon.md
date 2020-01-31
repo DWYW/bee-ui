@@ -202,6 +202,21 @@ export default {
   <span class='icon--name'>line-help</span>
 </span>
 
+<span class='icon--item'>
+  <bee-icon icon="loading-icon"> </bee-icon>
+  <span class='icon--name'>loading-icon</span>
+</span>
+
+<span class='icon--item'>
+  <bee-icon icon="fold"> </bee-icon>
+  <span class='icon--name'>fold</span>
+</span>
+
+<span class='icon--item'>
+  <bee-icon icon="unfold"> </bee-icon>
+  <span class='icon--name'>unfold</span>
+</span>
+
 ```
 
 :::
