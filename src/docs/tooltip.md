@@ -173,6 +173,6 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|content|提示的文字信息,可使用\n换行|String|—|—|1.0.0及之后支持\n|
+|content|提示的文字信息,可使用\n换行|String|—|—|1.0.0及之后支持|
 |position|位置|String|见上面|top|*|
 |theme|主题|String|dark,light|dark|1.0.0|

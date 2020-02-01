@@ -4,7 +4,7 @@
 
     <div class="page-body">
       <Nav :left='left'></Nav>
-      <bee-scrollbar ref='scrollbar'>
+      <bee-scrollbar ref='scrollbar' :scroll-element.sync='scrollDom'>
         <div class="pageer" ref='PW'>
           <router-view class="contentper md"/>
 
@@ -50,7 +50,7 @@ export default {
   watch: {
     '$route': function () {
       this.$nextTick(() => {
-        // this.$refs.BeeScroll.init()
+        this.scrollDom.scrollTop = 0
       })
     }
   }

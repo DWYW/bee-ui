@@ -241,4 +241,11 @@ bee-ui提供了一套默认的主题颜色。
 // alias
 @alias-option-background-color: #f5f5f5;
 
+// tree
+@tree-blank-width: 24px;
+@tree-fold-line-color: @border-color;
+@tree-primary-color: @primary-color;
+@tree-icon-default-color: @font-tint-color;
+@tree-disabled-color: #cccccc;
+
 ```

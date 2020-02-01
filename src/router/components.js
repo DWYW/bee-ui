@@ -121,5 +121,9 @@ export default [{
     path: 'scrollbar',
     label: 'scrollbar 滚动区域',
     type: 'doc'
+  }, {
+    path: 'tree',
+    label: 'tree 树形组件',
+    type: 'doc'
   }]
 }]
