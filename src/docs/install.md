@@ -9,6 +9,6 @@ npm install bee-ui-vue --save
 项目依赖
 
 ```
-vue 2.4.0  
-less 2.3.0
+vue 2.5.0  
+less 3.0.0
 ```

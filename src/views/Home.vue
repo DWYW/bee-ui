@@ -4,7 +4,7 @@
       <div style="position: relative;">
         <img src="../assets/logo.gif" alt="" class="logo">
 
-        <div class='dependencies'>vue 2.4.0  &nbsp;&nbsp;&nbsp;&nbsp; less 2.3.0</div>
+        <!-- <div class='dependencies'>vue 2.4.0  &nbsp;&nbsp;&nbsp;&nbsp; less 2.3.0</div> -->
 
         <div class="home--btns">
           <router-link to='/components/install'>
