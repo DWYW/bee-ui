@@ -74,9 +74,8 @@ export default {
   },
   methods: {
     beforeEnter (el) {
-      this.$nextTick(() => {
-        this.updatePosition()
-      })
+      // resolve fialed to get the expected value of $el height.
+      setTimeout(this.updatePosition, 0)
 
       if (this.scrollParent) {
         Listener.addListener(this.scrollParent, 'scroll', this.updatePosition)
