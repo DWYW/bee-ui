@@ -294,8 +294,8 @@ export default {
 
       this.columnsConfig = [...leftColumnsConfig, ...middleColumnsConfig, ...rightColumnsConfig]
       this.size.tableMinWidth = leftWidth + middleWidth + rightWidth
-      this.size.tableLeftWidth = leftWidth + 1
-      this.size.tableRightWidth = rightWidth + 1
+      this.size.tableLeftWidth = leftWidth
+      this.size.tableRightWidth = rightWidth
     },
 
     updateTableSize () {
