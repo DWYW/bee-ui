@@ -34,6 +34,7 @@ export const BeeToolTip: typeof BeeComponent
 export const BeeDrawer: typeof BeeComponent
 export const BeeAlias: typeof BeeComponent
 export const BeeTree: typeof BeeComponent
+export const BeeCascader: typeof BeeComponent
 export {
   Alert,
   Language,

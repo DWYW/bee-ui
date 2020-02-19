@@ -96,6 +96,10 @@ export default [{
     path: 'alias',
     label: 'alias 别名',
     type: 'doc'
+  }, {
+    path: 'cascader',
+    label: 'cascader 级联选择',
+    type: 'doc'
   }]
 }, {
   path: null,
