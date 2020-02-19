@@ -1,0 +1,57 @@
+@import '../../theme.less';
+@import './options.less';
+
+.bee-cascader {
+  position: relative;
+
+  display: inline-block;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  min-width: 80px;
+  height: @cascader-height;
+  padding: 4px 0;
+
+  cursor: pointer;
+
+  border: 1px solid @border-color;
+  border-radius: @border-radius;
+
+  font-size: @font-size;
+  line-height: 1.5;
+
+  .selected--label {
+    display: block;
+    overflow: hidden;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 20px;
+    padding-left: 5px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .placeholder {
+      color: @placeholder-color;
+    }
+  }
+
+  .bee-cascader--icon {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+
+    display: block;
+
+    transform: translate3d(0, -50%, 0);
+  }
+
+  &.bee-cascader__disabled {
+    cursor: no-drop;
+    user-select: none;
+
+    opacity: .6;
+    background-color: @cascader-background-color_disabled;
+  }
+}

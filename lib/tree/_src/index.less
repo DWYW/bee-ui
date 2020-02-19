@@ -9,6 +9,8 @@
     box-sizing: border-box;
     padding-left: @tree-blank-width;
 
+    transition: height .3s;
+
     &.fold-line_solid::before, &.fold-line_dashed::before {
       position: absolute;
       top: 0;
@@ -60,7 +62,7 @@
         padding-right: 4px;
 
         transition: color .2s linear;
-        
+
         &.bee-selected-part, &.bee-checkbox-selected {
           color: @tree-primary-color;
         }
@@ -94,3 +96,10 @@
     transform: rotate(1turn);
   }
 }
+
+// .tree-children-enter-active, .tree-children-leave-active {
+//   transition: height .3s;
+// }
+// .tree-children-enter, .tree-children-leave-to {
+//   height: 0;
+// }

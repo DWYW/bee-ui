@@ -22,16 +22,16 @@
 
     thead tr th,
     tbody tr td,
-    tfoot tr td { 
+    tfoot tr td {
       box-sizing: border-box;
-      
+
       &.bee-table--cell {
         padding: 8px;
 
         word-break: break-word;
 
         font-size: @font-size;
-        line-height: 1.4;
+        line-height: 1.5;
 
         &:not(:last-child) {
           border-right: 1px solid @table-border-color;
@@ -122,7 +122,7 @@
 
   .bee-table--footer {
     bottom: 0;
-    
+
     >table {
       transform: translateY(-100%);
     }
@@ -145,7 +145,7 @@
   .bee-table--left, .bee-table--right {
     color: @table-body-color;
     background-color: @table-body-background-color;
-    
+
     .bee-table--drawer {
       overflow: hidden;
 

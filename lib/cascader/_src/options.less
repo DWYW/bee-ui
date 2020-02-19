@@ -1,0 +1,51 @@
+.bee-cascader-options {
+  .bee-popper--body {
+    white-space: nowrap;
+  }
+  .bee-cascader-item-options {
+    display: inline-block;
+    overflow: auto;
+
+    height: 180px;
+    padding: 5px 0;
+
+    cursor: pointer;
+    vertical-align: text-top;
+
+    &:not(:last-child) {
+      border-right: 1px solid @cascader-border-color;
+    }
+
+    .options--item {
+      position: relative;
+
+      padding: 6px 45px 6px 15px;
+
+      &:hover, &.options--item__actived {
+        background-color: @cascader-options-background-color_hover;
+      }
+
+      &.options--item__actived {
+        color: @primary-color;
+      }
+
+      &.options--item__disabled {
+        cursor: no-drop;
+        user-select: none;
+
+        opacity: .6;
+        background-color: transparent;
+      }
+
+      .bee-icon {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+
+        display: block;
+
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
