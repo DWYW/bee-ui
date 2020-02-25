@@ -74,7 +74,7 @@ export default {
       text-decoration: none;
 
       color: #666666;
-      border: 1px solid #88888888;
+      border: 1px solid #888888;
       border-radius: 500px;
 
       font-size: 20px;
