@@ -168,6 +168,13 @@ export default {
         this.$listeners.change && this.$listeners.change(value)
       }
     }
+  },
+  watch: {
+    value: function (value) {
+      if (!helpers.equal(value, this.selected)) {
+        this.selected = value
+      }
+    }
   }
 }
 </script>

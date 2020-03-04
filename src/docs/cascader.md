@@ -40,7 +40,8 @@ export default {
           value: "001011"
         }, {
           label: "山丘二十里",
-          value: "001012"
+          value: "001012",
+          children: []
         }, {
           label: "果然馋（guoranchan）",
           value: "001013"
@@ -136,6 +137,7 @@ export default {
 ```html
 <div>
   <bee-cascader
+    style="float: right;"
     :data="friuts"
     placeholder="请选择"
     v-model='cascader1'

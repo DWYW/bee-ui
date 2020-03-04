@@ -167,12 +167,13 @@ export default {
       const _clip = clip.getBoundingClientRect()
       const arrow = this.$refs.arrow
       const arrowWidth = parseInt(helpers.getCss(arrow, 'border-width')) || 0
+      const distance = this.distance
 
       return {
         [ALIGN.AUTO]: function () {
           let _left = 0
 
-          if (clip.clientWidth - (_reference.left - _clip.left) >= _popper.width) {
+          if (clip.clientWidth - (_reference.left - _clip.left) + distance >= _popper.width) {
             _left = this[ALIGN.START]()
 
             if (_left < _clip.left) {
@@ -183,7 +184,7 @@ export default {
               }
             }
           } else {
-            _left = _clip.left + clip.clientWidth - _popper.width
+            _left = _clip.left + clip.clientWidth - _popper.width - distance
 
             if (_reference.left > _clip.left + clip.clientWidth - arrowWidth * 2) {
               _left = _reference.left + arrowWidth * 2 - _popper.width
