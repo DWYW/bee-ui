@@ -1,7 +1,7 @@
 <style lang='less'>
 .primary {
   cursor: pointer;
-  
+
   &:not(:last-child)::after {
     content: '|';
     padding: 0 5px;
@@ -33,19 +33,19 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ],
       scores: [
-        { name: '张三',  chinese: 10, math: 80,  english: 90 }, 
-        { name: '李四', chinese: 86, math: 70,  english: 92 }, 
-        { name: '王五', chinese: 96, math: 90,  english: 80 }, 
-        { name: '小丽', chinese: 83, math: 89,  english: 92 }, 
-        { name: '小红', chinese: 79, math: 99,  english: 100 }, 
+        { name: '张三',  chinese: 10, math: 80,  english: 90 },
+        { name: '李四', chinese: 86, math: 70,  english: 92 },
+        { name: '王五', chinese: 96, math: 90,  english: 80 },
+        { name: '小丽', chinese: 83, math: 89,  english: 92 },
+        { name: '小红', chinese: 79, math: 99,  english: 100 },
         { name: '小明', chinese: 88, math: 80,  english: 95}
       ],
       selections: []
@@ -64,7 +64,7 @@ export default {
         message: `当前为第${index + 1}个，\n数据为：${JSON.stringify(data)}`
       }).show()
     },
-    
+
     selectionChange (rows) {
       console.log(rows)
     },
@@ -111,11 +111,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -155,11 +155,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -186,11 +186,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -223,11 +223,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -256,7 +256,7 @@ export default {
 ::: demo
 ``` html
 <template>
-  <div style='height: 200px;'> 
+  <div style='height: 200px;'>
     <bee-table :data='students'>
       <bee-table-column width='100' label='姓名' prop='name'></bee-table-column>
       <bee-table-column width='100' label='年龄' prop='age'></bee-table-column>
@@ -275,11 +275,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -320,11 +320,11 @@ export default {
   data () {
     return {
       scores: [
-        { name: '张三',  chinese: 10, math: 80,  english: 90 }, 
-        { name: '李四', chinese: 86, math: 70,  english: 92 }, 
-        { name: '王五', chinese: 96, math: 90,  english: 80 }, 
-        { name: '小丽', chinese: 83, math: 89,  english: 92 }, 
-        { name: '小红', chinese: 79, math: 99,  english: 100 }, 
+        { name: '张三',  chinese: 10, math: 80,  english: 90 },
+        { name: '李四', chinese: 86, math: 70,  english: 92 },
+        { name: '王五', chinese: 96, math: 90,  english: 80 },
+        { name: '小丽', chinese: 83, math: 89,  english: 92 },
+        { name: '小红', chinese: 79, math: 99,  english: 100 },
         { name: '小明', chinese: 88, math: 80,  english: 95}
       ]
     }
@@ -377,11 +377,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -421,11 +421,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -471,11 +471,11 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
@@ -486,7 +486,7 @@ export default {
         message: `当前为第${index + 1}个，\n数据为：${JSON.stringify(data)}`
       }).show()
     },
-    
+
     selectionChange (rows) {
       console.log(rows)
     },
@@ -530,18 +530,18 @@ export default {
   data () {
     return {
       students: [
-        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' }, 
-        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' }, 
-        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' }, 
-        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' }, 
+        { name: '张三', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '李四',  age: 20,  grade: '三年级',  subject: '临床医学',  sex: '男' },
+        { name: '王五', age: 23, grade: '三年级', subject: '临床医学', sex: '男' },
+        { name: '小丽', age: 23, grade: '三年级', subject: '临床医学', sex: '女' },
+        { name: '小红', age: 21, grade: '一年级', subject: '临床医学', sex: '女' },
         { name: '小明', age: 0,  grade: '二年级',  subject: '临床医学',  sex: '男' }
       ]
     }
   },
   methods: {
     /**
-     * data.type 
+     * data.type
      * data.rowIndex
      * data.columnIndex
      */
@@ -598,19 +598,19 @@ export default {
 ```js
 // summaryMethod default
 
-function (columns, data, text) {
-  return columns.map((col, rowIdx) => {
-    if (rowIdx === 0) {
-      return text
-    } else if (col.prop) {
+function (columns, data, summaryText, getValueByPath) {
+  return columns.map((column, index) => {
+    if (index === 0) return summaryText
+
+    if (column.prop) {
       return data.reduce((acc, cur) => {
-        const item = deepValue(col.prop, cur)
-        Number(item) ? acc += Number(item) : null
+        const item = getValueByPath(cur, column.prop)
+        acc += (Number(item) || 0)
         return acc
       }, 0)
-    } else {
-      return col.placeholder
     }
+
+    return column.placeholder
   })
 }
 
