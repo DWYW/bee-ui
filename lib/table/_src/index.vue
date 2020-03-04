@@ -45,10 +45,10 @@
 
     <!-- table footer -->
     <section class="bee-table--footer" :style="{
-      'min-width': size.tableMinWidth + 'px',
       'height': size.tableFooterHeight + 'px'
     }" v-if="visible.footer" ref="footer">
       <table-main :style="{
+        'min-width': size.tableMinWidth + 'px',
         'margin-top': size.tableFooterHeight + 'px'
       }"
         :columns-config="columnsConfig"
