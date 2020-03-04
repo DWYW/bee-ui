@@ -18,7 +18,7 @@
             @click="optionItemSelected(option, key)"
           >
             <span>{{getItemLabel(option)}}</span>
-            <bee-icon icon="right" v-if="option.children"></bee-icon>
+            <bee-icon icon="right" v-if="option.children && option.children.length > 0"></bee-icon>
           </div>
         </template>
       </bee-scrollbar>
@@ -105,7 +105,7 @@ export default {
 
         switch (this.type) {
           case 'last':
-            if (!data.children) this.onPick(_selected)
+            if (!(data.children && data.children.length > 0)) this.onPick(_selected)
             break
           case 'every':
             this.onPick(_selected, !data.children)
