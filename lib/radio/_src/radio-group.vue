@@ -38,15 +38,11 @@ export default {
       if (index === this.selected) return
 
       this.selected = index
-      this.$listeners.input && this.$listeners.input(this.selected)
+      this.$listeners.input && this.$listeners.input(index)
+      this.$listeners.change && this.$listeners.change(index)
     }
   },
   watch: {
-    'selected': function (value, oldValue) {
-      if (value !== oldValue && value !== this.value) {
-        this.$listeners.change && this.$listeners.change(value)
-      }
-    },
     'value': function (value) {
       if (value !== this.selected) this.selected = value
     }
