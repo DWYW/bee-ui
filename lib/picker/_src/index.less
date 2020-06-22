@@ -50,6 +50,7 @@
     .bee-picker--value-text, .bee-picker--placeholder {
       display: inline-block;
 
+      box-sizing: border-box;
       padding-right: 10px;
       padding-left: 25px;
 
@@ -75,25 +76,41 @@
 
   &.bee-picker__date .bee-picker--value {
     .bee-picker--value-text, .bee-picker--placeholder {
-      min-width: 75px;
+      min-width: 110px;
+    }
+
+    &.has-suffix .bee-picker--value-text {
+      min-width: 120px;
     }
   }
 
   &.bee-picker__datetime .bee-picker--value {
     .bee-picker--value-text, .bee-picker--placeholder {
-      min-width: 135px;
+      min-width: 170px;
+    }
+
+    &.has-suffix .bee-picker--value-text {
+      min-width: 180px;
     }
   }
 
   &.bee-picker__range .bee-picker--value {
     .bee-picker--value-text, .bee-picker--placeholder {
-      min-width: 170px;
+      min-width: 205px;
+    }
+
+    &.has-suffix .bee-picker--value-text {
+      min-width: 215px;
     }
   }
 
   &.bee-picker__rangetime .bee-picker--value {
     .bee-picker--value-text, .bee-picker--placeholder {
-      min-width: 285px;
+      min-width: 320px;
+    }
+
+    &.has-suffix .bee-picker--value-text {
+      min-width: 330px;
     }
   }
 
