@@ -36,6 +36,8 @@ export default {
       date11: null,
       date12: null,
       date13: null,
+      date14: null,
+      date15: null,
       visible: {
         hour: true,
         minute: true,
@@ -178,13 +180,13 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker v-model='date1' @change="onChange" @closed='onClosed'></bee-picker>
-    <bee-picker 
-      type='datetime' 
-      :default-time='defaultTime' 
+    <bee-picker
+      type='datetime'
+      :default-time='defaultTime'
       @change="onChange"
-      v-model='date2' 
-    ></bee-picker> 
-    
+      v-model='date2'
+    ></bee-picker>
+
     <br/>
 
     <bee-picker type='range' v-model='date3' @change="onChange"></bee-picker>
@@ -356,7 +358,7 @@ export default {
     <p>您选择的是：{{date12}}</p>
     <p>您选择的是：{{date13}}</p>
 
-  
+
     <bee-dialog v-model='dialogShow'>
       <section class='test-dialog-body' ref='test'>
         <section class='wp'>
@@ -364,6 +366,22 @@ export default {
         </section>
       </section>
     </bee-dialog>
+  </div>
+</template>
+```
+:::
+
+### 清除所选值
+
+::: demo
+``` html
+<template>
+  <div class='inline'>
+    <bee-picker v-model='date14' :clear-btn-visible="true" @change="onChange"></bee-picker>
+    <bee-picker v-model='date15' type="range" :clear-btn-visible="true" @change="onChange"></bee-picker>
+
+    <p>您选择的是：{{date14}}</p>
+    <p>您选择的是：{{date15}}</p>
   </div>
 </template>
 ```
@@ -388,6 +406,7 @@ export default {
 |quickBtnsType|快速选择按钮的类型|string|inner,outer|inner|-|
 |maxDays|日期最大的选择天数|number|-|-|-|
 |autoChange|选择日期后是否自动切换到时间选择|boolean|-|-|^0.7.0|
+|clearBtnVisible|是否显示清除按钮|boolean|-|false|^1.4.0|
 
 <br/>
 <br/>

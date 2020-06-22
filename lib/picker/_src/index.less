@@ -3,7 +3,7 @@
 .bee-picker {
   display: inline-block;
   overflow: hidden;
-  
+
   .bee-picker--value {
     position: relative;
 
@@ -29,11 +29,22 @@
     .bee-icon {
       position: absolute;
       top: 50%;
-      left: 5px;
 
       transform: translateY(-50%);
 
       font-size: 16px;
+
+      &.prefix-icon {
+        left: 5px;
+      }
+
+      &.suffix-icon {
+        right: 5px;
+
+        display: none;
+
+        color: @font-tint-color;
+      }
     }
 
     .bee-picker--value-text, .bee-picker--placeholder {
@@ -47,6 +58,18 @@
 
     .bee-picker--placeholder {
       color: @placeholder-color;
+    }
+
+    &:hover {
+      .bee-icon.suffix-icon {
+        display: block;
+      }
+    }
+
+    &.has-suffix {
+      .bee-picker--value-text {
+        padding-right: 20px;
+      }
     }
   }
 
