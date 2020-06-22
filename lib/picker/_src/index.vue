@@ -85,7 +85,7 @@ export default {
   data () {
     return {
       toggle: false,
-      oldValue: null
+      oldValue: this.value
     }
   },
   computed: {
@@ -231,9 +231,10 @@ export default {
       this._pickerInstance.open = false
       Listener.removeListener(window, 'click', this.togglePicker)
 
-      if (helpers.equal(this.value, this.oldValue)) return
-
-      this.$listeners.change && this.$listeners.change(this.value)
+      if (helpers.equal(this.value, this.oldValue) === false) {
+        this.$listeners.change && this.$listeners.change(this.value)
+        this.oldValue = helpers.deepCopy(this.value)
+      }
     },
 
     getFormat () {
@@ -252,23 +253,29 @@ export default {
         this.$listeners.input && this.$listeners.input(data.value)
       }
 
-      // If It is triggered by outer quick button, emit change event.
-      if (data.type === 'quick' && this.quickBtnsType === 'outer') {
-        this.$listeners.change && this.$listeners.change(this.value)
+      if (this.toggle) {
+        // If the picker opened, close it.
+        if (/^(date|range)$/.test(this.type) || data.type === 'clear') {
+          this.$nextTick(() => {
+            this.togglePicker()
+          })
+        }
+
+        return
       }
 
-      // auto close picker.
-      if (this.toggle && (/^(date|range)$/.test(this.type) || data.type === 'clear')) {
-        this.$nextTick(() => {
-          this.togglePicker()
-        })
+      if (helpers.equal(data.value, this.oldValue) === false) {
+        if ((data.type === 'quick' && this.quickBtnsType === 'outer') || data.type === 'clear') {
+          this.$listeners.change && this.$listeners.change(data.value)
+          this.oldValue = helpers.deepCopy(data.value)
+        }
       }
     },
 
     clearPicked () {
       this.pickerCallback({
         type: 'clear',
-        data: null
+        value: null
       })
     }
   }
