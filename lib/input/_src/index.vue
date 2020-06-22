@@ -71,7 +71,7 @@ export default {
       let _value = this.value || ''
 
       if (this.maxlength) {
-        _value = _value.slice(0, this.maxlength)
+        _value = _value.toString().slice(0, this.maxlength)
       }
 
       this.$listeners.input && this.$listeners.input(_value)
