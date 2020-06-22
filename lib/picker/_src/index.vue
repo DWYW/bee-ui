@@ -11,11 +11,15 @@
       :value="value"
     ></quick-buttons>
 
-    <section class="bee-picker--value" @click="togglePicker">
-      <bee-icon icon="date"></bee-icon>
+    <section :class="['bee-picker--value', {
+      'has-suffix': clearBtnVisible
+    }]" @click="togglePicker">
+      <bee-icon class="prefix-icon" icon="date"></bee-icon>
 
       <span class="bee-picker--value-text" v-if='value'>{{labelText}}</span>
       <span class="bee-picker--placeholder" v-else>{{placeholder}}</span>
+
+      <bee-icon v-if='clearBtnIsVisible' class="suffix-icon" @click.stop="clearPicked" icon="error"></bee-icon>
     </section>
   </section>
 </template>
@@ -75,6 +79,7 @@ export default {
         return {}
       }
     },
+    clearBtnVisible: Boolean,
     value: [Date, Array]
   },
   data () {
@@ -137,6 +142,10 @@ export default {
       }
 
       return ''
+    },
+
+    clearBtnIsVisible () {
+      return this.clearBtnVisible && this.value
     }
   },
   methods: {
@@ -249,11 +258,18 @@ export default {
       }
 
       // auto close picker.
-      if (this.toggle && /^(date|range)$/.test(this.type)) {
+      if (this.toggle && (/^(date|range)$/.test(this.type) || data.type === 'clear')) {
         this.$nextTick(() => {
           this.togglePicker()
         })
       }
+    },
+
+    clearPicked () {
+      this.pickerCallback({
+        type: 'clear',
+        data: null
+      })
     }
   }
 }
