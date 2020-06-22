@@ -378,7 +378,9 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker v-model='date14' :clear-btn-visible="true" @change="onChange"></bee-picker>
+    <bee-picker v-model='date14' type="datetime" :clear-btn-visible="true" @change="onChange"></bee-picker>
     <bee-picker v-model='date15' type="range" :clear-btn-visible="true" @change="onChange"></bee-picker>
+    <bee-picker v-model='date15' type="rangetime" :clear-btn-visible="true" @change="onChange"></bee-picker>
 
     <p>您选择的是：{{date14}}</p>
     <p>您选择的是：{{date15}}</p>
