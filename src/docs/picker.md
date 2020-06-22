@@ -309,6 +309,7 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker :disabled='true' v-model='date9' @change="onChange" :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
+    <bee-picker v-model='date9' @change="onChange" :quick-btns='quickBtns' quick-btns-type='outer'></bee-picker> <br/>
     <bee-picker v-model='date10' @change="onChange" :quick-btns='quickBtns' type='rangetime'></bee-picker>
     <p>您选择的是：{{date9}}</p>
     <p>您选择的是：{{date10}}</p>
@@ -378,9 +379,9 @@ export default {
 <template>
   <div class='inline'>
     <bee-picker v-model='date14' :clear-btn-visible="true" @change="onChange"></bee-picker>
-    <bee-picker v-model='date14' type="datetime" :clear-btn-visible="true" @change="onChange"></bee-picker>
+    <!-- <bee-picker v-model='date14' type="datetime" :clear-btn-visible="true" @change="onChange"></bee-picker> -->
     <bee-picker v-model='date15' type="range" :clear-btn-visible="true" @change="onChange"></bee-picker>
-    <bee-picker v-model='date15' type="rangetime" :clear-btn-visible="true" @change="onChange"></bee-picker>
+    <!-- <bee-picker v-model='date15' type="rangetime" :clear-btn-visible="true" @change="onChange"></bee-picker> -->
 
     <p>您选择的是：{{date14}}</p>
     <p>您选择的是：{{date15}}</p>
