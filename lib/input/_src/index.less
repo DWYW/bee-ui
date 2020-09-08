@@ -3,20 +3,22 @@
 .bee-input {
   position: relative;
 
+  height: @input-height;
   display: inline-block;
 
   background-color: @input-background-color;
 
   font-size: @font-size;
+  border: 1px solid @input-border-color;
+  border-radius: @border-radius;
+  box-sizing: border-box;
 
   >input {
-    box-sizing: border-box;
     width: 100%;
-    height: @input-height;
-    padding: 0 @padding-vertial;
+    height: 100%;
 
-    border: 1px solid @input-border-color;
-    border-radius: @border-radius;
+    padding: 0 @padding-vertial;
+    border: none;
     outline: none;
     background-color: transparent;
 
@@ -58,9 +60,10 @@
   }
 
   &.bee-input__primary {
+    border-color: @input-border-color_primary;
+
     >input {
       color: @input-color_primary;
-      border-color: @input-border-color_primary;
 
       &::placeholder {
         color: @input-placeholder-color_primary;
@@ -73,9 +76,10 @@
   }
 
   &.bee-input__success {
+    border-color: @input-border-color_success;
+
     >input {
       color: @input-color_success;
-      border-color: @input-border-color_success;
 
       &::placeholder {
         color: @input-placeholder-color_success;
@@ -88,9 +92,10 @@
   }
 
   &.bee-input__error {
+    border-color: @input-border-color_error;
+
     >input {
       color: @input-color_error;
-      border-color: @input-border-color_error;
 
       &::placeholder {
         color: @input-placeholder-color_error;

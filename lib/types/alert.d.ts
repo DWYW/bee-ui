@@ -4,7 +4,7 @@ interface AlertOptions {
   message: string;
   title?: string;
   html?: string;
-  center?: string;
+  center?: boolean;
   closeVisible?: boolean;
   cancelVisible?: boolean;
   confirmVisible?: boolean;
