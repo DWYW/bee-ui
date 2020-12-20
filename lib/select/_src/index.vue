@@ -182,7 +182,7 @@ export default {
 
         // if the search function be used and nothing selected, to restore the label.
         if (this.value && !this.values.find(item => item && item[1] === this.keyword)) {
-          this.keyword = this.values[0][1]
+          this.keyword = helpers.getValueByPath(this.values, '[0][1]', '')
         }
       }
 
@@ -250,7 +250,8 @@ export default {
         return acc
       }, [])
 
-      this.updateSelected(values)
+      // If value is defined and can not find in options, emit events.
+      this.updateSelected(values, values.length === 0 && this.value)
     },
 
     removeSelectedItem (index) {
