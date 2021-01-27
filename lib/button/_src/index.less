@@ -80,14 +80,14 @@
     border: 1px solid @border-color;
     background-color: @button-background-color;
 
-    line-height: @button-height - 2;
+    line-height: (@button-height - 2);
 
     &.bee-button__sm {
-      line-height: @button-sm-height - 2;
+      line-height: (@button-sm-height - 2);
     }
 
     &.bee-button__lg {
-      line-height: @button-lg-height - 2;
+      line-height: (@button-lg-height - 2);
     }
 
     &:active {
@@ -213,7 +213,7 @@
 
     &.bee-button__default {
       color: @font-tint-color;
-      
+
       &:active {
         color: @font-tint-color;
         border-color: @border-color;

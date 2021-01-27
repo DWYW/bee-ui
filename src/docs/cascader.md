@@ -392,6 +392,18 @@ export default {
 |value|已选择的值，可使用 v-model 双向绑定数据。|Array|—|—|1.4.0|
 
 <br/>
+
+``` js
+
+const optionsKey = {
+  label: 'name',
+  vlaue: 'id',
+  disabled: 'disabled'
+}
+
+```
+
+<br/>
 <br/>
 
 ### 事件

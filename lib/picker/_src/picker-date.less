@@ -35,7 +35,7 @@
 
       cursor: pointer;
     }
-    
+
     .date-year__next, .date-month__next {
       position:relative;
       z-index: 1;
@@ -51,8 +51,8 @@
 
       box-sizing: border-box;
       width: 100%;
-      margin: 0 -@picker-date-line-height * 2;
-      padding: 0 @picker-date-line-height * 2;
+      margin: 0 (-@picker-date-line-height * 2);
+      padding: 0 (@picker-date-line-height * 2);
     }
   }
 
@@ -82,7 +82,7 @@
       width: 100%;
 
       border-bottom: 1px solid @picker-border-color;
-      
+
       .date-week-label--item {
         display: inline-block;
 
@@ -101,7 +101,7 @@
       padding-top: 10px;
 
       cursor: pointer;
-      
+
       .date--item {
         display: inline-block;
 
@@ -112,13 +112,13 @@
         text-align: center;
 
         line-height: @picker-date-day-size;
-        
+
         .date-item--text {
           display: block;
 
           width: @picker-date-line-height;
           height: @picker-date-line-height;
-          margin:  (@picker-date-day-size - @picker-date-line-height) / 2 auto;
+          margin:  ((@picker-date-day-size - @picker-date-line-height) / 2) auto;
 
           border-radius: 50%;
 
@@ -145,7 +145,7 @@
 
         &.date--item__selected, &.date--item__range-start, &.date--item__range-end {
           color: @picker-color_selected;
-          
+
           .date-item--text {
             background-color: @picker-background-color_selected;
           }
@@ -154,7 +154,7 @@
             color: @picker-color_selected;
           }
         }
-        
+
         &.date--item__range-start {
           border-top-left-radius: @picker-date-day-size;
           border-bottom-left-radius: @picker-date-day-size;

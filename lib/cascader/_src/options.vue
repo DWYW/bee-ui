@@ -7,22 +7,27 @@
     v-model='open'
     ref='popper'
   >
-   <section class="bee-cascader-item-options" v-for="(item, key) in optionsData" :key="key">
-      <bee-scrollbar>
-        <template v-for="(option, optionKey) in item">
-          <div :class="['options--item', {
-            'options--item__actived': itemIsActived(option),
-            'options--item__disabled': getItemDisabled(option)
-          }]"
-            :key="optionKey"
-            @click="optionItemSelected(option, key)"
-          >
-            <span>{{getItemLabel(option)}}</span>
-            <bee-icon icon="right" v-if="option.children && option.children.length > 0"></bee-icon>
-          </div>
-        </template>
-      </bee-scrollbar>
-   </section>
+    <div class="bee-cascader-item-options" v-if="optionsData.length === 0">
+      <div class="options--empty">暂无可选项</div>
+    </div>
+    <template v-else>
+      <section class="bee-cascader-item-options" v-for="(item, key) in optionsData" :key="key">
+        <bee-scrollbar>
+          <template v-for="(option, optionKey) in item">
+            <div :class="['options--item', {
+              'options--item__actived': itemIsActived(option),
+              'options--item__disabled': getItemDisabled(option)
+            }]"
+              :key="optionKey"
+              @click="optionItemSelected(option, key)"
+            >
+              <span>{{getItemLabel(option)}}</span>
+              <bee-icon icon="right" v-if="option.children && option.children.length > 0"></bee-icon>
+            </div>
+          </template>
+        </bee-scrollbar>
+    </section>
+    </template>
   </bee-popper>
 </template>
 
@@ -66,6 +71,8 @@ export default {
       return this.selected.indexOf(this.getItemValue(data)) > -1
     },
     updateOptions (selected = []) {
+      if (!this.options.length) return
+
       const _options = [this.options]
       let i = 0
       let data = this.options
@@ -102,6 +109,13 @@ export default {
 
       this.$nextTick(() => {
         this.$refs.popper.updatePosition()
+
+        // reset chilren scrolltop
+        if (data.children && data.children.length > 0) {
+          const options = this.$el.querySelectorAll('.bee-cascader-item-options')
+          const lastOption = options[options.length - 1]
+          lastOption.querySelector('.options--item').parentNode.scrollTop = 0
+        }
 
         switch (this.type) {
           case 'last':
