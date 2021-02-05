@@ -24,7 +24,7 @@ export default {
 
 ### 基本用法
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div class='inline'>
@@ -50,14 +50,19 @@ export default {
 ```
 :::
 
-### 自定义颜色
+### 自定义颜色和文字
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div class='inline'>
-    <bee-switch open-color='green' close-color='red'></bee-switch>
+    <bee-switch open-color='green' close-color='red'>
+      <template v-slot:open>是</template>
+      <template v-slot:close>否</template>
+    </bee-switch>
   </div>
+
+  ^1.5.0 支持自定义文字
 </template>
 ```
 :::

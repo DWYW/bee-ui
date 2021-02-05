@@ -1,21 +1,28 @@
 @import '../../theme.less';
 
 .bee-radio-group {
+  max-width: 100%;
   display: inline-block;
 
   .bee-group--item {
+    max-width: 100%;
     display: inline-block;
 
-    white-space: nowrap;
-
     .bee-group-item--radio {
+      max-width: 100%;
       padding-right: 4px;
     }
 
     .bee-group-item--desc {
+      padding-top: 4px;
+      padding-bottom: 4px;
       padding-right: 15px;
 
-      line-height: @radio-line-height;
+      font-size: 13px;
+      line-height: (@radio-line-height - 8px);
+      word-break: break-all;
+
+      color: @radio-color-desc;
     }
 
     &.bee-group--item__block {
@@ -25,6 +32,7 @@
         display: block;
 
         padding-left: 24px;
+        padding-right: 4px;
       }
     }
 

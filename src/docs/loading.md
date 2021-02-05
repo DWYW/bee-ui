@@ -45,7 +45,7 @@ export default {
 
 ### 基本用法
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div class='inline loadingper'>
@@ -80,10 +80,10 @@ export default {
 
 ### 通过指令添加
 
-::: demo 
+::: demo
 ``` html
 <template>
-  <div class='inline loadingper' v-loading='loading' data-type='pie' data-text='loading' data-block='false'>
+  <div class='inline loadingper' v-loading='loading' data-loading-type='pie' data-loading-text='loading' data-loading-block='false'>
     <bee-button @click="toggleLoading">显示loading</bee-button>
   </div>
 </template>
