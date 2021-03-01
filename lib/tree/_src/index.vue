@@ -94,12 +94,18 @@ export default {
       return this.recursive(this.data, containHalfSelected)
     },
 
-    onChecked (checked, key, data) {
+    onChecked (detail) {
       this.$nextTick(() => {
         if (this.$listeners.checked) {
-          this.$listeners.checked(Boolean(checked), key, data)
+          this.$listeners.checked(detail)
         }
       })
+    },
+
+    onToggle (detail) {
+      if (this.$listeners.toggle) {
+        this.$listeners.toggle(detail)
+      }
     }
   }
 }
