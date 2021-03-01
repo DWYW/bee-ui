@@ -3,18 +3,16 @@
 .bee-tab {
   box-sizing: border-box;
   width: 100%;
-  
+  background-color: @tab-background-color;
+
   .bee-tab--header {
     position: relative;
 
     width: 100%;
 
-    background-color: @tab-background-color;
-    
     .bee-tab-bar {
       position: absolute;
       z-index: 1;
-      top: 0;
       left: 0;
 
       display: block;
@@ -53,10 +51,14 @@
 
     background-color: @tab-background-color_active;
   }
-  
+
   &.bee-tab__card {
     border: 1px solid @tab-background-color;
     border-top: none;
+  }
+
+  &.bee-tab__header {
+    background-color: transparent;
   }
 }
 

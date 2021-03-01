@@ -22,7 +22,10 @@ const OptionsConstructor = Vue.extend(CascaderOptions)
 export default {
   name: 'BeeCascader',
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      required: true
+    },
     placeholder: String,
     labelFormat: Function,
     disabled: Boolean,

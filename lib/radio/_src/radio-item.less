@@ -1,11 +1,11 @@
 @import '../../theme.less';
 
 .bee-radio {
+  max-width: 100%;
   display: inline-block;
 
   cursor: pointer;
   user-select: none;
-  white-space: nowrap;
 
   font-size: 14px;
   line-height: @radio-line-height;
@@ -13,9 +13,7 @@
   >span, .bee-radio--label {
     position: relative;
 
-    display: inline-block;
-
-    vertical-align: middle;
+    display: block;
   }
 
   input[type=radio] {
@@ -24,12 +22,8 @@
 
   i.beefont {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 0;
-
-    transform: translateY(-50%);
-    vertical-align: middle;
-
     color: @radio-color-unselected;
 
     font-size: 20px;
@@ -37,6 +31,7 @@
 
   .bee-radio--label {
     padding-left: 24px;
+    word-break: break-all;
   }
 
   &.bee-radio__selected {

@@ -1,6 +1,6 @@
 
 
-<script> 
+<script>
 export default {
   data () {
     return {
@@ -114,7 +114,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           const matches = key.match(/\w+/g)
-          
+
           if (matches.length < 3) {
             resolve([{
               name: 'children-1'
@@ -143,12 +143,12 @@ export default {
 
 ### 基本用法
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div>
     <bee-tree ref='grades'
-      :data='grades' 
+      :data='grades'
       :defaultUnfold='defaultUnfold'
       :nodeDisabled='nodeDisabled'
       fold-line='dashed'
@@ -156,7 +156,7 @@ export default {
     ></bee-tree>
   </div>
 </template>
-<script> 
+<script>
 export default {
   data () {
     return {
@@ -228,7 +228,7 @@ export default {
 
 ### 自定义
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div>
@@ -247,7 +247,7 @@ export default {
     </bee-tree>
   </div>
 </template>
-<script> 
+<script>
 export default {
   data () {
     return {
@@ -319,7 +319,7 @@ export default {
 
 ### 异步加载
 
-::: demo 
+::: demo
 ``` html
 <template>
   <div>
@@ -329,7 +329,7 @@ export default {
     ></bee-tree>
   </div>
 </template>
-<script> 
+<script>
 export default {
   data () {
     return {
@@ -345,7 +345,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           const matches = key.match(/\w+/g)
-          
+
           if (matches.length < 3) {
             resolve([{
               name: 'children-1'
@@ -388,4 +388,22 @@ export default {
 |defaultUnfold|节点的默认折叠状态|Function=>Boolean|—|—|1.4.0|
 |nodeDisabled|节点的禁用状态|Function=>Boolean|—|—|1.4.0|
 |loadData|异步加载|Function=>Promise|—|—|1.4.0|
+
+
+### 事件
+|事件|说明|版本支持|
+|---|---|---|
+|checked|子项被选后的事件回调|1.4.0|
+|toggle|子项折叠后的事件回调|1.5.0|
+
+
+事件返回值
+```ts
+interfase CallbackDetail {
+  value: Boolean,
+  key: String,
+  data: Object,
+  instance: Vue.Component
+}
+```
 

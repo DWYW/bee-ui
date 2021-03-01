@@ -5,8 +5,8 @@
         "width": this.width
       }'
         v-loading='loading'
-        :data-type='loadingType'
-        :data-text='loadingText'
+        :data-loading-type='loadingType'
+        :data-loading-text='loadingText'
       >
         <div class='bee-dialog--title'>
           <span class='bee-dialog-title--text'>{{title}}</span>
