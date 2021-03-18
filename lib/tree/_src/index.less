@@ -1,7 +1,53 @@
 @import '../../theme.less';
 
-.bee-tree {
-  .tree-child-tree {
+ul.bee-tree {
+  >.tree-node {
+    >.tree-node-content {
+      margin-bottom: 5px;
+
+      .bee-icon {
+        display: inline-block;
+        width: @tree-blank-width;
+        user-select: none;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        cursor: pointer;
+
+        transition: color .2s linear;
+
+        &.bee-selected-part, &.bee-checkbox-selected {
+          color: @tree-primary-color;
+        }
+
+        &.bee-checkbox-unselected {
+          color: @tree-icon-default-color;
+        }
+
+        &.bee-loading-icon {
+          font-size: 15px;
+          animation: loading-child 1s linear infinite;
+        }
+      }
+
+      .node-name {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    &.disabled {
+      >.tree-node-content {
+
+        .bee-selected-part, &.bee-checkbox-selected, .bee-checkbox-unselected, .node-name {
+          color: @tree-disabled-color;
+          cursor: no-drop;
+        }
+      }
+    }
+  }
+
+  &.node-tree {
     position: relative;
 
     overflow: hidden;
@@ -9,85 +55,7 @@
     box-sizing: border-box;
     padding-left: @tree-blank-width;
 
-    transition: height .3s;
-
-    &.fold-line_solid::before, &.fold-line_dashed::before {
-      position: absolute;
-      top: 0;
-      left: (@tree-blank-width / 2);
-
-      width: 0;
-      height: 100%;
-
-      content: '';
-
-      border-left: 1px none @tree-fold-line-color;
-    }
-
-    &.fold-line_solid::before {
-      border-left-style: solid;
-    }
-
-    &.fold-line_dashed::before {
-      border-left-style: dashed;
-    }
-  }
-
-  .tree-node {
-    .node-content {
-      .toggle-icon, .select-status {
-        display: inline-block;
-
-        width: @tree-blank-width;
-
-        cursor: pointer;
-        user-select: none;
-        text-align: center;
-        vertical-align: middle;
-
-        font-size: 20px;
-      }
-
-      .toggle-icon {
-        .bee-loading-icon {
-          display: inline-block;
-
-          animation: loading-child 1s linear infinite;
-
-          font-size: 14px;
-        }
-      }
-
-      .select-status {
-        padding-right: 4px;
-
-        transition: color .2s linear;
-
-        &.bee-selected-part, &.bee-checkbox-selected {
-          color: @tree-primary-color;
-        }
-        &.bee-checkbox-unselected {
-          color: @tree-icon-default-color;
-        }
-      }
-
-      .node-name {
-        display: inline-block;
-
-        vertical-align: middle;
-      }
-
-      &.node_disabled {
-        color: @tree-disabled-color;
-
-        .select-status, .node-name {
-          cursor: no-drop;
-          user-select: none;
-
-          color: @tree-disabled-color;
-        }
-      }
-    }
+    transition: height 0.3s;
   }
 }
 
@@ -96,10 +64,3 @@
     transform: rotate(1turn);
   }
 }
-
-// .tree-children-enter-active, .tree-children-leave-active {
-//   transition: height .3s;
-// }
-// .tree-children-enter, .tree-children-leave-to {
-//   height: 0;
-// }

@@ -1,145 +1,62 @@
-
-
 <script>
 export default {
   data () {
     return {
-      grades: [{
-        name: '一年级',
-        value: 1,
-        children: [{
-          name: '1班',
-          value: 101
-        }, {
-          name: '2班',
-          value: 102,
-          children: [{
-            name: '实验班',
-            value: 10201
-          }, {
-            name: '普通班',
-            value: 10202
-          }]
-        }, {
-          name: '3班',
-          value: 103
-        }]
-      }, {
-        name: '二年级',
-        value: 2,
-        children: [{
-          name: '1班',
-          value: 201
-        }, {
-          name: '2班',
-          value: 202
-        }]
-      }, {
-        name: '三年级',
-        value: 3,
-        children: [{
-          name: '1班',
-          value: 301
-        }, {
-          name: '2班',
-          value: 302
-        }, {
-          name: '3班',
-          value: 303
-        }]
-      }],
+      grades: JSON.parse('[{"name":"一年级","id":1, "children":[{"name":"1班","id":101},{"name":"2班","id":102,"disabled":true,"children":[{"name":"实验班","id":10201},{"name":"普通班","id":10202}]},{"name":"3班","id":103}]},{"name":"二年级","id":2, "children":[{"name":"1班","id":201, "selected": true},{"name":"2班","id":202}]},{"name":"三年级","id":3, "fold": false, "children":[{"name":"1班","id":301},{"name":"2班","id":302},{"name":"3班","id":303}]}]'),
 
-      navs: [{
-        name: '手机',
-        key: '0',
-        icon: 'mobile',
-        children: [{
-          name: '华为',
-          key: '0-0'
-        }, {
-          name: '苹果',
-          key: '0-1'
-        }]
-      }, {
-        name: '电脑',
-        key: '1',
-        icon: 'bell',
-        children: [{
-          name: '华为',
-          key: '1-0',
-        }, {
-          name: '苹果',
-          key: '1-1'
-        }, {
-          name: '小米',
-          key: '1-2',
-        }, {
-          name: '联想',
-          key: '1-3'
-        }]
-      }],
-      nav: '0',
+      navs: JSON.parse('[{"label":"手机","value":"0","icon":"mobile","children":[{"label":"华为","value":"0-0"},{"label":"苹果","value":"0-1"}]},{"label":"电脑","value":"1","icon":"bell","children":[{"label":"华为","actived": true,"value":"1-0"},{"label":"苹果","value":"1-1"},{"label":"小米","value":"1-2"},{"label":"联想","value":"1-3"}]}]'),
+
+      nav: '',
+
       asyncData: [{
-        name: 'child1'
+        name: 'child0'
       }, {
-        name: 'child2'
-      }]
+        name: 'child1'
+      }],
+      asnycLoading: false
     }
   },
   methods: {
-    changeNav (data) {
-      this.nav = data.key
+    onFold (status) {
+      console.log('onfold', status)
     },
-
-    isActived (data) {
-      const reg = new RegExp(`^${data.key}`)
-      return reg.test(this.nav)
+    onChecked (detail) {
+      console.log('onchecked', detail)
     },
-
-    onChecked () {
-      console.log('arguments', ...arguments)
-      console.log('all Selcted', this.$refs.grades.getSelectedNode())
-      console.log('all add half Selcted', this.$refs.grades.getSelectedNode(true))
+    onNavItemSelected (scope) {
+      this.nav = scope.data.value
     },
-
-    defaultUnfold (key) {
-      return /^\d+$/.test(key)
+    foldNavChildren (scope) {
+      scope.vm.$set(scope.vm.node, 'fold', !scope.vm.childrenIsFold)
+      console.log(scope.vm.node.fold)
     },
-
-    nodeDisabled (key) {
-      return /^0-0$/.test(key)
-    },
-
-    asyncGetData (key, data) {
+    asyncGetData (detail) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const matches = key.match(/\w+/g)
-
-          if (matches.length < 3) {
-            resolve([{
-              name: 'children-1'
-            }, {
-              name: 'children-2'
-            }])
-          } else {
-            if (Math.random() > 0.5) {
-              resolve()
-            } else {
-              this.$_createMessage({
-                type: 'error',
-                message: '强制返回reject'
-              }).show()
-              reject()
-            }
-          }
+          resolve([{
+            name: 'children' + detail.paths.concat([0]).join('-'),
+            id: 1
+          }, {
+            name: 'children' + detail.paths.concat([1]).join('-'),
+            id: 2
+          }])
         }, 1000)
+      })
+    },
+    asyncGetChecked (detail) {
+      this.asnycLoading = true
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          this.asnycLoading = false
+          resolve(detail.value)
+        }, 500)
       })
     }
   }
 }
 </script>
 
-## tree 树形组件 (1.4.0)
+## tree 树形组件 (1.6.0)
 
 ### 基本用法
 
@@ -147,78 +64,22 @@ export default {
 ``` html
 <template>
   <div>
-    <bee-tree ref='grades'
-      :data='grades'
-      :defaultUnfold='defaultUnfold'
-      :nodeDisabled='nodeDisabled'
-      fold-line='dashed'
-      @checked='onChecked'
-    ></bee-tree>
+    <bee-tree :tree="grades" @fold="onFold" @checked="onChecked"></bee-tree>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      grades: [{
-        name: '一年级',
-        value: 1,
-        children: [{
-          name: '1班',
-          value: 101
-        }, {
-          name: '2班',
-          value: 102,
-          children: [{
-            name: '实验班',
-            value: 10201
-          }, {
-            name: '普通班',
-            value: 10202
-          }]
-        }, {
-          name: '3班',
-          value: 103
-        }]
-      }, {
-        name: '二年级',
-        value: 2,
-        children: [{
-          name: '1班',
-          value: 201
-        }, {
-          name: '2班',
-          value: 202
-        }]
-      }, {
-        name: '三年级',
-        value: 3,
-        children: [{
-          name: '1班',
-          value: 301
-        }, {
-          name: '2班',
-          value: 302
-        }, {
-          name: '3班',
-          value: 303
-        }]
-      }]
+      grades: grades: JSON.parse('[{"name":"一年级","id":1, "children":[{"name":"1班","id":101},{"name":"2班","id":102,"disabled":true,"children":[{"name":"实验班","id":10201},{"name":"普通班","id":10202}]},{"name":"3班","id":103}]},{"name":"二年级","id":2, "children":[{"name":"1班","id":201, "selected": true},{"name":"2班","id":202}]},{"name":"三年级","id":3, "fold": false, "children":[{"name":"1班","id":301},{"name":"2班","id":302},{"name":"3班","id":303}]}]')
     }
   },
   methods: {
-    onChecked () {
-      console.log('arguments', ...arguments)
-      console.log('all Selcted', this.$refs.grades.getSelectedNode())
-      console.log('all add half Selcted', this.$refs.grades.getSelectedNode(true))
+    onFold (status) {
+      console.log('onfold', status)
     },
-
-    defaultUnfold (key) {
-      return /^\d+$/.test(key)
-    },
-
-    nodeDisabled (key) {
-      return /^0-0$/.test(key)
+    onChecked (detail) {
+      console.log('onchecked', detail)
     }
   }
 }
@@ -232,18 +93,18 @@ export default {
 ``` html
 <template>
   <div>
-    <bee-tree class='navs-tree'
-      :data='navs'
-      :fold-disabled='true'
-    >
-      <div :class="[{
-        'actived': isActived(scope.data)
-      }]" slot-scope='scope'
-        @click='changeNav(scope.data)'
-      >
-        <bee-icon class="node-icon" :icon='scope.data.icon'></bee-icon>
-        <span>{{scope.data.name}} {{scope.key}}</span>
-      </div>
+    <bee-tree class="navs-tree" :tree="navs" :fold-icon="{fold: 'unfold', unfold: 'fold'}" :fold-default="false">
+      <template v-slot:default="scope">
+        <div class="node-content" :class="{actived: nav.indexOf(scope.data.value) === 0}" @click="onNavItemSelected(scope)">
+          <bee-icon class="node-icon"
+            v-if="scope.data.children"
+            :icon="scope.vm.foldIcon"
+            @click.stop="foldNavChildren(scope)"
+          ></bee-icon>
+          <bee-icon class="node-icon" :icon='scope.data.icon'></bee-icon>
+          <span>{{scope.data.label}} {{scope.data.value}}</span>
+        </div>
+      </template>
     </bee-tree>
   </div>
 </template>
@@ -251,46 +112,17 @@ export default {
 export default {
   data () {
     return {
-      navs: [{
-        name: '手机',
-        key: '0',
-        icon: 'mobile',
-        children: [{
-          name: '华为',
-          key: '0-0'
-        }, {
-          name: '苹果',
-          key: '0-1'
-        }]
-      }, {
-        name: '电脑',
-        key: '1',
-        icon: 'bell',
-        children: [{
-          name: '华为',
-          key: '1-0',
-        }, {
-          name: '苹果',
-          key: '1-1'
-        }, {
-          name: '小米',
-          key: '1-2',
-        }, {
-          name: '联想',
-          key: '1-3'
-        }]
-      }],
-      nav: '0'
+      navs: JSON.parse('[{"label":"手机","value":"0","icon":"mobile","children":[{"label":"华为","value":"0-0"},{"label":"苹果","value":"0-1"}]},{"label":"电脑","value":"1","icon":"bell","children":[{"label":"华为","actived": true,"value":"1-0"},{"label":"苹果","value":"1-1"},{"label":"小米","value":"1-2"},{"label":"联想","value":"1-3"}]}]'),
+      nav: ''
     }
   },
   methods: {
-    changeNav (data) {
-      this.nav = data.key
+    onNavItemSelected (scope) {
+      this.nav = scope.data.value
     },
-
-    isActived (data) {
-      const reg = new RegExp(`^${data.key}`)
-      return reg.test(this.nav)
+    foldNavChildren (scope) {
+      scope.vm.$set(scope.vm.node, 'fold', !scope.vm.childrenIsFold)
+      console.log(scope.vm.node.fold)
     }
   }
 }
@@ -310,7 +142,11 @@ export default {
   cursor: pointer;
 }
 
-.navs-tree .tree-node .node-content .actived {
+.navs-tree .node-tree >.tree-node {
+  padding: 5px 0;
+}
+
+.navs-tree .tree-node .node-content.actived {
   color: #ff6701;
 }
 </style>
@@ -322,11 +158,8 @@ export default {
 ::: demo
 ``` html
 <template>
-  <div>
-    <bee-tree
-      :data='asyncData'
-      :load-data='asyncGetData'
-    ></bee-tree>
+  <div v-loading="asnycLoading">
+    <bee-tree :tree="asyncData" :load-children="asyncGetData" :load-checked="asyncGetChecked"></bee-tree>
   </div>
 </template>
 <script>
@@ -334,35 +167,23 @@ export default {
   data () {
     return {
       asyncData: [{
-        name: 'child1'
+        name: 'child0'
       }, {
-        name: 'child2'
+        name: 'child1'
       }]
     }
   },
   methods: {
-    asyncGetData (key, data) {
+    asyncGetData (detail) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const matches = key.match(/\w+/g)
-
-          if (matches.length < 3) {
-            resolve([{
-              name: 'children-1'
-            }, {
-              name: 'children-2'
-            }])
-          } else {
-            if (Math.random() > 0.5) {
-              resolve()
-            } else {
-              this.$_createMessage({
-                type: 'error',
-                message: '强制返回reject'
-              }).show()
-              reject()
-            }
-          }
+          resolve([{
+            name: 'children' + detail.paths.concat([0]).join('-'),
+            id: 1
+          }, {
+            name: 'children' + detail.paths.concat([1]).join('-'),
+            id: 2
+          }])
         }, 1000)
       })
     }
@@ -377,33 +198,42 @@ export default {
 
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
-|data|生成tree的数据|Array|—|—|1.4.0|
-|nameKey|标题名称|String|—|name|1.4.0|
-|selectedKey|节点是否被选中|String|—|selected|1.4.0|
-|halfSelectedKey|节点是否被部分选中|String|—|halfSelected|1.4.0|
-|foldIcon|节点的展开折叠对应的图标信息|Object|—|{fontFamily: undefined,icons: ['arr-down', 'arr-right']}|1.4.0|
-|foldDisabled|节点的是否禁用可折叠|Boolean|—|false|1.4.0|
-|foldLine|是否显示连接线|String|solid,dashed|—|1.4.0|
-|defaultUnfoldAll|是否展开全部节点|Boolean|—|false|1.4.0|
-|defaultUnfold|节点的默认折叠状态|Function=>Boolean|—|—|1.4.0|
-|nodeDisabled|节点的禁用状态|Function=>Boolean|—|—|1.4.0|
-|loadData|异步加载|Function=>Promise|—|—|1.4.0|
+|data|生成tree的数据|Array|—|—|1.6.0|
+|primaryAttr|循环时主键取值的属性|String|—|id|1.6.0|
+|nameAttr|节点内容取值的属性|String|—|name|1.6.0|
+|foldIcon|节点的展开折叠对应的图标配置信息|Object|—|{<br/>fold: 'arr-right',<br/>unfold: 'arr-down'<br/>}|1.6.0|
+|foldAttr|节点子项折叠取值的属性|String|—|fold|1.6.0|
+|foldDisabled|节点子项是否禁用折叠，如果禁用则默认为展开|Boolean|—|false|1.6.0|
+|foldDefault|对未设置折叠状态的节点，设置的默认值|Boolean|—|true|1.6.0|
+|selectedAttr|节点选中状态取值的属性|String|—|selected|1.6.0|
+|disabledAttr|节点禁用状态取值的属性|String|—|disabled|1.6.0|
+|unrelated|节点之间是否是非关联的|Boolean|—|false|1.6.0|
+|loadChildren|异步读取子节点的方法|Function=>Promise|—|—|1.6.0|
+
+```
+// foldIcon配置信息
+
+{
+  fold: BeeIcon.Props,
+  unfold: BeeIcon.Props
+}
+```
 
 
 ### 事件
 |事件|说明|版本支持|
 |---|---|---|
-|checked|子项被选后的事件回调|1.4.0|
-|toggle|子项折叠后的事件回调|1.5.0|
+|checked|子项被选后的事件回调|1.6.0|
+|fold|子项折叠后的事件回调|1.6.0|
 
 
 事件返回值
 ```ts
 interfase CallbackDetail {
-  value: Boolean,
-  key: String,
-  data: Object,
-  instance: Vue.Component
+  value: any
+  paths: array
+  node: Object
+  vm: Vue.Component
 }
 ```
 

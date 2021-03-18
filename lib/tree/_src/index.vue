@@ -1,112 +1,71 @@
 <template>
   <ul class="bee-tree">
-    <tree-node
-      v-for='(child, key) in data'
-      :key='key + ""'
-      :node-key='key + ""'
-      :node-data='child'
+    <tree-node v-for="(child, key) in tree" :key="child[primaryAttr]"
+      :node="child"
+      :paths="[key]"
     ></tree-node>
   </ul>
 </template>
 
 <script>
 import TreeNode from './tree-node'
-import helpers from '../../utils/helpers'
 
 export default {
   name: 'BeeTree',
-  provide () {
-    return {
-      treeInstance: this
-    }
-  },
   components: {
     TreeNode
   },
+  provide () {
+    return {
+      _treeVm: this
+    }
+  },
   props: {
-    data: {
+    tree: {
       type: Array,
-      default: () => []
+      required: true
     },
-    nameKey: {
+    primaryAttr: {
+      type: String,
+      default: 'id'
+    },
+    nameAttr: {
       type: String,
       default: 'name'
-    },
-    selectedKey: {
-      type: String,
-      validator: (value) => /^\w+$/.test(value),
-      default: 'selected'
-    },
-    halfSelectedKey: {
-      type: String,
-      validator: (value) => /^\w+$/.test(value),
-      default: 'halfSelected'
     },
     foldIcon: {
       type: Object,
       default: () => ({
-        fontFamily: undefined,
-        icons: ['arr-down', 'arr-right']
+        fold: 'arr-right',
+        unfold: 'arr-down'
       })
+    },
+    foldAttr: {
+      type: String,
+      default: 'fold'
     },
     foldDisabled: {
       type: Boolean,
       default: false
     },
-    foldLine: {
-      type: String,
-      validator: (value) => /^(solid|dashed)$/.test(value)
+    foldDefault: {
+      type: Boolean,
+      default: true
     },
-    defaultUnfoldAll: {
+    selectedAttr: {
+      type: String,
+      default: 'selected'
+    },
+    disabledAttr: {
+      type: String,
+      default: 'disabled'
+    },
+    unrelated: {
       type: Boolean,
       default: false
     },
-    defaultUnfold: Function,
-    nodeDisabled: Function,
-    loadData: Function
-  },
-  methods: {
-    recursive (data, containHalfSelected) {
-      let selected = []
-
-      if (!helpers.typeof(data, 'array')) return selected
-
-      let i = 0
-
-      while (i < data.length) {
-        const item = data[i++]
-
-        if (helpers.getValueByPath(item, this.selectedKey)) {
-          selected.push(item)
-        } else if (containHalfSelected && helpers.getValueByPath(item, this.halfSelectedKey)) {
-          selected.push(item)
-        }
-
-        if (item.children) {
-          selected = selected.concat(this.recursive(item.children, containHalfSelected))
-        }
-      }
-
-      return selected
-    },
-
-    getSelectedNode (containHalfSelected) {
-      return this.recursive(this.data, containHalfSelected)
-    },
-
-    onChecked (detail) {
-      this.$nextTick(() => {
-        if (this.$listeners.checked) {
-          this.$listeners.checked(detail)
-        }
-      })
-    },
-
-    onToggle (detail) {
-      if (this.$listeners.toggle) {
-        this.$listeners.toggle(detail)
-      }
-    }
+    loadChildren: Function,
+    loadChecked: Function
   }
 }
 </script>
