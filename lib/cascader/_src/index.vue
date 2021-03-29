@@ -175,7 +175,7 @@ export default {
   watch: {
     value: function (value) {
       if (!helpers.equal(value, this.selected)) {
-        this.selected = value
+        this.selected = value || []
       }
     }
   }
