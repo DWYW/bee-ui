@@ -252,7 +252,7 @@ export default {
         return acc
       }
 
-      let values = this.options.reduce(reduceIterator, [])
+      let values = options.reduce(reduceIterator, [])
 
       if (defaultValueOptions) {
         values = defaultValueOptions.reduce(reduceIterator, values)
