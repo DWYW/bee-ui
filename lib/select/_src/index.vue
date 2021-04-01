@@ -48,6 +48,7 @@ export default {
   name: 'BeeSelect',
   props: {
     value: null,
+    defaultValueOptions: Array,
     options: {
       type: Array,
       required: true
@@ -237,21 +238,28 @@ export default {
     },
 
     valuesInit () {
-      const data = helpers.typeof(this.value) !== 'array' ? [this.value] : this.value
+      const { value, optionKey, options, defaultValueOptions } = this
+      const data = helpers.typeof(value) !== 'array' ? [value] : value
 
-      const values = this.options.reduce((acc, item) => {
-        const _value = helpers.getValueByPath(item, this.optionKey.value)
-        const _label = helpers.getValueByPath(item, this.optionKey.label)
+      function reduceIterator (acc, item) {
+        const _value = helpers.getValueByPath(item, optionKey.value)
+        const _label = helpers.getValueByPath(item, optionKey.label)
 
         if (data.indexOf(_value) > -1) {
           acc.push([_value, _label])
         }
 
         return acc
-      }, [])
+      }
+
+      let values = this.options.reduce(reduceIterator, [])
+
+      if (defaultValueOptions) {
+        values = defaultValueOptions.reduce(reduceIterator, values)
+      }
 
       // If value is defined and can not find in options, emit events.
-      this.updateSelected(values, values.length === 0 && this.value)
+      this.updateSelected(values, values.length === 0 && value)
     },
 
     removeSelectedItem (index) {

@@ -383,6 +383,7 @@ export default {
 | 参数 | 说明 |	类型 |	可选值 |	默认值 | 版本支持|
 |---|---|---|---|---|---|
 |data|数据源|Array|—|—|1.4.0|
+|defaultValueData|初始值不为空，并且在data中无法找到时，会在此项中寻找相应的值|Array|—|—|1.6.3|
 |optionKey|每一个选项要是显示的字段和取值的字段|Object|—|—|1.4.0|
 |placeholder|占位符|String|—|—|1.4.0|
 |disabled|是否是禁用|Boolean|—|false|1.4.0|
