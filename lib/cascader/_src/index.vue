@@ -48,7 +48,8 @@ export default {
       },
       default: 'last'
     },
-    value: Array
+    value: Array,
+    defaultValueData: Array
   },
   data () {
     return {
@@ -61,30 +62,39 @@ export default {
       return getScrollParent(this.$el)
     },
     label () {
-      let text = ''
+      const { data, defaultValueData, selected, labelFormat, getItemValue, getItemLabel } = this
+      let text
 
       // If custom processing exists and has a value, return the custom value.
-      if (this.labelFormat) {
-        text = this.labelFormat(this.selected)
-
-        if (text) {
-          return text.toString()
-        }
+      if (labelFormat) {
+        text = labelFormat(this.selected)
+        if (text) return text.toString()
       }
 
-      let i = 0
-      let data = this.data
-      let selectItem = this.selected[i++]
       text = []
+      let _data = data
+      let i = 0
+      let selectItem = selected[i++]
 
-      while (data && selectItem) {
-        const _item = data.find(v => this.getItemValue(v) === selectItem)
-
+      while (_data && selectItem) {
+        const _item = _data.find(v => getItemValue(v) === selectItem)
         if (!_item) break
 
-        text.push(this.getItemLabel(_item))
-        data = _item.children
-        selectItem = this.selected[i++]
+        text.push(getItemLabel(_item))
+
+        _data = _item.children
+        selectItem = selected[i++]
+      }
+
+      // try in default valueData
+      if (i <= selected.length && defaultValueData) {
+        while (i <= selected.length) {
+          const _item = defaultValueData.find(v => getItemValue(v) === selectItem)
+          if (!_item) break
+
+          text.push(getItemLabel(_item))
+          selectItem = selected[i++]
+        }
       }
 
       return text.join(this.joinText)

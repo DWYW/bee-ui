@@ -60,7 +60,7 @@ export default {
 }
 </script>
 ## select 下拉选框
- 
+
 ### 基本用法
 
 ::: demo
@@ -214,6 +214,7 @@ export default {
 |参数|说明|类型|可选值|默认值|版本支持|
 |---|---|---|---|---|---|
 |options|选项数组|Array|—|—|*|
+|defaultValueOptions|初始值不为空，并且在options中无法找到时，会在此项中寻找相应的值|Array|—|—|1.6.3|
 |optionKey|每一个选项要是显示的字段和取值的字段|Object|—|—|*|
 |placeholder|占位符|String|—|—|*|
 |multiple|是否是多选|Boolean|—|false|*|
