@@ -92,8 +92,8 @@ export default {
       if (!this.$refs.body) return
 
       const _scrollElement = this.$refs.body
-      const horizontalBarWidth = _scrollElement.offsetWidth - _scrollElement.clientWidth
-      const verticalBarHeight = _scrollElement.offsetHeight - _scrollElement.clientHeight
+      const horizontalBarWidth = (_scrollElement.offsetWidth - _scrollElement.clientWidth) + 2
+      const verticalBarHeight = (_scrollElement.offsetHeight - _scrollElement.clientHeight) + 2
       let style = _scrollElement.getAttribute('style') || ''
       _scrollElement.setAttribute('style', this.updateStyle(style, {
         'width': `calc(100% + ${horizontalBarWidth}px)`,
