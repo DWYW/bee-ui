@@ -4,7 +4,7 @@
 
 [latest](https://dwyw.github.io/bee-ui/latest/index.html)
 
-[bee-ui-audio-vue](https://dwyw.github.io/bee-ui-audio/index.html)
+[bee-ui-audio-vue](https://dwyw.github.io/bee-ui-audio/latest/index.html)
 
 
 ## npm 安装
